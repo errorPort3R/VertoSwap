@@ -34,9 +34,6 @@ public class Item
     private String description;
 
     @Column(nullable = false)
-    private ArrayList<String> photos;
-
-    @Column(nullable = false)
     private String acceptableExchange;
 
     @Column(nullable = false)
@@ -55,12 +52,11 @@ public class Item
     {
     }
 
-    public Item(String title, String location, String description, ArrayList<String> photos, String acceptableExchange, Status status, LocalDateTime time, boolean service, User user)
+    public Item(String title, String location, String description, String acceptableExchange, Status status, LocalDateTime time, boolean service, User user)
     {
         this.title = title;
         this.location = location;
         this.description = description;
-        this.photos = photos;
         this.acceptableExchange = acceptableExchange;
         this.status = status;
         this.time = time;
@@ -106,16 +102,6 @@ public class Item
     public void setDescription(String description)
     {
         this.description = description;
-    }
-
-    public ArrayList<String> getPhotos()
-    {
-        return photos;
-    }
-
-    public void setPhotos(ArrayList<String> photos)
-    {
-        this.photos = photos;
     }
 
     public String getAcceptableExchange()
