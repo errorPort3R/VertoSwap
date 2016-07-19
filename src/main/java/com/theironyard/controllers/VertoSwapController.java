@@ -62,7 +62,7 @@ public class VertoSwapController
         return "redirect:/";
     }
 
-    @RequestMapping(path = "account-update", method = RequestMethod.POST)
+    @RequestMapping(path = "/account-update", method = RequestMethod.POST)
     public String editAccount(HttpSession session, String password, String newUsername, String newPassword) throws Exception {
         String username = (String) session.getAttribute("username");
         if (username == null) {
@@ -78,7 +78,7 @@ public class VertoSwapController
         return "redirect:/";
     }
 
-    @RequestMapping(path = "account-delete", method = RequestMethod.POST)
+    @RequestMapping(path = "/account-delete", method = RequestMethod.POST)
     public String deleteAccount(HttpSession session) throws Exception {
         String username = (String) session.getAttribute("username");
         if (username == null) {
