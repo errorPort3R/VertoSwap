@@ -18,7 +18,7 @@ public class Thread
     User sender;
 
     @Column(nullable = false)
-    User reciever;
+    User receiver;
 
     @Column(nullable = false)
     Item item;
@@ -27,10 +27,10 @@ public class Thread
     {
     }
 
-    public Thread(User sender, User reciever, Item item)
+    public Thread(User sender, User receiver, Item item)
     {
         this.sender = sender;
-        this.reciever = reciever;
+        this.receiver = receiver;
         this.item = item;
     }
 
@@ -54,14 +54,14 @@ public class Thread
         this.sender = sender;
     }
 
-    public User getReciever()
+    public User getReceiver()
     {
-        return reciever;
+        return receiver;
     }
 
-    public void setReciever(User reciever)
+    public void setReceiver(User reciever)
     {
-        this.reciever = reciever;
+        this.receiver = reciever;
     }
 
     public Item getItem()
