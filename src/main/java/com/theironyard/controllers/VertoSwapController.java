@@ -473,11 +473,11 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/photo-read", method = RequestMethod.GET)
-    public String getPhoto(HttpSession session)
+    public String getPhoto(HttpSession session, Item item)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByName(username);
-
+        Iterable<Photo> photoList = photos.findByItem(item);
         session.setAttribute("username", user.getUsername());
         return"";
     }
