@@ -46,6 +46,35 @@ public class VertoSwapController {
         return "redirect:/";
     }
 
+    @RequestMapping(path = "account-update", method = RequestMethod.POST)
+    public String editAccount(HttpSession session, String password, String newUsername, String newPassword) throws Exception {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            throw new Exception("Not logged in.");
+        }
+        User user = users.findByName(username);
+        if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
+            throw new Exception("Wrong password.");
+        }
+        user.setUsername(newUsername);
+        user.setPassword(PasswordStorage.createHash(newPassword));
+        users.save(user);
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "account-delete", method = RequestMethod.POST)
+    public String deleteAccount(HttpSession session) throws Exception {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            throw new Exception("Not logged in.");
+        }
+        User user = users.findByName(username);
+
+        // delete all user-connected DBs
+        users.delete(user.getId());
+        return "redirect:/";
+    }
+
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpSession session, String username, String password) throws Exception {
         User userFromDB = users.findByName(username);
