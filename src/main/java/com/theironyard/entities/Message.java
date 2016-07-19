@@ -12,14 +12,65 @@ public class Message
 {
     @Id
     @GeneratedValue
-    int id;
+    private int id;
 
     @Column(nullable = false)
-    String body;
+    private String body;
 
     @Column(nullable = false)
-    LocalDateTime time;
+    private LocalDateTime time;
 
     @ManyToOne
-    Thread thread;
+    private Thread thread;
+
+    public Message()
+    {
+    }
+
+    public Message(String body, LocalDateTime time, Thread thread)
+    {
+        this.body = body;
+        this.time = time;
+        this.thread = thread;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public String getBody()
+    {
+        return body;
+    }
+
+    public void setBody(String body)
+    {
+        this.body = body;
+    }
+
+    public LocalDateTime getTime()
+    {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time)
+    {
+        this.time = time;
+    }
+
+    public Thread getThread()
+    {
+        return thread;
+    }
+
+    public void setThread(Thread thread)
+    {
+        this.thread = thread;
+    }
 }
