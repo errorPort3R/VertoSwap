@@ -22,32 +22,149 @@ public class Item
 
     @Id
     @GeneratedValue
-    int id;
+    private int id;
 
     @Column(nullable = false)
-    String title;
+    private String title;
 
     @Column(nullable = false)
-    String location;
+    private String location;
 
     @Column(nullable = false)
-    String description;
+    private String description;
 
     @Column(nullable = false)
-    ArrayList<String> photos;
+    private ArrayList<String> photos;
 
     @Column(nullable = false)
-    String acceptableExchange;
+    private String acceptableExchange;
 
     @Column(nullable = false)
-    Status status;
+    private Status status;
 
     @Column(nullable = false)
-    LocalDateTime time;
+    private LocalDateTime time;
 
     @Column(nullable = false)
     boolean service;
 
     @ManyToOne
-    User user;
+    private User user;
+
+    public Item()
+    {
+    }
+
+    public Item(String title, String location, String description, ArrayList<String> photos, String acceptableExchange, Status status, LocalDateTime time, boolean service, User user)
+    {
+        this.title = title;
+        this.location = location;
+        this.description = description;
+        this.photos = photos;
+        this.acceptableExchange = acceptableExchange;
+        this.status = status;
+        this.time = time;
+        this.service = service;
+        this.user = user;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public String getTitle()
+    {
+        return title;
+    }
+
+    public void setTitle(String title)
+    {
+        this.title = title;
+    }
+
+    public String getLocation()
+    {
+        return location;
+    }
+
+    public void setLocation(String location)
+    {
+        this.location = location;
+    }
+
+    public String getDescription()
+    {
+        return description;
+    }
+
+    public void setDescription(String description)
+    {
+        this.description = description;
+    }
+
+    public ArrayList<String> getPhotos()
+    {
+        return photos;
+    }
+
+    public void setPhotos(ArrayList<String> photos)
+    {
+        this.photos = photos;
+    }
+
+    public String getAcceptableExchange()
+    {
+        return acceptableExchange;
+    }
+
+    public void setAcceptableExchange(String acceptableExchange)
+    {
+        this.acceptableExchange = acceptableExchange;
+    }
+
+    public Status getStatus()
+    {
+        return status;
+    }
+
+    public void setStatus(Status status)
+    {
+        this.status = status;
+    }
+
+    public LocalDateTime getTime()
+    {
+        return time;
+    }
+
+    public void setTime(LocalDateTime time)
+    {
+        this.time = time;
+    }
+
+    public boolean isService()
+    {
+        return service;
+    }
+
+    public void setService(boolean service)
+    {
+        this.service = service;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
+    }
 }
