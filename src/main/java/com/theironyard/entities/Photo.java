@@ -14,10 +14,7 @@ public class Photo
     private int id;
 
     @Column(nullable = false)
-    private String originalFilename;
-
-    @Column(nullable = false)
-    private String newFilename;
+    private String filename;
 
     @Column(nullable = false)
     private String caption;
@@ -32,10 +29,9 @@ public class Photo
     {
     }
 
-    public Photo(String originalFilename, String newFilename, String caption, User user, Item item)
+    public Photo(String filename, String caption, User user, Item item)
     {
-        this.originalFilename = originalFilename;
-        this.newFilename = newFilename;
+        this.filename = filename;
         this.caption = caption;
         this.user = user;
         this.item = item;
@@ -51,24 +47,14 @@ public class Photo
         this.id = id;
     }
 
-    public String getOriginalFilename()
+    public String getFilename()
     {
-        return originalFilename;
+        return filename;
     }
 
-    public void setOriginalFilename(String originalFilename)
+    public void setFilename(String filename)
     {
-        this.originalFilename = originalFilename;
-    }
-
-    public String getNewFilename()
-    {
-        return newFilename;
-    }
-
-    public void setNewFilename(String newFilename)
-    {
-        this.newFilename = newFilename;
+        this.filename = filename;
     }
 
     public String getCaption()

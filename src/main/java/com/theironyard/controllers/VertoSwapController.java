@@ -1,8 +1,6 @@
 package com.theironyard.controllers;
 
-import com.theironyard.entities.Item;
-import com.theironyard.entities.User;
-import com.theironyard.entities.Work;
+import com.theironyard.entities.*;
 import com.theironyard.entities.Thread;
 import com.theironyard.services.*;
 import com.theironyard.services.UserRepository;
@@ -13,8 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.time.LocalDateTime;
 
 
@@ -24,6 +26,8 @@ import java.time.LocalDateTime;
 @Controller
 public class VertoSwapController
 {
+
+    public static String PHOTOS_DIR = "photos/";
 
     @Autowired
     UserRepository users;
@@ -175,14 +179,24 @@ public class VertoSwapController
         return "redirect:/";
     }
 
+    @RequestMapping(path = "/item-read-specific", method = RequestMethod.GET)
+    public String getSpecificItem(HttpSession session, int id)
+    {
+        String username = (String)session.getAttribute("username");
+        User user = users.findByName(username);
+        Item item = items.findOne(id);
+        session.setAttribute("username", user.getUsername());
+        return"";
+    }
+
     @RequestMapping(path = "/item-read", method = RequestMethod.GET)
-    public String getItem(HttpSession session)
+    public Iterable<Item> getItem(HttpSession session)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByName(username);
         Iterable<Item> itemsList = items.findByUser(user);
         session.setAttribute("username", user.getUsername());
-        return"";
+        return itemsList;
     }
 
     @RequestMapping(path = "/item-update", method = RequestMethod.POST)
@@ -204,10 +218,12 @@ public class VertoSwapController
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByName(username);
-        works.delete(id);
+        items.delete(id);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
     }
+
+
 
 
 
@@ -398,13 +414,13 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/thread-read", method = RequestMethod.GET)
-    public String getThread(HttpSession session)
+    public Iterable<Thread> getThread(HttpSession session)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByName(username);
-        Iterable<Item> itemsList = items.findByUser(user);
+        Iterable<Thread> threadList = threads.findByUser(user);
         session.setAttribute("username", user.getUsername());
-        return"";
+        return threadList;
     }
 
     @RequestMapping(path = "/thread-update", method = RequestMethod.POST)
@@ -424,7 +440,7 @@ public class VertoSwapController
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByName(username);
-        works.delete(id);
+        threads.delete(id);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
 
@@ -439,42 +455,54 @@ public class VertoSwapController
 
 
 
-
-  /*  @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
-    public String createThread(HttpSession session, User receiver, Item item)
+    @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
+    public void addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, Item item, HttpServletResponse response) throws Exception
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByName(username);
-        Thread t = new Thread(user,receiver, item);
-        threads.save(t);
+        File dir = new File("public/" + PHOTOS_DIR);
+        dir.mkdirs();
+
+        File photoFile = File.createTempFile("photo", photo.getOriginalFilename(), dir);
+        FileOutputStream fos = new FileOutputStream(photoFile);
+        fos.write(photo.getBytes());
+
+        Photo newPhoto = new Photo(photoFile.getName(), caption, user, item);
+        photos.save(newPhoto);
         session.setAttribute("username", user.getUsername());
-        return "redirect:/";
     }
 
-    @RequestMapping(path = "/thread-read", method = RequestMethod.GET)
-    public String getThread(HttpSession session)
+    @RequestMapping(path = "/photo-read", method = RequestMethod.GET)
+    public String getPhoto(HttpSession session)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByName(username);
-        Iterable<Item> itemsList = items.findByUser(user);
+
         session.setAttribute("username", user.getUsername());
         return"";
     }
 
-    @RequestMapping(path = "/thread-update", method = RequestMethod.POST)
-    public String updateThread(HttpSession session,int id, User receiver, Item item)
+    @RequestMapping(path = "/photo-update", method = RequestMethod.POST)
+    public String updatePhoto(HttpSession session, MultipartFile photo, int id, String filename, String caption, Item item, HttpServletResponse response) throws Exception
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByName(username);
-        Thread t = new Thread(user,receiver, item);
-        t.setId(id);
-        threads.save(t);
+        File dir = new File("public/" + PHOTOS_DIR);
+        dir.mkdirs();
+
+        File photoFile = File.createTempFile("photo", photo.getOriginalFilename(), dir);
+        FileOutputStream fos = new FileOutputStream(photoFile);
+        fos.write(photo.getBytes());
+
+        Photo newPhoto = new Photo(photoFile.getName(), caption, user, item);
+        newPhoto.setId(id);
+        photos.save(newPhoto);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
     }
 
-    @RequestMapping(path = "/thread-delete", method = RequestMethod.POST)
-    public String deleteThread(HttpSession session, int id)
+    @RequestMapping(path = "/photo-delete", method = RequestMethod.POST)
+    public String deletePhoto(HttpSession session, int id)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByName(username);
@@ -482,6 +510,6 @@ public class VertoSwapController
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
 
-    }*/
+    }
 
 }
