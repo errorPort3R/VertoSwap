@@ -59,7 +59,7 @@ public class VertoSwapController
     @RequestMapping(path = "/account-create", method = RequestMethod.GET)
     public String createAccountPage(HttpSession session, Model model)
     {
-        return "redirect:/";
+        return "account-create";
     }
 
 
