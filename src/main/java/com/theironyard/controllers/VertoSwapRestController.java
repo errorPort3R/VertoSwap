@@ -4,6 +4,9 @@ import com.theironyard.entities.*;
 import com.theironyard.entities.Thread;
 import com.theironyard.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -147,14 +150,14 @@ public class VertoSwapRestController
 //    static SimpMessagingTemplate messenger;
 //
 //    @Autowired
-//    public WebSocketController(SimpMessagingTemplate messenger)
+//    public void WebSocketController(SimpMessagingTemplate messenger)
 //    {
 //        this.messenger = messenger;
 //    }
 //
-//    @MessageMapping("/move")
-//    @SendTo("/move")
-//    public Message move(Message message)
+//    @MessageMapping("/send")
+//    @SendTo("/send")
+//    public Message sendMessage(Message message)
 //    {
 //        return message;
 //    }

@@ -13,7 +13,7 @@ public class User {
     private int id;
 
     @Column(nullable = false, unique = true)
-    String username;
+    private String username;
 
     @Column(nullable = false)
     private String password;
