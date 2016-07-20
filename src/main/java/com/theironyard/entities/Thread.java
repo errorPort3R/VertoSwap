@@ -12,16 +12,16 @@ public class Thread
 {
     @Id
     @GeneratedValue
-    int id;
+    private int id;
 
     @ManyToOne
-    User sender;
+    private User sender;
 
     @ManyToOne
-    User receiver;
+    private User receiver;
 
     @ManyToOne
-    Item item;
+    private Item item;
 
     public Thread()
     {
@@ -59,9 +59,9 @@ public class Thread
         return receiver;
     }
 
-    public void setReceiver(User reciever)
+    public void setReceiver(User receiver)
     {
-        this.receiver = reciever;
+        this.receiver = receiver;
     }
 
     public Item getItem()

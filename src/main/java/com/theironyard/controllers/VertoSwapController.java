@@ -3,20 +3,22 @@ package com.theironyard.controllers;
 import com.theironyard.entities.*;
 import com.theironyard.entities.Thread;
 import com.theironyard.services.*;
-import com.theironyard.services.UserRepository;
 import com.theironyard.utilities.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 
@@ -48,9 +50,20 @@ public class VertoSwapController
     PhotoRepository photos;
 
 
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public String main(HttpSession session, Model model)
+    {
+        return "home";
+    }
+
+
+
+
+
     //***************************************************************************************
     //
     //USER ROUTES
+    //
     //***************************************************************************************
     @RequestMapping(path = "/account-create", method = RequestMethod.POST)
     public String createAccount(HttpSession session, String username, String password) throws Exception {
@@ -118,6 +131,7 @@ public class VertoSwapController
     //***************************************************************************************
     //
     //WORK ROUTES
+    //
     //***************************************************************************************
     @RequestMapping(path = "/work-create", method = RequestMethod.POST)
     public String createWork(HttpSession session,String job_title, String description)
@@ -165,6 +179,7 @@ public class VertoSwapController
     //***************************************************************************************
     //
     //ITEM ROUTES
+    //
     //***************************************************************************************
     @RequestMapping(path = "/item-create", method = RequestMethod.POST)
     public String createItem(HttpSession session, String title, String location, String description, String acceptableExchange, String stat, boolean service)
@@ -401,6 +416,7 @@ public class VertoSwapController
     //***************************************************************************************
     //
     //THREAD ROUTES
+    //
     //***************************************************************************************
     @RequestMapping(path = "/thread-create", method = RequestMethod.POST)
     public String createThread(HttpSession session, User receiver, Item item)
@@ -418,7 +434,7 @@ public class VertoSwapController
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Iterable<Thread> threadList = threads.findByUser(user);
+        Iterable<Thread> threadList = threads.findByReceiver(user);
         session.setAttribute("username", user.getUsername());
         return threadList;
     }
@@ -450,11 +466,11 @@ public class VertoSwapController
 
 
 
-
-
-
-
-
+    //***************************************************************************************
+    //
+    //           PHOTO ROUTES
+    //
+    //***************************************************************************************
     @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
     public void addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, Item item, HttpServletResponse response) throws Exception
     {
