@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 
 /**
@@ -101,18 +102,36 @@ public class VertoSwapController
         return "redirect:/";
     }
 
-    @RequestMapping(path = "/account-delete", method = RequestMethod.POST)
-    public String deleteAccount(HttpSession session) throws Exception {
-        String username = (String) session.getAttribute("username");
-        if (username == null) {
-            throw new Exception("Not logged in.");
-        }
-        User user = users.findByUsername(username);
-
-        // delete all user-connected DBs
-        users.delete(user.getId());
-        return "redirect:/";
-    }
+//    @RequestMapping(path = "/account-delete", method = RequestMethod.POST)
+//    public String deleteAccount(HttpSession session) throws Exception {
+//        String username = (String) session.getAttribute("username");
+//        if (username == null) {
+//            throw new Exception("Not logged in.");
+//        }
+//        User user = users.findByUsername(username);
+//        items.delete(items.findByUser(user));
+//        works.delete(works.findByUser(user));
+//        photos.delete(photos.findByUser(user));
+//
+//        /////  ??
+//        User sender = new User(user.getUsername(), user.getPassword());
+//        User receiver = new User(user.getUsername(), user.getPassword());
+//
+//        Iterable<Thread> senderToDelete = threads.findBySender(sender);
+//        for (Thread t : senderToDelete) {
+//            messages.delete(messages.findByThread(t));
+//        }
+//
+//        Iterable<Thread> receiverToDelete = threads.findByReceiver(receiver);
+//        for (Thread t : receiverToDelete) {
+//            messages.delete(messages.findByThread(t));
+//        }
+//
+//        /////
+//
+//        users.delete(user.getId());
+//        return "redirect:/";
+//    }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpSession session, String username, String password) throws Exception {
@@ -243,180 +262,6 @@ public class VertoSwapController
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     //***************************************************************************************

@@ -2,6 +2,7 @@ package com.theironyard.services;
 
 import com.theironyard.entities.Item;
 import com.theironyard.entities.Photo;
+import com.theironyard.entities.User;
 import org.springframework.data.repository.CrudRepository;
 
 /**
@@ -10,4 +11,5 @@ import org.springframework.data.repository.CrudRepository;
 public interface PhotoRepository extends CrudRepository<Photo, Integer>
 {
     public Iterable<Photo> findByItem(Item item);
+    public Iterable<Photo> findByUser(User user);
 }
