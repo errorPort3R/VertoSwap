@@ -23,15 +23,19 @@ public class Message
     @ManyToOne
     private Thread thread;
 
+    @ManyToOne
+    private User user;
+
     public Message()
     {
     }
 
-    public Message(String body, LocalDateTime time, Thread thread)
+    public Message(String body, LocalDateTime time, Thread thread, User user)
     {
         this.body = body;
         this.time = time;
         this.thread = thread;
+        this.user = user;
     }
 
     public int getId()
@@ -72,5 +76,15 @@ public class Message
     public void setThread(Thread thread)
     {
         this.thread = thread;
+    }
+
+    public User getUser()
+    {
+        return user;
+    }
+
+    public void setUser(User user)
+    {
+        this.user = user;
     }
 }
