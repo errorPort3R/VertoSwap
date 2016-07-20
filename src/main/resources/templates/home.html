@@ -5,17 +5,20 @@
     <title>VertoSwap</title>
 </head>
 <body>
-<h2>VertoSwap</h2><br>
-<h4>a bartering app</h4><br><br>
+<h2>VertoSwap</h2>
+<h4>a bartering app</h4><br>
+Login:
 <form action="/login" method="post">
     <input type="text" name="username" placeholder="Username"/>
     <input type="password" name="password" placeholder="Password"/>
     <button type="submit">Login</button>
-</form><br><br>
+</form><br>
+Or create an account:
 <a href="/account-create">Create account</a><br><br>
+Search available barters:
 <form action="/item-read" method="get">
     <input type="text" name="search" placeholder="Search"/>
     <button type="submit">Search</button>
-</form><br><br>
+</form>
 </body>
 </html>
