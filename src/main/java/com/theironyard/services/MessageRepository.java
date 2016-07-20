@@ -10,4 +10,5 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface MessageRepository extends CrudRepository<Message, Integer>{
     public Iterable<Message> findByThread(Thread thread);
+    public Message findByUser(User user);
 }
