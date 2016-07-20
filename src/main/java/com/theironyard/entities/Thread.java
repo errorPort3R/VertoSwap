@@ -14,13 +14,13 @@ public class Thread
     @GeneratedValue
     int id;
 
-    @Column(nullable = false)
+    @ManyToOne
     User sender;
 
-    @Column(nullable = false)
+    @ManyToOne
     User receiver;
 
-    @Column(nullable = false)
+    @ManyToOne
     Item item;
 
     public Thread()
