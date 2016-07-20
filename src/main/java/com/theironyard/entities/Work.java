@@ -11,16 +11,16 @@ public class Work
 {
     @Id
     @GeneratedValue
-    int id;
+    private int id;
 
     @Column(nullable = false)
-    String jobTitle;
+    private String jobTitle;
 
     @Column(nullable = false)
-    String description;
+    private String description;
 
     @ManyToOne
-    User user;
+    private User user;
 
     public Work()
     {

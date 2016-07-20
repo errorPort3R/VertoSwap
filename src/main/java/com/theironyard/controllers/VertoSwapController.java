@@ -3,20 +3,22 @@ package com.theironyard.controllers;
 import com.theironyard.entities.*;
 import com.theironyard.entities.Thread;
 import com.theironyard.services.*;
-import com.theironyard.services.UserRepository;
 import com.theironyard.utilities.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 
 
@@ -48,13 +50,24 @@ public class VertoSwapController
     PhotoRepository photos;
 
 
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public String main(HttpSession session, Model model)
+    {
+        return "home";
+    }
+
+
+
+
+
     //***************************************************************************************
     //
     //USER ROUTES
+    //
     //***************************************************************************************
     @RequestMapping(path = "/account-create", method = RequestMethod.POST)
     public String createAccount(HttpSession session, String username, String password) throws Exception {
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         if (user != null) {
             throw new Exception("Username unavailable.");
         }
@@ -72,7 +85,7 @@ public class VertoSwapController
         if (username == null) {
             throw new Exception("Not logged in.");
         }
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         if (!PasswordStorage.verifyPassword(password, user.getPassword())) {
             throw new Exception("Wrong password.");
         }
@@ -88,7 +101,7 @@ public class VertoSwapController
         if (username == null) {
             throw new Exception("Not logged in.");
         }
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
 
         // delete all user-connected DBs
         users.delete(user.getId());
@@ -97,7 +110,7 @@ public class VertoSwapController
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpSession session, String username, String password) throws Exception {
-        User userFromDB = users.findByName(username);
+        User userFromDB = users.findByUsername(username);
         if (userFromDB == null) {
             return "redirect:/create-account";
         }
@@ -118,12 +131,13 @@ public class VertoSwapController
     //***************************************************************************************
     //
     //WORK ROUTES
+    //
     //***************************************************************************************
     @RequestMapping(path = "/work-create", method = RequestMethod.POST)
     public String createWork(HttpSession session,String job_title, String description)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         Work w = new Work(job_title, description, user);
         works.save(w);
         session.setAttribute("username", user.getUsername());
@@ -134,7 +148,7 @@ public class VertoSwapController
     public String getWork(HttpSession session)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         Iterable<Work> workList = works.findByUser(user);
         session.setAttribute("username", user.getUsername());
         return"";
@@ -144,7 +158,7 @@ public class VertoSwapController
     public String updateWork(HttpSession session, int id, String job_title, String description)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         Work w = new Work(job_title, description, user);
         w.setId(id);
         works.save(w);
@@ -156,7 +170,7 @@ public class VertoSwapController
     public String deleteWork(HttpSession session, int id)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         works.delete(id);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
@@ -165,12 +179,13 @@ public class VertoSwapController
     //***************************************************************************************
     //
     //ITEM ROUTES
+    //
     //***************************************************************************************
     @RequestMapping(path = "/item-create", method = RequestMethod.POST)
     public String createItem(HttpSession session, String title, String location, String description, String acceptableExchange, String stat, boolean service)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
         Item.Status status = Item.Status.valueOf(stat);
         Item i = new Item(title, location, description, acceptableExchange, status, time, service, user);
@@ -183,7 +198,7 @@ public class VertoSwapController
     public String getSpecificItem(HttpSession session, int id)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         Item item = items.findOne(id);
         session.setAttribute("username", user.getUsername());
         return"";
@@ -193,7 +208,7 @@ public class VertoSwapController
     public Iterable<Item> getItem(HttpSession session)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         Iterable<Item> itemsList = items.findByUser(user);
         session.setAttribute("username", user.getUsername());
         return itemsList;
@@ -203,7 +218,7 @@ public class VertoSwapController
     public String updateItem(HttpSession session, int id, String title, String location, String description, String acceptableExchange, String stat, boolean service)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
         Item.Status status = Item.Status.valueOf(stat);
         Item i = new Item(title, location, description, acceptableExchange, status, time, service, user);
@@ -217,7 +232,7 @@ public class VertoSwapController
     public String deleteitem (HttpSession session, int id)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         items.delete(id);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
@@ -401,12 +416,13 @@ public class VertoSwapController
     //***************************************************************************************
     //
     //THREAD ROUTES
+    //
     //***************************************************************************************
     @RequestMapping(path = "/thread-create", method = RequestMethod.POST)
     public String createThread(HttpSession session, User receiver, Item item)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         Thread t = new Thread(user,receiver, item);
         threads.save(t);
         session.setAttribute("username", user.getUsername());
@@ -417,8 +433,8 @@ public class VertoSwapController
     public Iterable<Thread> getThread(HttpSession session)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
-        Iterable<Thread> threadList = threads.findByUser(user);
+        User user = users.findByUsername(username);
+        Iterable<Thread> threadList = threads.findByReceiver(user);
         session.setAttribute("username", user.getUsername());
         return threadList;
     }
@@ -427,7 +443,7 @@ public class VertoSwapController
     public String updateThread(HttpSession session,int id, User receiver, Item item)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         Thread t = new Thread(user,receiver, item);
         t.setId(id);
         threads.save(t);
@@ -439,7 +455,7 @@ public class VertoSwapController
     public String deleteThread(HttpSession session, int id)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         threads.delete(id);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
@@ -450,16 +466,16 @@ public class VertoSwapController
 
 
 
-
-
-
-
-
+    //***************************************************************************************
+    //
+    //           PHOTO ROUTES
+    //
+    //***************************************************************************************
     @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
     public void addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, Item item, HttpServletResponse response) throws Exception
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         File dir = new File("public/" + PHOTOS_DIR);
         dir.mkdirs();
 
@@ -476,7 +492,7 @@ public class VertoSwapController
     public String getPhoto(HttpSession session, Item item)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         Iterable<Photo> photoList = photos.findByItem(item);
         session.setAttribute("username", user.getUsername());
         return"";
@@ -486,7 +502,7 @@ public class VertoSwapController
     public String updatePhoto(HttpSession session, MultipartFile photo, int id, String filename, String caption, Item item, HttpServletResponse response) throws Exception
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         File dir = new File("public/" + PHOTOS_DIR);
         dir.mkdirs();
 
@@ -505,7 +521,7 @@ public class VertoSwapController
     public String deletePhoto(HttpSession session, int id)
     {
         String username = (String)session.getAttribute("username");
-        User user = users.findByName(username);
+        User user = users.findByUsername(username);
         works.delete(id);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";

@@ -43,7 +43,7 @@ public class Item
     private LocalDateTime time;
 
     @Column(nullable = false)
-    boolean service;
+    private boolean service;
 
     @ManyToOne
     private User user;

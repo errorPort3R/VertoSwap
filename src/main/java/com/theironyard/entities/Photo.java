@@ -20,10 +20,10 @@ public class Photo
     private String caption;
 
     @ManyToOne
-    User user;
+    private User user;
 
     @ManyToOne
-    Item item;
+    private Item item;
 
     public Photo()
     {
