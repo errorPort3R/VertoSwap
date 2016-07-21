@@ -93,6 +93,7 @@ public class VertoSwapController
         }
         User user = users.findByUsername(username);
         Iterable<Item> archivedItems = items.findByUserAndStatus(user, ARCHIVE);
+        model.addAttribute("username", username);
         model.addAttribute("archived", archivedItems);
         return "archive";
     }
@@ -184,7 +185,7 @@ public class VertoSwapController
         Work w = new Work(job_title, description, user);
         works.save(w);
         session.setAttribute("username", user.getUsername());
-        return "redirect:/";
+        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/work-read", method = RequestMethod.GET)
@@ -237,7 +238,7 @@ public class VertoSwapController
         Item i = new Item(title, location, description, acceptableExchange, status, time, service, user);
         items.save(i);
         session.setAttribute("username", user.getUsername());
-        return "redirect:/";
+        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/item-read-specific", method = RequestMethod.GET)
@@ -344,7 +345,7 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
-    public void addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, Item item, HttpServletResponse response) throws Exception
+    public String addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, Item item, HttpServletResponse response) throws Exception
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
@@ -358,6 +359,7 @@ public class VertoSwapController
         Photo newPhoto = new Photo(photoFile.getName(), caption, user, item);
         photos.save(newPhoto);
         session.setAttribute("username", user.getUsername());
+        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/photo-read", method = RequestMethod.GET)
