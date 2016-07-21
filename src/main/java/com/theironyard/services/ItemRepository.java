@@ -10,4 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface ItemRepository extends CrudRepository<Item, Integer>
 {
     public Iterable<Item> findByUser(User user);
+    public Iterable<Item> findByServiceTrueOrderByTimeDesc();
+    public Iterable<Item> findByServiceFalseOrderByTimeDesc();
+    public Iterable<Item> findByUserAndStatus(User user, Item.Status status);
 }

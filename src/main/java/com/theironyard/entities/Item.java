@@ -37,6 +37,7 @@ public class Item
     private String acceptableExchange;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.ORDINAL)
     private Status status;
 
     @Column(nullable = false)

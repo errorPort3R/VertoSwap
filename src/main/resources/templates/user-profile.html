@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+</head>
+<body>
+Hello, {{username}}!
+<br><br>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<a href="/">Home</a>
+<br><br>
+Messages:
+{{#messages}}{{/messages}}
+<br><br>
+
+Active barters:
+<ul>
+{{#activeBarters}}
+    <li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>
+{{/activeBarters}}
+</ul>
+<br><br>
+
+Inactive barters:
+<ul>
+{{#inactiveBarters}}
+    <li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>
+{{/inactiveBarters}}
+</ul>
+<br><br>
+<a href="/archive">Archived barters</a>
+<br><br>
+Create a new barter
+<br>
+<form action="/item-create" method="post">
+    <input type="text" name="title" placeholder="Title"/>
+    <input type="text" name="description" placeholder="Description"/>
+    <input type="text" name="location" placeholder="Location"/>
+    <input type="text" name="acceptableExchange" placeholder="Acceptable Exchange"/>
+    <select name="service">
+        <option value="true">Service</option>
+        <option value="false">Good</option>
+    </select>
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

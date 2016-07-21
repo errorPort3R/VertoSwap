@@ -22,6 +22,8 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import static com.theironyard.entities.Item.Status.ARCHIVE;
+
 
 /**
  * Created by Dan on 7/19/16.
@@ -54,6 +56,16 @@ public class VertoSwapController
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String main(HttpSession session, Model model)
     {
+        String username = (String) session.getAttribute("username");
+        // add full text search //
+
+        Iterable<Item> servicesList = items.findByServiceTrueOrderByTimeDesc();
+        Iterable<Item> goodsList = items.findByServiceFalseOrderByTimeDesc();
+
+        model.addAttribute("username", username);
+        model.addAttribute("services", servicesList);
+        model.addAttribute("goods", goodsList);
+
         return "home";
     }
 
@@ -61,6 +73,28 @@ public class VertoSwapController
     public String createAccountPage(HttpSession session, Model model)
     {
         return "account-create";
+    }
+
+    @RequestMapping(path = "/user-profile", method = RequestMethod.GET )
+    public String userProfile(HttpSession session, Model model) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+        model.addAttribute("username", username);
+        return "user-profile";
+    }
+
+    @RequestMapping(path = "/archive", method = RequestMethod.GET)
+    public String archive(HttpSession session, Model model) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+        User user = users.findByUsername(username);
+        Iterable<Item> archivedItems = items.findByUserAndStatus(user, ARCHIVE);
+        model.addAttribute("archived", archivedItems);
+        return "archive";
     }
 
 
@@ -196,6 +230,7 @@ public class VertoSwapController
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
+        // status must be set here ??
         Item.Status status = Item.Status.valueOf(stat);
         Item i = new Item(title, location, description, acceptableExchange, status, time, service, user);
         items.save(i);
