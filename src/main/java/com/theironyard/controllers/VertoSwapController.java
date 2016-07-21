@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import static com.theironyard.entities.Item.Status.ACTIVE;
 import static com.theironyard.entities.Item.Status.ARCHIVE;
 
 
@@ -226,15 +227,15 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/item-create", method = RequestMethod.POST)
-    public String createItem(HttpSession session, String title, String location, String description, String acceptableExchange, String stat, boolean service)
+    public String createItem(HttpSession session, String title, String location, String description, String acceptableExchange, boolean service)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
+        Item.Status status = ACTIVE;
 
-        // status must be set here ??
+        // use LDT to set status to INACTIVE, etc;
 
-        Item.Status status = Item.Status.valueOf(stat);
         Item i = new Item(title, location, description, acceptableExchange, status, time, service, user);
         items.save(i);
         session.setAttribute("username", user.getUsername());
