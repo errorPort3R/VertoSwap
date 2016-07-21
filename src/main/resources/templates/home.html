@@ -7,18 +7,44 @@
 <body>
 <h2>VertoSwap</h2>
 <h4>a place to barter</h4><br>
+{{^username}}
 Login:
 <form action="/login" method="post">
     <input type="text" name="username" placeholder="Username"/>
     <input type="password" name="password" placeholder="Password"/>
     <button type="submit">Login</button>
-</form><br>
+</form>
+<br>
 Or create an account:
-<a href="/account-create">Create account</a><br><br>
+<a href="/account-create">Create account</a>
+{{/username}}
+{{#username}}
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<br><br>
+<a href="/user-profile">Go to profile</a>
+{{/username}}
+<br><br>
 Search available barters:
-<form action="/item-read" method="get">
+<form action="/" method="get">
     <input type="text" name="search" placeholder="Search"/>
     <button type="submit">Search</button>
-</form>
+</form><br><br>
+Goods
+<br>
+<ul>
+{{#goods}}
+    <li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>
+{{/goods}}
+</ul>
+<br><br>
+Services
+<br>
+<ul>
+{{#services}}
+    <li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>
+{{/services}}
+</ul>
 </body>
 </html>

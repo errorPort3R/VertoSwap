@@ -20,6 +20,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+
+import static com.theironyard.entities.Item.Status.ACTIVE;
+import static com.theironyard.entities.Item.Status.ARCHIVE;
 
 
 /**
@@ -53,6 +57,16 @@ public class VertoSwapController
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String main(HttpSession session, Model model)
     {
+        String username = (String) session.getAttribute("username");
+        // add full text search //
+
+        Iterable<Item> servicesList = items.findByServiceTrueOrderByTimeDesc();
+        Iterable<Item> goodsList = items.findByServiceFalseOrderByTimeDesc();
+
+        model.addAttribute("username", username);
+        model.addAttribute("services", servicesList);
+        model.addAttribute("goods", goodsList);
+
         return "home";
     }
 
@@ -60,6 +74,29 @@ public class VertoSwapController
     public String createAccountPage(HttpSession session, Model model)
     {
         return "account-create";
+    }
+
+    @RequestMapping(path = "/user-profile", method = RequestMethod.GET )
+    public String userProfile(HttpSession session, Model model) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+        model.addAttribute("username", username);
+        return "user-profile";
+    }
+
+    @RequestMapping(path = "/archive", method = RequestMethod.GET)
+    public String archive(HttpSession session, Model model) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+        User user = users.findByUsername(username);
+        Iterable<Item> archivedItems = items.findByUserAndStatus(user, ARCHIVE);
+        model.addAttribute("username", username);
+        model.addAttribute("archived", archivedItems);
+        return "archive";
     }
 
 
@@ -108,8 +145,10 @@ public class VertoSwapController
             throw new Exception("Not logged in.");
         }
         User user = users.findByUsername(username);
-
-        // delete all user-connected DBs
+        items.delete(items.findByUser(user));
+        works.delete(works.findByUser(user));
+        photos.delete(photos.findByUser(user));
+        messages.delete(messages.findByUser(user));
         users.delete(user.getId());
         return "redirect:/";
     }
@@ -147,7 +186,7 @@ public class VertoSwapController
         Work w = new Work(job_title, description, user);
         works.save(w);
         session.setAttribute("username", user.getUsername());
-        return "redirect:/";
+        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/work-read", method = RequestMethod.GET)
@@ -188,16 +227,19 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/item-create", method = RequestMethod.POST)
-    public String createItem(HttpSession session, String title, String location, String description, String acceptableExchange, String stat, boolean service)
+    public String createItem(HttpSession session, String title, String location, String description, String acceptableExchange, boolean service)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
-        Item.Status status = Item.Status.valueOf(stat);
+        Item.Status status = ACTIVE;
+
+        // use LDT to set status to INACTIVE, etc;
+
         Item i = new Item(title, location, description, acceptableExchange, status, time, service, user);
         items.save(i);
         session.setAttribute("username", user.getUsername());
-        return "redirect:/";
+        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/item-read-specific", method = RequestMethod.GET)
@@ -243,180 +285,6 @@ public class VertoSwapController
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     //***************************************************************************************
@@ -478,7 +346,7 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
-    public void addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, Item item, HttpServletResponse response) throws Exception
+    public String addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, Item item, HttpServletResponse response) throws Exception
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
@@ -492,6 +360,7 @@ public class VertoSwapController
         Photo newPhoto = new Photo(photoFile.getName(), caption, user, item);
         photos.save(newPhoto);
         session.setAttribute("username", user.getUsername());
+        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/photo-read", method = RequestMethod.GET)
