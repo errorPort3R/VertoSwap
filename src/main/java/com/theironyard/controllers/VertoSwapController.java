@@ -230,7 +230,9 @@ public class VertoSwapController
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
+
         // status must be set here ??
+
         Item.Status status = Item.Status.valueOf(stat);
         Item i = new Item(title, location, description, acceptableExchange, status, time, service, user);
         items.save(i);
