@@ -12,5 +12,5 @@ public interface ThreadRepository extends CrudRepository<Thread, Integer>
 {
     public Iterable<Thread> findBySender(User sender);
     public Iterable<Thread> findByReceiver(User receiver);
-    public Iterable<Thread> findBySenderAndReceiverAndItem(User sender, User receiver, Item item);
+    public Thread findBySenderAndReceiverAndItem(User sender, User receiver, Item item);
 }
