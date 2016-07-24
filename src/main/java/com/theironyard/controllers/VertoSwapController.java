@@ -59,8 +59,10 @@ public class VertoSwapController
     public String main(HttpSession session, Model model)
     {
         String username = (String) session.getAttribute("username");
+
         // add full text search //
 
+        // filter by status
         Iterable<Item> servicesList = items.findByServiceTrueOrderByTimeDesc();
         Iterable<Item> goodsList = items.findByServiceFalseOrderByTimeDesc();
 
@@ -83,7 +85,14 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
+        User user = users.findByUsername(username);
+        //Iterable<Item> activeItems = items.findByUser(user);
+        Iterable<Item > activeItems = items.findByUserAndStatusOrderByTimeDesc(user, ACTIVE);
+        //Iterable<Item> activeItems = items.findByUserAndStatus(user, ACTIVE);
+        Iterable<Item > inactiveItems = items.findByUserAndStatusOrderByTimeDesc(user, INACTIVE);
+        //Iterable<Item> inactiveItems = items.findByUserAndStatus(user, INACTIVE);
         model.addAttribute("username", username);
+        model.addAttribute("activeBarters", activeItems);
         return "user-profile";
     }
 
@@ -233,11 +242,8 @@ public class VertoSwapController
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
-        Item.Status status = ACTIVE;
-
-        // use LDT to set status to INACTIVE, etc;
-
-        Item i = new Item(title, location, description, acceptableExchange, status, time, service, user);
+        //Item.Status status = ACTIVE;
+        Item i = new Item(title, location, description, acceptableExchange, ACTIVE, time, service, user);
         items.save(i);
         session.setAttribute("username", user.getUsername());
         return "redirect:/user-profile";
@@ -355,7 +361,7 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
-    public String addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, Item item, HttpServletResponse response) throws Exception
+    public String addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, /*Item item,*/ int id, HttpServletResponse response) throws Exception
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
@@ -365,6 +371,8 @@ public class VertoSwapController
         File photoFile = File.createTempFile("photo", photo.getOriginalFilename(), dir);
         FileOutputStream fos = new FileOutputStream(photoFile);
         fos.write(photo.getBytes());
+
+        Item item = items.findOne(id);
 
         Photo newPhoto = new Photo(photoFile.getName(), caption, user, item);
         photos.save(newPhoto);

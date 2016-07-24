@@ -5,12 +5,33 @@
     <title>Archive</title>
 </head>
 <body>
+<a href="/">Home</a>
+<br>
+<a href="/user-profile">Go to profile</a>
+<form action="/logout" method="post">
+    <button type="submit">Logout</button>
+</form>
+<br><br>
 {{username}}'s archive
 <br><br>
-<ul>
-{{#archived}}
-    <li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>
-{{/archived}}
-</ul>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Acceptable Exchange</th>
+        <th>Time</th>
+    </tr>
+    {{#archived}}
+    <tr>
+        <td>{{title}}</td>
+        <td>{{description}}</td>
+        <td>{{location}}</td>
+        <td>{{acceptableExchange}}</td>
+        <td>{{time}}</td>
+    </tr>
+    {{/archived}}
+</table>
+
 </body>
 </html>

@@ -17,19 +17,88 @@ Messages
 <br><br>
 
 Active barters
-<ul>
-{{#activeBarters}}
-    <li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>
-{{/activeBarters}}
-</ul>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Acceptable Exchange</th>
+        <th>Time</th>
+    </tr>
+    {{#activeBarters}}
+    <tr>
+        <td>{{title}}</td>
+        <td>{{description}}</td>
+        <td>{{location}}</td>
+        <td>{{acceptableExchange}}</td>
+        <td>{{time}}</td>
+        <td>Upload photo:
+            <form action="/photo-create" method="post" enctype="multipart/form-data">
+                <input type="file" name="photo"/>
+                <input type="hidden" name="id" value="{{id}}"/>
+                <input type="text" name="caption" placeholder="Write a caption"/>
+                <button type="submit">Upload</button>
+            </form></td>
+        <td>Add work history:
+            <form action="/work-create" method="post">
+                <input type="text" name="job_title" placeholder="Job Title"/>
+                <input type="text" name="description" placeholder="Description"/>
+                <button type="submit">Submit</button>
+            </form></td>
+    </tr>
+    {{/activeBarters}}
+</table>
 <br><br>
-
 Inactive barters
-<ul>
-{{#inactiveBarters}}
-    <li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>
-{{/inactiveBarters}}
-</ul>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Acceptable Exchange</th>
+        <th>Time</th>
+    </tr>
+    {{#inactiveBarters}}
+    <tr>
+        <td>{{title}}</td>
+        <td>{{description}}</td>
+        <td>{{location}}</td>
+        <td>{{acceptableExchange}}</td>
+        <td>{{time}}</td>
+    </tr>
+    {{/inactiveBarters}}
+</table>
+
+
+
+
+
+<!--<ul>-->
+<!--{{#activeBarters}}-->
+    <!--<li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}-->
+        <!--Upload photo:-->
+        <!--<form action="/photo-create" method="post" enctype="multipart/form-data">-->
+            <!--<input type="file" name="photo"/>-->
+            <!--<input type="text" name="caption" placeholder="Write a caption"/>-->
+            <!--<button type="submit">Upload</button>-->
+        <!--</form>-->
+        <!--Add work history:-->
+        <!--<form action="/work-create" method="post">-->
+            <!--<input type="text" name="job_title" placeholder="Job Title"/>-->
+            <!--<input type="text" name="description" placeholder="Description"/>-->
+            <!--<button type="submit">Submit</button>-->
+        <!--</form>-->
+    <!--</li>-->
+<!--{{/activeBarters}}-->
+<!--</ul>-->
+<!--<br><br>-->
+
+<!--Inactive barters-->
+<!--<ul>-->
+<!--{{#inactiveBarters}}-->
+    <!--<li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>-->
+<!--{{/inactiveBarters}}-->
+<!--</ul>-->
 <br><br>
 <a href="/archive">Archived barters</a>
 <br><br><br>
@@ -46,20 +115,20 @@ Create a new barter:
     </select>
     <button type="submit">Submit</button>
 </form>
-<br><br>
-Upload photo:
-<form action="/photo-create" method="post" enctype="multipart/form-data">
-    <input type="file" name="photo"/>
-    <input type="text" name="caption" placeholder="Write a caption"/>
-    <button type="submit">Upload</button>
-</form>
-<br><br>
-Add work history:
-<form action="/work-create", method="post">
-    <input type="text" name="job_title" placeholder="Job Title"/>
-    <input type="text" name="description" placeholder="Description"/>
-    <button type="submit">Submit</button>
-</form>
+<!--<br><br>-->
+<!--Upload photo:-->
+<!--<form action="/photo-create" method="post" enctype="multipart/form-data">-->
+    <!--<input type="file" name="photo"/>-->
+    <!--<input type="text" name="caption" placeholder="Write a caption"/>-->
+    <!--<button type="submit">Upload</button>-->
+<!--</form>-->
+<!--<br><br>-->
+<!--Add work history:-->
+<!--<form action="/work-create" method="post">-->
+    <!--<input type="text" name="job_title" placeholder="Job Title"/>-->
+    <!--<input type="text" name="description" placeholder="Description"/>-->
+    <!--<button type="submit">Submit</button>-->
+<!--</form>-->
 
 </body>
 </html>
