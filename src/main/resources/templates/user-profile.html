@@ -35,6 +35,7 @@ Active barters
         <td>Upload photo:
             <form action="/photo-create" method="post" enctype="multipart/form-data">
                 <input type="file" name="photo"/>
+                <input type="hidden" name="id" value="{{id}}"/>
                 <input type="text" name="caption" placeholder="Write a caption"/>
                 <button type="submit">Upload</button>
             </form></td>

@@ -359,7 +359,7 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
-    public String addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, Item item, HttpServletResponse response) throws Exception
+    public String addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, /*Item item,*/ int id, HttpServletResponse response) throws Exception
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
@@ -369,6 +369,8 @@ public class VertoSwapController
         File photoFile = File.createTempFile("photo", photo.getOriginalFilename(), dir);
         FileOutputStream fos = new FileOutputStream(photoFile);
         fos.write(photo.getBytes());
+
+        Item item = items.findOne(id);
 
         Photo newPhoto = new Photo(photoFile.getName(), caption, user, item);
         photos.save(newPhoto);
