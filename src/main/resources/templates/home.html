@@ -33,18 +33,43 @@ Search available barters:
 </form><br><br>
 Goods
 <br>
-<ul>
-{{#goods}}
-    <li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>
-{{/goods}}
-</ul>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Acceptable Exchange</th>
+        <th>Time</th>
+    </tr>
+    {{#goods}}
+    <tr>
+        <td>{{title}}</td>
+        <td>{{description}}</td>
+        <td>{{location}}</td>
+        <td>{{acceptableExchange}}</td>
+        <td>{{time}}</td>
+    </tr>
+    {{/goods}}
+</table>
 <br><br>
 Services
-<br>
-<ul>
-{{#services}}
-    <li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>
-{{/services}}
-</ul>
+<table>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Location</th>
+        <th>Acceptable Exchange</th>
+        <th>Time</th>
+    </tr>
+    {{#services}}
+    <tr>
+        <td>{{title}}</td>
+        <td>{{description}}</td>
+        <td>{{location}}</td>
+        <td>{{acceptableExchange}}</td>
+        <td>{{time}}</td>
+    </tr>
+    {{/services}}
+</table>
 </body>
 </html>
