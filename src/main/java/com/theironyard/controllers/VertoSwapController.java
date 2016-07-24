@@ -87,8 +87,10 @@ public class VertoSwapController
         }
         User user = users.findByUsername(username);
         //Iterable<Item> activeItems = items.findByUser(user);
-        Iterable<Item> activeItems = items.findByUserAndStatus(user, ACTIVE);
-        Iterable<Item> inactiveItems = items.findByUserAndStatus(user, INACTIVE);
+        Iterable<Item > activeItems = items.findByUserAndStatusOrderByTimeDesc(user, ACTIVE);
+        //Iterable<Item> activeItems = items.findByUserAndStatus(user, ACTIVE);
+        Iterable<Item > inactiveItems = items.findByUserAndStatusOrderByTimeDesc(user, INACTIVE);
+        //Iterable<Item> inactiveItems = items.findByUserAndStatus(user, INACTIVE);
         model.addAttribute("username", username);
         model.addAttribute("activeBarters", activeItems);
         return "user-profile";
