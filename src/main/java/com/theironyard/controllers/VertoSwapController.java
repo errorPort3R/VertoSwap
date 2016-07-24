@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import static com.theironyard.entities.Item.Status.ACTIVE;
 import static com.theironyard.entities.Item.Status.ARCHIVE;
+import static com.theironyard.entities.Item.Status.INACTIVE;
 
 
 /**
@@ -262,6 +263,14 @@ public class VertoSwapController
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Iterable<Item> itemsList = items.findByUser(user);
+        for(Item item : itemsList)
+        {
+            if(item.getTime().plusWeeks(2).compareTo(LocalDateTime.now()) > 0)
+            {
+                item.setStatus(INACTIVE);
+                items.save(item);
+            }
+        }
         session.setAttribute("username", user.getUsername());
         return itemsList;
     }
@@ -293,7 +302,7 @@ public class VertoSwapController
 
     //***************************************************************************************
     //
-    //THREAD ROUTES
+    //                  THREAD ROUTES
     //
     //***************************************************************************************
     @RequestMapping(path = "/thread-create", method = RequestMethod.POST)

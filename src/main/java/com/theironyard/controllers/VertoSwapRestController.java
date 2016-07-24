@@ -8,6 +8,11 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by jeffryporter on 7/20/16.
@@ -147,19 +152,32 @@ public class VertoSwapRestController
     //        MESSAGE Routes
     //
     //***************************************************************************************
-//    static SimpMessagingTemplate messenger;
+
+//    private List<SseEmitter> emitters = new CopyOnWriteArrayList<>();
 //
-//    @Autowired
-//    public void WebSocketController(SimpMessagingTemplate messenger)
+//    @RequestMapping("/messages")
+//    public SseEmitter messages()
 //    {
-//        this.messenger = messenger;
+//        SseEmitter sseEmitter = new SseEmitter();
+//
+//        emitters.add(sseEmitter);
+//
+//        sseEmitter.onCompletion(() -> emitters.remove(sseEmitter));
+//        return sseEmitter;
 //    }
-//
-//    @MessageMapping("/send")
-//    @SendTo("/send")
-//    public Message sendMessage(Message message)
+//    @RequestMapping(value= "/new-message", method = RequestMethod.POST)
+//    public void postMessage(String message)
 //    {
-//        return message;
+//        for(SseEmitter emitter : emitters)
+//        {
+//            try
+//            {
+//                emitter.send(SseEmitter.event().name("spring").data(message));
+//            } catch (IOException e)
+//            {
+//                e.printStackTrace();
+//            }
+//        }
 //    }
 
     //***************************************************************************************
