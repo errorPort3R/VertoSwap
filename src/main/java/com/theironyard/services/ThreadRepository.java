@@ -10,7 +10,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface ThreadRepository extends CrudRepository<Thread, Integer>
 {
-    public Iterable<Thread> findBySender(User sender);
-    public Iterable<Thread> findByReceiver(User receiver);
-    public Thread findBySenderAndReceiverAndItem(User sender, User receiver, Item item);
+    public Iterable<Thread> findByInterestedUser(User interestedUser);
+    public Iterable<Thread> findByItem(Item item);
+    public Thread findByInterestedUserAndItem(User interestedUser, Item item);
 }
