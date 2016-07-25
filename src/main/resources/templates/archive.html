@@ -29,6 +29,12 @@
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
         <td>{{time}}</td>
+        <td>
+            <form action="/item-delete" method="post">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Delete</button>
+            </form>
+        </td>
     </tr>
     {{/archived}}
 </table>

@@ -36,6 +36,7 @@ Active barters
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
         <td>{{time}}</td>
+        <!-- ?? only show below if photo/work history is empty-->
         <td>
             {{^service}}
             Upload photo:
@@ -47,13 +48,25 @@ Active barters
             </form>
             {{/service}}
             {{#service}}
+            <!--incomplete below: -->
             Add work history:
-            <form action="/work-create" method="post">
-                <input type="text" name="job_title" placeholder="Job Title"/>
-                <input type="text" name="description" placeholder="Description"/>
-                <button type="submit">Submit</button>
-            </form>
+            <select name="">
+                {{#workHistory}}
+                <option value="">{{jobTitle}}</option>
+                {{/workHistory}}
+            </select>
+            <!--<form action="/work-create" method="post">-->
+                <!--<input type="text" name="job_title" placeholder="Job Title"/>-->
+                <!--<input type="text" name="description" placeholder="Description"/>-->
+                <!--<button type="submit">Submit</button>-->
+            <!--</form>-->
             {{/service}}
+        </td>
+        <td>
+            <form action="/item-archive" method="post">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Archive</button>
+            </form>
         </td>
     </tr>
     {{/activeBarters}}
@@ -75,6 +88,12 @@ Inactive barters
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
         <td>{{time}}</td>
+        <td>
+            <form action="/item-archive" method="post">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Archive</button>
+            </form>
+        </td>
     </tr>
     {{/inactiveBarters}}
 </table>
