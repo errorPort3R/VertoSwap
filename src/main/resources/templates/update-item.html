@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Item</title>
+</head>
+<body>
+Update Item Info
+<br><br>
+<form action="/item-update" method="post">
+    <input type="text" name="title" value="{{title}}"/>
+    <input type="text" name="description" value="{{description}}"/>
+    <input type="text" name="location" value="{{location}}"/>
+    <input type="text" name="acceptableExchange" value="{{acceptableExchange}}"/>
+    <input type="hidden" name="id" value="{{id}}"/> 
+    <button type="submit">Submit</button>
+</form>
+
+</body>
+</html>

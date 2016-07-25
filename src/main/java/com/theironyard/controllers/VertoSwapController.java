@@ -133,6 +133,34 @@ public class VertoSwapController
         return "work-history";
     }
 
+    @RequestMapping(path = "/update-item", method = RequestMethod.GET)
+    public String updateItem(HttpSession session, Model model, int id) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+        Item item = items.findOne(id);
+        model.addAttribute("title", item.getTitle());
+        model.addAttribute("description", item.getDescription());
+        model.addAttribute("location", item.getLocation());
+        model.addAttribute("acceptableExchange", item.getAcceptableExchange());
+        model.addAttribute("id", item.getId());
+
+        return "update-item";
+    }
+
+    @RequestMapping(path = "/update-work", method = RequestMethod.GET)
+    public String updateWork(HttpSession session, Model model, int id) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+        Work work = works.findOne(id);
+        model.addAttribute("jobTitle", work.getJobTitle());
+        model.addAttribute("description", work.getDescription());
+        model.addAttribute("id", work.getId());
+        return "update-work";
+    }
 
 
 
@@ -234,15 +262,15 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/work-update", method = RequestMethod.POST)
-    public String updateWork(HttpSession session, int id, String job_title, String description)
+    public String updateWork(HttpSession session, int id, String jobTitle, String description)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Work w = new Work(job_title, description, user);
+        Work w = new Work(jobTitle, description, user);
         w.setId(id);
         works.save(w);
         session.setAttribute("username", user.getUsername());
-        return "redirect:/";
+        return "redirect:/work-history";
     }
 
     @RequestMapping(path = "/work-delete", method = RequestMethod.POST)
@@ -316,12 +344,12 @@ public class VertoSwapController
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
-        Item.Status status = Item.Status.valueOf(stat);
-        Item i = new Item(title, location, description, acceptableExchange, status, time, service, user);
+        //Item.Status status = Item.Status.valueOf(stat);
+        Item i = new Item(title, location, description, acceptableExchange, ACTIVE, time, service, user);
         i.setId(id);
         items.save(i);
         session.setAttribute("username", user.getUsername());
-        return "redirect:/";
+        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/item-delete", method = RequestMethod.POST)

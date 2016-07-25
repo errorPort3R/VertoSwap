@@ -72,6 +72,9 @@ Active barters
                 <button type="submit">Archive</button>
             </form>
         </td>
+        <td>
+            <a href="/update-item?id={{id}}">Update</a>
+        </td>
     </tr>
     {{/activeBarters}}
 </table>
@@ -97,6 +100,9 @@ Inactive barters
                 <input type="hidden" name="id" value="{{id}}"/>
                 <button type="submit">Archive</button>
             </form>
+        </td>
+        <td>
+            <a href="/update-item?id={{id}}">Update</a>
         </td>
     </tr>
     {{/inactiveBarters}}
