@@ -93,6 +93,17 @@ public class VertoSwapController
         //Iterable<Item> inactiveItems = items.findByUserAndStatus(user, INACTIVE);
         model.addAttribute("username", username);
         model.addAttribute("activeBarters", activeItems);
+
+        //  to show photo/work upload only if good/service resp. :
+        for (Item i : activeItems) {
+            if (i.isService()) {
+                model.addAttribute("service", i);
+            }
+            else {
+                model.addAttribute("service", i);
+            }
+        }
+
         return "user-profile";
     }
 

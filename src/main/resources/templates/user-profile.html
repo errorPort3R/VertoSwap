@@ -12,6 +12,10 @@ Hello, {{username}}!
     <button type="submit">Logout</button>
 </form>
 <br><br>
+<a href="/work-history">Work History</a>
+<a href="/archive">Archived Barters</a>
+<br><br>
+
 Messages
 {{#messages}}{{/messages}}
 <br><br>
@@ -32,19 +36,25 @@ Active barters
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
         <td>{{time}}</td>
-        <td>Upload photo:
+        <td>
+            {{^service}}
+            Upload photo:
             <form action="/photo-create" method="post" enctype="multipart/form-data">
                 <input type="file" name="photo"/>
                 <input type="hidden" name="id" value="{{id}}"/>
                 <input type="text" name="caption" placeholder="Write a caption"/>
                 <button type="submit">Upload</button>
-            </form></td>
-        <td>Add work history:
+            </form>
+            {{/service}}
+            {{#service}}
+            Add work history:
             <form action="/work-create" method="post">
                 <input type="text" name="job_title" placeholder="Job Title"/>
                 <input type="text" name="description" placeholder="Description"/>
                 <button type="submit">Submit</button>
-            </form></td>
+            </form>
+            {{/service}}
+        </td>
     </tr>
     {{/activeBarters}}
 </table>
@@ -100,7 +110,7 @@ Inactive barters
 <!--{{/inactiveBarters}}-->
 <!--</ul>-->
 <br><br>
-<a href="/archive">Archived barters</a>
+
 <br><br><br>
 Create a new barter:
 <br>
