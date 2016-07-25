@@ -15,10 +15,7 @@ public class Thread
     private int id;
 
     @ManyToOne
-    private User sender;
-
-    @ManyToOne
-    private User receiver;
+    private User interestedUser;
 
     @ManyToOne
     private Item item;
@@ -27,10 +24,9 @@ public class Thread
     {
     }
 
-    public Thread(User sender, User receiver, Item item)
+    public Thread(User interestedUser, Item item)
     {
-        this.sender = sender;
-        this.receiver = receiver;
+        this.interestedUser = interestedUser;
         this.item = item;
     }
 
@@ -46,22 +42,12 @@ public class Thread
 
     public User getSender()
     {
-        return sender;
+        return interestedUser;
     }
 
     public void setSender(User sender)
     {
-        this.sender = sender;
-    }
-
-    public User getReceiver()
-    {
-        return receiver;
-    }
-
-    public void setReceiver(User receiver)
-    {
-        this.receiver = receiver;
+        this.interestedUser = sender;
     }
 
     public Item getItem()
