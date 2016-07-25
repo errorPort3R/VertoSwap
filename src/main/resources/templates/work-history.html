@@ -19,11 +19,28 @@
         <th>Title</th>
         <th>Description</th>
     </tr>
+    {{#workList}}
     <tr>
-        <td></td>
-        <td></td>
+        <td>{{jobTitle}}</td>
+        <td>{{description}}</td>
+        <td>
+            <form action="/work-delete" method="post">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Delete</button>
+            </form>
+        </td>
+        <td>
+            <a href="/update-work?id={{id}}">Update</a>
+        </td>
     </tr>
+    {{/workList}}
 </table>
 <br><br>
+Add a job to your work history:
+<form action="/work-create" method="post">
+    <input type="text" name="jobTitle" placeholder="Job title"/>
+    <input type="text" name="description" placeholder="Description"/>
+    <button type="submit">Submit</button>
+</form>
 </body>
 </html>

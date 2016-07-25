@@ -36,6 +36,7 @@ Active barters
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
         <td>{{time}}</td>
+        <!-- ?? only show below if photo/work history is empty-->
         <td>
             {{^service}}
             Upload photo:
@@ -47,13 +48,32 @@ Active barters
             </form>
             {{/service}}
             {{#service}}
+            <!-- ?? :  -->
             Add work history:
-            <form action="/work-create" method="post">
-                <input type="text" name="job_title" placeholder="Job Title"/>
-                <input type="text" name="description" placeholder="Description"/>
-                <button type="submit">Submit</button>
+            <form action="/item-attach-work" method="post">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <select name="workId">
+                    {{#workHistory}}
+                    <option value="{{id}}">{{jobTitle}}</option>
+                    {{/workHistory}}
+                </select>
+                <button type="submit">Add</button>
             </form>
+            <!--<form action="/work-create" method="post">-->
+                <!--<input type="text" name="job_title" placeholder="Job Title"/>-->
+                <!--<input type="text" name="description" placeholder="Description"/>-->
+                <!--<button type="submit">Submit</button>-->
+            <!--</form>-->
             {{/service}}
+        </td>
+        <td>
+            <form action="/item-archive" method="post">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Archive</button>
+            </form>
+        </td>
+        <td>
+            <a href="/update-item?id={{id}}">Update</a>
         </td>
     </tr>
     {{/activeBarters}}
@@ -75,6 +95,15 @@ Inactive barters
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
         <td>{{time}}</td>
+        <td>
+            <form action="/item-archive" method="post">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Archive</button>
+            </form>
+        </td>
+        <td>
+            <a href="/update-item?id={{id}}">Update</a>
+        </td>
     </tr>
     {{/inactiveBarters}}
 </table>
