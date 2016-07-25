@@ -308,11 +308,11 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/thread-create", method = RequestMethod.POST)
-    public String createThread(HttpSession session, User receiver, Item item)
+    public String createThread(HttpSession session, Item item)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Thread t = new Thread(user,receiver, item);
+        Thread t = new Thread(user, item);
         threads.save(t);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
@@ -333,7 +333,7 @@ public class VertoSwapController
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Thread t = new Thread(user,receiver, item);
+        Thread t = new Thread(user, item);
         t.setId(id);
         threads.save(t);
         session.setAttribute("username", user.getUsername());
@@ -345,14 +345,18 @@ public class VertoSwapController
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
+        Iterable<Message> messageList = new ArrayList<>();
+        messageList = messages.findByThread(threads.findOne(id));
+        for(Message mess : messageList)
+        {
+            messages.delete(mess);
+        }
         threads.delete(id);
+
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
 
     }
-
-
-
 
 
     //***************************************************************************************
@@ -419,5 +423,65 @@ public class VertoSwapController
         return "redirect:/";
 
     }
+
+    //***************************************************************************************
+    //
+    //                  MESSAGE ROUTES
+    //
+    //***************************************************************************************
+    @RequestMapping(path = "/message-buyer", method = RequestMethod.POST)
+    public String messageFromBuyer(HttpSession session, String body, LocalDateTime time, Thread thread)
+    {
+        String username = (String)session.getAttribute("username");
+        User user = users.findByUsername(username);
+        Message m = new Message(body, time, thread, user);
+        messages.save(m);
+        session.setAttribute("username", user.getUsername());
+        return "redirect:/";
+    }
+
+    @RequestMapping(path = "/message-seller", method = RequestMethod.POST)
+    public String messageFromseller(HttpSession session, Item item, String body, LocalDateTime time, Thread thread)
+    {
+        String username = (String)session.getAttribute("username");
+        User user = users.findByUsername(username);
+        Message m = new Message(body, time, thread, user);
+        messages.save(m);
+        session.setAttribute("username", user.getUsername());
+        return "chatpage";
+    }
+
+    @RequestMapping(path = "/thread-read", method = RequestMethod.GET)
+    public Iterable<Message> getMessages(HttpSession session, Thread thread)
+    {
+        String username = (String)session.getAttribute("username");
+        User user = users.findByUsername(username);
+        Iterable<Message> messageList = messages.findByThread(thread);
+        session.setAttribute("username", user.getUsername());
+        return messageList;
+    }
+
+    @RequestMapping(path = "/message-update", method = RequestMethod.POST)
+    public String updateMessage(HttpSession session,int id, Message message)
+    {
+        String username = (String)session.getAttribute("username");
+        User user = users.findByUsername(username);
+        message.setId(id);
+        messages.save(message);
+        session.setAttribute("username", user.getUsername());
+        return "chatpage";
+    }
+
+    @RequestMapping(path = "/message-delete", method = RequestMethod.POST)
+    public String deleteMessage(HttpSession session, int id)
+    {
+        String username = (String)session.getAttribute("username");
+        User user = users.findByUsername(username);
+        messages.delete(id);
+        session.setAttribute("username", user.getUsername());
+        return "redirect:/";
+
+    }
+
 
 }
