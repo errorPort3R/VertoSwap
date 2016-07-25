@@ -48,13 +48,17 @@ Active barters
             </form>
             {{/service}}
             {{#service}}
-            <!--incomplete below: -->
+            <!-- ?? :  -->
             Add work history:
-            <select name="">
-                {{#workHistory}}
-                <option value="">{{jobTitle}}</option>
-                {{/workHistory}}
-            </select>
+            <form action="/item-attach-work" method="post">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <select name="workId">
+                    {{#workHistory}}
+                    <option value="{{id}}">{{jobTitle}}</option>
+                    {{/workHistory}}
+                </select>
+                <button type="submit">Add</button>
+            </form>
             <!--<form action="/work-create" method="post">-->
                 <!--<input type="text" name="job_title" placeholder="Job Title"/>-->
                 <!--<input type="text" name="description" placeholder="Description"/>-->

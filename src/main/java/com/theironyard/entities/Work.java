@@ -22,9 +22,6 @@ public class Work
     @ManyToOne
     private User user;
 
-//    @OneToMany
-//    private Item item;
-
     public Work()
     {
     }

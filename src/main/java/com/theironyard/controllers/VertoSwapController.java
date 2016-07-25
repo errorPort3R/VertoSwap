@@ -153,7 +153,7 @@ public class VertoSwapController
             users.save(user);
             session.setAttribute("username", username);
         }
-        return "redirect:/";
+        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/account-update", method = RequestMethod.POST)
@@ -252,7 +252,7 @@ public class VertoSwapController
         User user = users.findByUsername(username);
         works.delete(id);
         session.setAttribute("username", user.getUsername());
-        return "redirect:/";
+        return "redirect:/work-history";
     }
 
     //***************************************************************************************
@@ -301,6 +301,15 @@ public class VertoSwapController
         return itemsList;
     }
 
+    @RequestMapping(path = "/item-attach-work", method = RequestMethod.POST)
+    public String attachWork(HttpSession session, int workId, int id) {
+        Work work = works.findOne(workId);
+        Item i = items.findOne(id);
+        i.setWork(work);
+        items.save(i);
+        return "redirect:/user-profile";
+    }
+
     @RequestMapping(path = "/item-update", method = RequestMethod.POST)
     public String updateItem(HttpSession session, int id, String title, String location, String description, String acceptableExchange, String stat, boolean service)
     {
@@ -323,7 +332,8 @@ public class VertoSwapController
         //items.delete(id);
         Item item = items.findOne(id);
         item.setStatus(DELETE);
-        session.setAttribute("username", user.getUsername());
+        items.save(item);
+        //session.setAttribute("username", user.getUsername());
         return "redirect:/";
     }
 
@@ -332,6 +342,7 @@ public class VertoSwapController
         String username = (String)session.getAttribute("username");
         Item item = items.findOne(id);
         item.setStatus(ARCHIVE);
+        items.save(item);
         return "redirect:/user-profile";
     }
 
