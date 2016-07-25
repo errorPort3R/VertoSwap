@@ -319,11 +319,11 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/thread-read", method = RequestMethod.GET)
-    public Iterable<Thread> getThread(HttpSession session)
+    public Iterable<Thread> getThread(HttpSession session, Item item)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Iterable<Thread> threadList = threads.findByReceiver(user);
+        Iterable<Thread> threadList = threads.findByItem(item);
         session.setAttribute("username", user.getUsername());
         return threadList;
     }
@@ -451,7 +451,7 @@ public class VertoSwapController
         return "chatpage";
     }
 
-    @RequestMapping(path = "/thread-read", method = RequestMethod.GET)
+    @RequestMapping(path = "/message-read", method = RequestMethod.GET)
     public Iterable<Message> getMessages(HttpSession session, Thread thread)
     {
         String username = (String)session.getAttribute("username");
@@ -482,6 +482,4 @@ public class VertoSwapController
         return "redirect:/";
 
     }
-
-
 }
