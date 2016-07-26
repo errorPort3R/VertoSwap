@@ -54,19 +54,25 @@ public class VertoSwapController
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String main(HttpSession session, Model model)
+    public String main(HttpSession session, Model model, String search)
     {
         String username = (String) session.getAttribute("username");
 
-        // add full text search //
+        Iterable<Item> searchList;
+        if (search != null) {
+            searchList = items.searchText(search, search, search, search);
+            //searchList = items.findByTitleLikeOrLocationLikeOrDescriptionLikeOrAcceptableExchangeLike(search, search, search, search);
+            model.addAttribute("searchList", searchList);
+        }
 
-        // filter by status
         Iterable<Item> servicesList = items.findByServiceTrueOrderByTimeDesc();
         Iterable<Item> goodsList = items.findByServiceFalseOrderByTimeDesc();
-
-        model.addAttribute("username", username);
         model.addAttribute("services", servicesList);
         model.addAttribute("goods", goodsList);
+
+
+        model.addAttribute("username", username);
+
 
         return "home";
     }
