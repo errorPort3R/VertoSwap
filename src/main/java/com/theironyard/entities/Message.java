@@ -1,6 +1,7 @@
 package com.theironyard.entities;
 
 import javax.persistence.*;
+import javax.security.sasl.AuthorizeCallback;
 import java.time.LocalDateTime;
 
 /**
@@ -14,28 +15,32 @@ public class Message
     @GeneratedValue
     private int id;
 
+    @ManyToOne
+    private User author;
+
+    @ManyToOne
+    private User recipient;
+
+    @ManyToOne
+    private Item item;
+
     @Column(nullable = false)
     private String body;
 
     @Column(nullable = false)
     private LocalDateTime time;
 
-    @ManyToOne
-    private Thread thread;
-
-    @ManyToOne
-    private User user;
-
     public Message()
     {
     }
 
-    public Message(String body, LocalDateTime time, Thread thread, User user)
+    public Message(User author, User recipient, Item item, String body, LocalDateTime time)
     {
+        this.author = author;
+        this.recipient = recipient;
+        this.item = item;
         this.body = body;
         this.time = time;
-        this.thread = thread;
-        this.user = user;
     }
 
     public int getId()
@@ -46,6 +51,36 @@ public class Message
     public void setId(int id)
     {
         this.id = id;
+    }
+
+    public User getAuthor()
+    {
+        return author;
+    }
+
+    public void setAuthor(User author)
+    {
+        this.author = author;
+    }
+
+    public User getRecipient()
+    {
+        return recipient;
+    }
+
+    public void setRecipient(User recipient)
+    {
+        this.recipient = recipient;
+    }
+
+    public Item getItem()
+    {
+        return item;
+    }
+
+    public void setItem(Item item)
+    {
+        this.item = item;
     }
 
     public String getBody()
@@ -66,25 +101,5 @@ public class Message
     public void setTime(LocalDateTime time)
     {
         this.time = time;
-    }
-
-    public Thread getThread()
-    {
-        return thread;
-    }
-
-    public void setThread(Thread thread)
-    {
-        this.thread = thread;
-    }
-
-    public User getUser()
-    {
-        return user;
-    }
-
-    public void setUser(User user)
-    {
-        this.user = user;
     }
 }

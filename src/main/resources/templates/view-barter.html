@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <title>Barter Details</title>
+</head>
+<body>
+<form action="/message-create" method="post">
+{{#good}}
+    {{title}}<br/>
+    {{location}}<br/>
+    {{description}}<br/>
+    {{acceptableExchange}}<br/>
+    {{time}}<br/>
+    {{user.username}}<br/>
+    <input type="hidden" name="id" value="{{id}}"/>
+{{/good}}
+<textarea name="body" placeholder="Type a message to this owner?" col="10" row="150"></textarea>
+    <button type="submit">Send</button>
+</form>
+</body>
+</html>
