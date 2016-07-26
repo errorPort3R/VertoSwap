@@ -22,5 +22,9 @@ public interface ItemRepository extends CrudRepository<Item, Integer> {
     public Iterable<Item> findByTitleLikeOrLocationLikeOrDescriptionLikeOrAcceptableExchangeLike(String title, String location, String description, String acceptableExchange);
 
 
+    //
+
+    @Query("SELECT i from Item i WHERE LOWER(title) LIKE '%' || LOWER(?) || '%' OR LOWER(location) LIKE '%' || LOWER(?) || '%' OR LOWER(description) LIKE '%' || LOWER(?) || '%' OR LOWER(acceptableExchange) LIKE '%' || LOWER(?) || '%'")
+    public Iterable<Item> searchText(String title, String location, String description, String acceptableExchange);
 
 }

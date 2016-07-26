@@ -60,7 +60,8 @@ public class VertoSwapController
 
         Iterable<Item> searchList;
         if (search != null) {
-            searchList = items.findByTitleLikeOrLocationLikeOrDescriptionLikeOrAcceptableExchangeLike(search, search, search, search);
+            searchList = items.searchText(search, search, search, search);
+            //searchList = items.findByTitleLikeOrLocationLikeOrDescriptionLikeOrAcceptableExchangeLike(search, search, search, search);
             model.addAttribute("searchList", searchList);
         }
 
