@@ -1,18 +1,9 @@
 package com.theironyard.controllers;
 
 import com.theironyard.entities.*;
-import com.theironyard.entities.Thread;
 import com.theironyard.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.handler.annotation.SendTo;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by jeffryporter on 7/20/16.
@@ -32,9 +23,6 @@ public class VertoSwapRestController
 
     @Autowired
     MessageRepository messages;
-
-    @Autowired
-    ThreadRepository threads;
 
     @Autowired
     PhotoRepository photos;
@@ -179,41 +167,6 @@ public class VertoSwapRestController
 //            }
 //        }
 //    }
-
-    //***************************************************************************************
-    //
-    //                  THREAD Routes
-    //
-    //***************************************************************************************
-    @RequestMapping(path = "/thread", method = RequestMethod.GET)
-    public Iterable<Thread> getThreads()
-    {
-        return threads.findAll();
-    }
-
-    @RequestMapping(path = "/thread", method = RequestMethod.POST)
-    public void addThread(@RequestBody Thread thread)
-    {
-        threads.save(thread);
-    }
-
-    @RequestMapping(path = "/thread", method = RequestMethod.PUT)
-    public void editThread(@RequestBody Thread thread)
-    {
-        threads.save(thread);
-    }
-
-    @RequestMapping(path = "/thread/{id}", method = RequestMethod.DELETE)
-    public void deleteThread(@PathVariable("id") int id)
-    {
-        threads.delete(id);
-    }
-
-    @RequestMapping(path = "/#/thread/{id}", method = RequestMethod.GET)
-    public Thread getThread(@PathVariable("id") int id)
-    {
-        return threads.findOne(id);
-    }
 
 
     //***************************************************************************************
