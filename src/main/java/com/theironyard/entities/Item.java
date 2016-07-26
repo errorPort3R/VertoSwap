@@ -49,6 +49,9 @@ public class Item
     @ManyToOne
     private User user;
 
+    @ManyToOne
+    private Work work;
+
     public Item()
     {
     }
@@ -63,6 +66,18 @@ public class Item
         this.time = time;
         this.service = service;
         this.user = user;
+    }
+
+    public Item(Work work) {
+        this.work = work;
+    }
+
+    public Work getWork() {
+        return work;
+    }
+
+    public void setWork(Work work) {
+        this.work = work;
     }
 
     public int getId()
