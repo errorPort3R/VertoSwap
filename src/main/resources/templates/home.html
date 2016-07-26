@@ -31,7 +31,12 @@ Search available barters:
     <input type="text" name="search" placeholder="Search"/>
     <button type="submit">Search</button>
 </form>
-<br><br>
+<br>
+{{#searchList}}
+<ul>
+    <li>{{title}} {{description}} {{location}}</li>
+</ul>
+{{/searchList}}
 Goods
 <br>
 <table>
