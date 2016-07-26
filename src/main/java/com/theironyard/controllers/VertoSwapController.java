@@ -54,26 +54,33 @@ public class VertoSwapController
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
-    public String main(HttpSession session, Model model, String search)
-    {
+    public String main(HttpSession session, Model model, String search) {
         String username = (String) session.getAttribute("username");
-
+        model.addAttribute("username", username);
         Iterable<Item> searchList;
+        ArrayList<Item> searchServiceArray = new ArrayList<>();
+        ArrayList<Item> searchGoodArray = new ArrayList<>();
         if (search != null) {
             searchList = items.searchText(search, search, search, search);
             //searchList = items.findByTitleLikeOrLocationLikeOrDescriptionLikeOrAcceptableExchangeLike(search, search, search, search);
-            model.addAttribute("searchList", searchList);
+            for (Item i : searchList) {
+                if (!i.isService()) {
+                    searchGoodArray.add(i);
+                }
+                else if (i.isService()) {
+                    searchServiceArray.add(i);
+                }
+                model.addAttribute("goods", searchGoodArray);
+                model.addAttribute("services", searchServiceArray);
+
+            }
         }
-
-        Iterable<Item> servicesList = items.findByServiceTrueOrderByTimeDesc();
-        Iterable<Item> goodsList = items.findByServiceFalseOrderByTimeDesc();
-        model.addAttribute("services", servicesList);
-        model.addAttribute("goods", goodsList);
-
-
-        model.addAttribute("username", username);
-
-
+        else {
+            Iterable<Item> servicesList = items.findByServiceTrueOrderByTimeDesc();
+            Iterable<Item> goodsList = items.findByServiceFalseOrderByTimeDesc();
+            model.addAttribute("services", servicesList);
+            model.addAttribute("goods", goodsList);
+        }
         return "home";
     }
 
