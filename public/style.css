@@ -25,3 +25,12 @@
 {
     display: inline-block;
 }
+
+.messages-box {
+    float: left;
+    width: 400px;
+    height: 200kpx;
+    margin: 10px;
+    border: 2px solid black;
+    overflow: scrolling;
+}

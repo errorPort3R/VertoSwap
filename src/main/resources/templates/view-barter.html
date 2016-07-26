@@ -6,7 +6,10 @@
     <title>Barter Details</title>
 </head>
 <body>
-<form action="/message-create" method="post">
+<form action="/" method="get" class="inline-form-button">
+    <button type="submit">Home</button>
+</form>
+<form action="/message-to-seller" method="post">
 {{#good}}
     {{title}}<br/>
     {{location}}<br/>
@@ -14,9 +17,10 @@
     {{acceptableExchange}}<br/>
     {{time}}<br/>
     {{user.username}}<br/>
-    <input type="hidden" name="id" value="{{id}}"/>
+    <input type="hidden" name="itemId" value="{{id}}"/>
 {{/good}}
-<textarea name="body" placeholder="Type a message to this owner?" col="10" row="150"></textarea>
+
+    <textarea name="body" placeholder="Type a message to this owner?" width="300 px;" height="100 px;"></textarea>
     <button type="submit">Send</button>
 </form>
 </body>
