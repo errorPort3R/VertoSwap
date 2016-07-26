@@ -1,82 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <title>VertoSwap</title>
 </head>
 <body>
-<h2>VertoSwap</h2>
-<h4>a place to barter</h4><br>
+
+<div id="logindiv">
 {{^username}}
-Login:
 <form action="/login" method="post">
     <input type="text" name="username" placeholder="Username"/>
-    <input type="password" name="password" placeholder="Password"/>
-    <button type="submit">Login</button>
+    <input type="password" name="password" placeholder="Password" />
+    <button type="submit"display="inline-block">Login</button>
 </form>
-<br>
-Or create an account:
-<a href="/account-create">Create account</a>
+<form action="/account-create" method="get">
+    <button type="submit" display="inline-block">Create account</button>
+</form>
 {{/username}}
 {{#username}}
-<a href="/user-profile">Go to profile</a>
-<br>
-<form action="/logout" method="post">
+<form action="/user-profile" method="get" display="inline-block">
+    <button type="submit">Go to profile</button>
+</form>
+<form action="/logout" method="post" display="inline-block">
     <button type="submit">Logout</button>
 </form>
 {{/username}}
-<br><br>
+</div>
+
+<div id="page-label">
+<h2>VertoSwap</h2>
+<h4>a place to barter</h4>
+</div>
 Search available barters:
 <form action="/" method="get">
     <input type="text" name="search" placeholder="Search"/>
     <button type="submit">Search</button>
 </form>
-<br>
-{{#searchList}}
-<ul>
-    <li>{{title}} {{description}} {{location}}</li>
-</ul>
-{{/searchList}}
-Goods
-<br>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Location</th>
-        <th>Acceptable Exchange</th>
-        <th>Time</th>
-    </tr>
+<div id="goods-home" class="floating-box">
+<b>Goods</b><br>
     {{#goods}}
-    <tr>
-        <td>{{title}}</td>
-        <td>{{description}}</td>
-        <td>{{location}}</td>
-        <td>{{acceptableExchange}}</td>
-        <td>{{time}}</td>
-    </tr>
+    <a href="/view-item/?id={{id}}">
+       {{title}}-{{location}}<br/>
+        <input type="hidden" name="id" value="{{id}}">
+    </a>
     {{/goods}}
-</table>
-<br><br>
-Services
-<br>
-<table>
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Location</th>
-        <th>Acceptable Exchange</th>
-        <th>Time</th>
-    </tr>
+</div>
+<div id="services-home" class="floating-box">
+<b>Services</b><br/>
     {{#services}}
-    <tr>
-        <td>{{title}}</td>
-        <td>{{description}}</td>
-        <td>{{location}}</td>
-        <td>{{acceptableExchange}}</td>
-        <td>{{time}}</td>
-    </tr>
+    <a href="/view-item/?id={{id}}"></a>
+        {{title}}-{{location}} <br/>
+    <input type="hidden" name="id" value="{{id}}">
     {{/services}}
-</table>
+</div>
 </body>
 </html>

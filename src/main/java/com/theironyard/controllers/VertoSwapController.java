@@ -8,9 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
@@ -47,9 +48,6 @@ public class VertoSwapController
     MessageRepository messages;
 
     @Autowired
-    ThreadRepository threads;
-
-    @Autowired
     PhotoRepository photos;
 
 
@@ -67,12 +65,10 @@ public class VertoSwapController
 
         Iterable<Item> servicesList = items.findByServiceTrueOrderByTimeDesc();
         Iterable<Item> goodsList = items.findByServiceFalseOrderByTimeDesc();
-        model.addAttribute("services", servicesList);
-        model.addAttribute("goods", goodsList);
-
 
         model.addAttribute("username", username);
-
+        model.addAttribute("services", servicesList);
+        model.addAttribute("goods", goodsList);
 
         return "home";
     }
@@ -91,10 +87,11 @@ public class VertoSwapController
         }
         User user = users.findByUsername(username);
         //Iterable<Item> activeItems = items.findByUser(user);
-        Iterable<Item > activeItems = items.findByUserAndStatusOrderByTimeDesc(user, ACTIVE);
+        Iterable<Item> activeItems = items.findByUserAndStatusOrderByTimeDesc(user, ACTIVE);
         //Iterable<Item> activeItems = items.findByUserAndStatus(user, ACTIVE);
-        Iterable<Item > inactiveItems = items.findByUserAndStatusOrderByTimeDesc(user, INACTIVE);
+        Iterable<Item> inactiveItems = items.findByUserAndStatusOrderByTimeDesc(user, INACTIVE);
         //Iterable<Item> inactiveItems = items.findByUserAndStatus(user, INACTIVE);
+        Iterable<Message> messagesList = messages.findByRecipient(user);
         model.addAttribute("username", username);
         model.addAttribute("activeBarters", activeItems);
 
@@ -109,6 +106,7 @@ public class VertoSwapController
         }
         Iterable<Work> workHistory = works.findByUser(user);
         model.addAttribute("workHistory", workHistory);
+        model.addAttribute("messages", messagesList);
 
         return "user-profile";
     }
@@ -177,15 +175,18 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/account-create", method = RequestMethod.POST)
-    public String createAccount(HttpSession session, String username, String password) throws Exception {
+    public String createAccount(HttpSession session, String username, String password) throws PasswordStorage.CannotPerformOperationException
+    {
         User user = users.findByUsername(username);
         if (user != null) {
-            throw new Exception("Username unavailable.");
+            System.err.printf("User Already Exists!");
+            return "redirect:/";
         }
         else {
             user = new User(username, PasswordStorage.createHash(password));
             users.save(user);
             session.setAttribute("username", username);
+            return "user-profile";
         }
         return "redirect:/user-profile";
     }
@@ -216,7 +217,8 @@ public class VertoSwapController
         items.delete(items.findByUser(user));
         works.delete(works.findByUser(user));
         photos.delete(photos.findByUser(user));
-        messages.delete(messages.findByUser(user));
+        messages.delete(messages.findByAuthor(user));
+        messages.delete(messages.findByRecipient(user));
         users.delete(user.getId());
         return "redirect:/";
     }
@@ -225,7 +227,7 @@ public class VertoSwapController
     public String login(HttpSession session, String username, String password) throws Exception {
         User userFromDB = users.findByUsername(username);
         if (userFromDB == null) {
-            return "redirect:/create-account";
+            return "redirect:/account-create";
         }
         else if (!PasswordStorage.verifyPassword(password, userFromDB.getPassword())) {
             throw new Exception("Wrong password.");
@@ -291,7 +293,7 @@ public class VertoSwapController
 
     //***************************************************************************************
     //
-    //ITEM ROUTES
+    //                  ITEM ROUTES
     //
     //***************************************************************************************
     @RequestMapping(path = "/item-create", method = RequestMethod.POST)
@@ -307,14 +309,15 @@ public class VertoSwapController
         return "redirect:/user-profile";
     }
 
-    @RequestMapping(path = "/item-read-specific", method = RequestMethod.GET)
-    public String getSpecificItem(HttpSession session, int id)
+    @RequestMapping(path = "/view-item", method = RequestMethod.GET)
+    public String getSpecificItem(HttpSession session, Model model,@RequestParam String id)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Item item = items.findOne(id);
+        Item item = items.findOne(Integer.valueOf(id));
         session.setAttribute("username", user.getUsername());
-        return"";
+        model.addAttribute("good", item);
+        return "view-barter";
     }
 
     @RequestMapping(path = "/item-read", method = RequestMethod.GET)
@@ -381,61 +384,6 @@ public class VertoSwapController
     }
 
 
-    //***************************************************************************************
-    //
-    //                  THREAD ROUTES
-    //
-    //***************************************************************************************
-    @RequestMapping(path = "/thread-create", method = RequestMethod.POST)
-    public String createThread(HttpSession session, Item item)
-    {
-        String username = (String)session.getAttribute("username");
-        User user = users.findByUsername(username);
-        Thread t = new Thread(user, item);
-        threads.save(t);
-        session.setAttribute("username", user.getUsername());
-        return "redirect:/";
-    }
-
-    @RequestMapping(path = "/thread-read", method = RequestMethod.GET)
-    public Iterable<Thread> getThread(HttpSession session, Item item)
-    {
-        String username = (String)session.getAttribute("username");
-        User user = users.findByUsername(username);
-        Iterable<Thread> threadList = threads.findByItem(item);
-        session.setAttribute("username", user.getUsername());
-        return threadList;
-    }
-
-    @RequestMapping(path = "/thread-update", method = RequestMethod.POST)
-    public String updateThread(HttpSession session,int id, User receiver, Item item)
-    {
-        String username = (String)session.getAttribute("username");
-        User user = users.findByUsername(username);
-        Thread t = new Thread(user, item);
-        t.setId(id);
-        threads.save(t);
-        session.setAttribute("username", user.getUsername());
-        return "redirect:/";
-    }
-
-    @RequestMapping(path = "/thread-delete", method = RequestMethod.POST)
-    public String deleteThread(HttpSession session, int id)
-    {
-        String username = (String)session.getAttribute("username");
-        User user = users.findByUsername(username);
-        Iterable<Message> messageList = new ArrayList<>();
-        messageList = messages.findByThread(threads.findOne(id));
-        for(Message mess : messageList)
-        {
-            messages.delete(mess);
-        }
-        threads.delete(id);
-
-        session.setAttribute("username", user.getUsername());
-        return "redirect:/";
-
-    }
 
 
     //***************************************************************************************
@@ -508,36 +456,38 @@ public class VertoSwapController
     //                  MESSAGE ROUTES
     //
     //***************************************************************************************
-    @RequestMapping(path = "/message-buyer", method = RequestMethod.POST)
-    public String messageFromBuyer(HttpSession session, String body, LocalDateTime time, Thread thread)
+    @RequestMapping(path = "/message-to-buyer", method = RequestMethod.POST)
+    public String messageFromBuyer(HttpSession session, String body, LocalDateTime time, Item item, User seller)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Message m = new Message(body, time, thread, user);
+        Message m = new Message(user, seller, item, body, time);
         messages.save(m);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
     }
 
-    @RequestMapping(path = "/message-seller", method = RequestMethod.POST)
-    public String messageFromseller(HttpSession session, Item item, String body, LocalDateTime time, Thread thread)
+    @RequestMapping(path = "/message-to-seller", method = RequestMethod.POST)
+    public String messageFromseller(HttpSession session, Item item, String body, LocalDateTime time)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Message m = new Message(body, time, thread, user);
+        Message m = new Message(user, item.getUser(), item, body, time);
         messages.save(m);
         session.setAttribute("username", user.getUsername());
         return "chatpage";
     }
 
-    @RequestMapping(path = "/message-read", method = RequestMethod.GET)
-    public Iterable<Message> getMessages(HttpSession session, Thread thread)
+    @RequestMapping(path = "/message-get-by-user", method = RequestMethod.GET)
+    public String getMessages(HttpSession session, Model model)
     {
+        Iterable<Message> recievedMessages = new ArrayList<>();
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Iterable<Message> messageList = messages.findByThread(thread);
+        Iterable<Message> messageList = messages.findByRecipient(user);
         session.setAttribute("username", user.getUsername());
-        return messageList;
+        model.addAttribute("recievedmessage", messageList);
+        return "message-page";
     }
 
     @RequestMapping(path = "/message-update", method = RequestMethod.POST)

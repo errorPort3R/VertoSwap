@@ -6,18 +6,27 @@
 </head>
 <body>
 Hello, {{username}}!
-<br><br>
-<a href="/">Home</a>
-<form action="/logout" method="post">
+<form action="/" method="get" class="inline-form-button">
+    <button type="submit">Home</button>
+</form>
+<form action="/logout" method="post" class="inline-form-button">
     <button type="submit">Logout</button>
 </form>
-<br><br>
-<a href="/work-history">Work History</a>
-<a href="/archive">Archived Barters</a>
-<br><br>
+<form action="/work-history" method="get" class="inline-form-button">
+    <button type="submit">Work History</button>
+</form>
+<form action="/archive" method="post" class="inline-form-button">
+    <button type="submit">Archived Barters</button>
+</form>
+<form action="/thread-read-all" method="get" class="inline-form-button">
+    <button type="submit">Messages</button>
+</form>
+<div id="messageBox" class="floating-box">
+        {{#messages}}
+           {{body}}<br/>
+        {{/messages}}
 
-Messages
-{{#messages}}{{/messages}}
+</div>
 <br><br>
 
 Active barters
