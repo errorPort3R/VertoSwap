@@ -1,18 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Update Work</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/spacelab/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-Update Work Info
+<div class="btn-group btn-group-justified">
+    <div class="btn-group">
+        <form action="/" method="get">
+            <button type="submit" class="btn btn-primary">Home</button></form>
+    </div>
+    <div class="btn-group">
+        <form action="/user-profile" method="get">
+            <button type="submit" class="btn btn-primary">Profile</button></form>
+    </div>
+    <div class="btn-group">
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-primary">Logout</button></form>
+    </div>
+</div>
+<div class="container">
+<h3>Update Work Info</h3>
+</div>
 <br><br>
+<div class="container">
 <form action="/work-update" method="post">
     <input type="text" name="jobTitle" value="{{jobTitle}}"/>
     <input type="text" name="description" value="{{description}}"/>
     <input type="hidden" name="id" value="{{id}}"/> 
     <button type="submit">Submit</button>
 </form>
-
+</div>
 </body>
 </html>

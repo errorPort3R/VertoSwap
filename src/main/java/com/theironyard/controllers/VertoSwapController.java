@@ -1,7 +1,6 @@
 package com.theironyard.controllers;
 
 import com.theironyard.entities.*;
-import com.theironyard.entities.Thread;
 import com.theironyard.services.*;
 import com.theironyard.utilities.PasswordStorage;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -197,7 +196,7 @@ public class VertoSwapController
             session.setAttribute("username", username);
             return "user-profile";
         }
-        return "redirect:/user-profile";
+        //return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/account-update", method = RequestMethod.POST)
