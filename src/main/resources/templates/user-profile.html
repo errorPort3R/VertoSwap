@@ -47,19 +47,29 @@
     <h3>Hello, {{username}}!</h3>
     </div>
 </div>
-<br><br>
+<br>
 <div class="container">
     <h4>Create a new barter:</h4>
     <br>
-    <form action="/item-create" method="post">
-        <input type="text" name="title" placeholder="Title"/>
-        <input type="text" name="description" placeholder="Description"/>
-        <input type="text" name="location" placeholder="Location"/>
-        <input type="text" name="acceptableExchange" placeholder="Acceptable Exchange"/>
-        <select name="service">
-            <option value="true">Service</option>
-            <option value="false">Good</option>
-        </select>
+    <form role="form" action="/item-create" method="post">
+        <div class="form-group">
+            <input type="text" class="form-control" name="title" placeholder="Title"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="description" placeholder="Description"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="location" placeholder="Location"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="acceptableExchange" placeholder="Acceptable Exchange"/>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="service" value="true">Service</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="service" value="false">Good</label>
+        </div>
         <button type="submit">Submit</button>
     </form>
 </div>
@@ -120,7 +130,10 @@
             </form>
         </td>
         <td>
-            <a href="/update-item?id={{id}}">Update</a>
+            <form action="/update-item?id={{id}}" method="get">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Update</button>
+            </form>
         </td>
     </tr>
     {{/activeBarters}}
@@ -153,7 +166,10 @@
             </form>
         </td>
         <td>
-            <a href="/update-item?id={{id}}">Update</a>
+            <form action="/update-item?id={{id}}" method="get">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Update</button>
+            </form>
         </td>
     </tr>
     {{/inactiveBarters}}

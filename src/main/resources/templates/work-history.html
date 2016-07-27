@@ -56,11 +56,15 @@
 </div>
 <br><br>
 <div class="container">
-<h3>Add a job to your work history:</h3>
-    <br><br>
-<form action="/work-create" method="post">
-    <input type="text" name="jobTitle" placeholder="Job title"/>
-    <input type="text" name="description" placeholder="Description"/>
+<h4>Add a job to your work history:</h4>
+    <br>
+<form role="form" action="/work-create" method="post">
+    <div class="form-group">
+    <input type="text" class="form-control" name="jobTitle" placeholder="Job title"/>
+    </div>
+    <div class="form-group">
+    <input type="text" class="form-control" name="description" placeholder="Description"/>
+    </div>
     <button type="submit">Submit</button>
 </form>
 </div>

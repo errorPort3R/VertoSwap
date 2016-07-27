@@ -24,17 +24,29 @@
     </div>
 </div>
 <div class="container">
-<h3>Update Item Info</h3>
-</div>
-<br><br>
-<div class="container">
-    <form action="/item-update" method="post">
-        <input type="text" name="title" value="{{title}}"/>
-        <input type="text" name="description" value="{{description}}"/>
-        <input type="text" name="location" value="{{location}}"/>
-        <input type="text" name="acceptableExchange" value="{{acceptableExchange}}"/>
+<h4>Update Item Info</h4>
+<br>
+    <form role="form" action="/item-update" method="post">
+        <div class="form-group">
+            <input type="text" class="form-control" name="title" value="{{title}}"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="description" value="{{description}}"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="location" value="{{location}}"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="acceptableExchange" value="{{acceptableExchange}}"/>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="service" value="true">Service</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="service" value="false">Good</label>
+        </div>
         <input type="hidden" name="id" value="{{id}}"/> 
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit">Submit</button>
     </form>
 </div>
 </body>
