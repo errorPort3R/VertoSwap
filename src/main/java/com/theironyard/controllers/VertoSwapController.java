@@ -194,9 +194,8 @@ public class VertoSwapController
             user = new User(username, PasswordStorage.createHash(password));
             users.save(user);
             session.setAttribute("username", username);
-            return "user-profile";
+            return "redirect:/user-profile";
         }
-        //return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/account-update", method = RequestMethod.POST)
@@ -465,25 +464,26 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/message-to-buyer", method = RequestMethod.POST)
-    public String messageFromBuyer(HttpSession session, String body, LocalDateTime time, Item item, User seller)
+    public String messageFromBuyer(HttpSession session, String body, Item item, User seller)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Message m = new Message(user, seller, item, body, time);
+        Message m = new Message(user, seller, item, body, LocalDateTime.now());
         messages.save(m);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
     }
 
     @RequestMapping(path = "/message-to-seller", method = RequestMethod.POST)
-    public String messageFromseller(HttpSession session, Item item, String body, LocalDateTime time)
+    public String messageFromseller(HttpSession session,@RequestParam String itemId,@RequestParam String body)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Message m = new Message(user, item.getUser(), item, body, time);
+        Item item = items.findOne(Integer.valueOf(itemId));
+        Message m = new Message(user, item.getUser(), item, body, LocalDateTime.now());
         messages.save(m);
         session.setAttribute("username", user.getUsername());
-        return "chatpage";
+        return "redirect:/";
     }
 
     @RequestMapping(path = "/message-get-by-user", method = RequestMethod.GET)

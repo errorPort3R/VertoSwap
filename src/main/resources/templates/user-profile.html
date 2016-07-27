@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <title>User Profile</title>
 </head>
@@ -21,7 +22,7 @@ Hello, {{username}}!
 <form action="/thread-read-all" method="get" class="inline-form-button">
     <button type="submit">Messages</button>
 </form>
-<div id="messageBox" class="floating-box">
+<div id="messageBox" class="messages-box">
         {{#messages}}
            {{body}}<br/>
         {{/messages}}
