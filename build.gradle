@@ -34,6 +34,7 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-websocket')
 	runtime('com.h2database:h2')
 	runtime('org.postgresql:postgresql')
+	compile('org.hibernate:hibernate-java8:5.0.9.Final')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 

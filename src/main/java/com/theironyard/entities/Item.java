@@ -1,5 +1,7 @@
 package com.theironyard.entities;
 
+import com.theironyard.utilities.FormatMethods;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,6 +54,8 @@ public class Item
     @ManyToOne
     private Work work;
 
+    private String timedateString;
+
     public Item()
     {
     }
@@ -66,6 +70,7 @@ public class Item
         this.time = time;
         this.service = service;
         this.user = user;
+        this.timedateString = FormatMethods.timeDateFormatter(time);
     }
 
     public Item(Work work) {
@@ -148,6 +153,7 @@ public class Item
     public void setTime(LocalDateTime time)
     {
         this.time = time;
+        this.timedateString = FormatMethods.timeDateFormatter(time);
     }
 
     public boolean isService()
@@ -168,5 +174,15 @@ public class Item
     public void setUser(User user)
     {
         this.user = user;
+    }
+
+    public String getTimedateString()
+    {
+        return timedateString;
+    }
+
+    public void setTimedateString(String timedateString)
+    {
+        this.timedateString = timedateString;
     }
 }

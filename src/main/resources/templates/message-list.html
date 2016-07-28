@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <title>Welcome to VertoMessage!</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+
+</head>
+<body>
+<form action="/user-profile" method="get" class="inline-form-button">
+    <button type="submit">Go to profile</button>
+</form>
+<form action="/" method="get" class="inline-form-button">
+    <button type="submit">Home</button>
+</form>
+<form action="/logout" method="post" class="inline-form-button">
+    <button type="submit">Logout</button>
+</form>
+
+<div id="message-box"></div>
+<br/>
+
+{{#conversations}}<form action="/message-delete" method ="post" class="button-small">
+    <input type="hidden" name="id" value="{{id}}"/>
+    <button type="submit">X</button>
+</form>
+
+<div id='divlabel'>
+{{author.username}}<br/>
+    <input type="hidden" name="id" value="{{id}}"/>
+    {{timedateString}}
+</div>
+<div id='divmsg'>
+    <form>
+    <a href="/message-get-by-conversation/?conversation={{conversation}}">
+        {{item.title}}
+        </a>
+    </form>
+    </div><br /><br />
+{{/conversations}}
+</body>
+</html>

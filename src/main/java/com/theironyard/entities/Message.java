@@ -1,5 +1,7 @@
 package com.theironyard.entities;
 
+import com.theironyard.utilities.FormatMethods;
+
 import javax.persistence.*;
 import javax.security.sasl.AuthorizeCallback;
 import java.time.LocalDateTime;
@@ -9,7 +11,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "messages")
-public class Message
+public class Message implements Comparable<Message>
 {
     @Id
     @GeneratedValue
@@ -30,18 +32,26 @@ public class Message
     @Column(nullable = false)
     private LocalDateTime time;
 
+    @Column(nullable = false)
+    private String conversation;
+
+    private String timedateString;
+
     public Message()
     {
     }
-
-    public Message(User author, User recipient, Item item, String body, LocalDateTime time)
+    //user, item.getUser(), item, body, LocalDateTime.now(), conversation
+    public Message(User author, User recipient, Item item, String body, LocalDateTime time, String conversation)
     {
         this.author = author;
         this.recipient = recipient;
         this.item = item;
         this.body = body;
         this.time = time;
+        this.conversation = conversation;
+        this.timedateString = FormatMethods.timeDateFormatter(time);
     }
+
 
     public int getId()
     {
@@ -101,5 +111,40 @@ public class Message
     public void setTime(LocalDateTime time)
     {
         this.time = time;
+        this.timedateString = FormatMethods.timeDateFormatter(time);
+    }
+
+    public String getConversation()
+    {
+        return conversation;
+    }
+
+    public void setConversation(String conversation)
+    {
+        this.conversation = conversation;
+    }
+
+    public String getTimedateString()
+    {
+        return timedateString;
+    }
+
+    public void setTimedateString(String timedateString)
+    {
+        this.timedateString = timedateString;
+    }
+
+    @Override
+    public int compareTo(Message o)
+    {
+        if (this.id < o.id)
+        {
+            return 1;
+        }
+        else if (this.id <o.id)
+        {
+            return -1;
+        }
+        return 0;
     }
 }
