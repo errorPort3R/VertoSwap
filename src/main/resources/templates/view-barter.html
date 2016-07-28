@@ -1,27 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <title>Barter Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/spacelab/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-<form action="/" method="get" class="inline-form-button">
-    <button type="submit">Home</button>
-</form>
-<form action="/message-to-seller" method="post">
-{{#good}}
-    {{title}}<br/>
-    {{location}}<br/>
-    {{description}}<br/>
-    {{acceptableExchange}}<br/>
-    {{timedateString}}<br/>
-    {{user.username}}<br/>
-    <input type="hidden" name="itemId" value="{{id}}"/>
-{{/good}}
 
-    <textarea name="body" placeholder="Type a message to this owner?" class="message-area"></textarea>
-    <button type="submit">Send</button>
-</form>
+<div class="btn-group btn-group-justified">
+    <div class="btn-group">
+        <form action="/" method="get">
+            <button type="submit" class="btn btn-primary">Home</button></form>
+    </div>
+    <div class="btn-group">
+        <form action="/user-profile" method="get">
+            <button type="submit" class="btn btn-primary">Profile</button></form>
+    </div>
+    <div class="btn-group">
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-primary">Logout</button></form>
+    </div>
+</div>
+<br><br>
+
+<div class="container">
+    {{#photos}} <img class="img-thumbnail" src="/photos/{{filename}}" height="100" width="100"> {{/photos}}
+</div>
+<br><br>
+
+{{#good}}
+{{#work}}
+<div class="container">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        {{jobTitle}}
+    </div>
+    <div class="panel-body">
+        {{description}}
+    </div>
+</div>
+</div>
+{{/work}}
+{{/good}}
+<div class="container">
+    <div class="bg-info">
+    {{#good}}
+        {{title}} <br>
+        {{location}}<br>
+        {{description}}<br>
+        {{acceptableExchange}}<br>
+        {{timedateString}}<br>
+        Posted by: <i>{{user.username}}</i><br/>
+    </div>
+    <br>
+    <form role="form" action="/message-to-seller" method="post">
+        <div class="form-group">
+            <textarea class="form-control" name="body" placeholder="Type a message to this swapper."></textarea>
+        </div>
+        <input type="hidden" name="itemId" value="{{id}}"/>
+        <button type="submit">Send</button>
+    </form>
+</div>
+{{/good}}
+<br><br>
+
 </body>
 </html>

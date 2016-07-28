@@ -342,6 +342,14 @@ public class VertoSwapController
         }
         session.setAttribute("username", user.getUsername());
         model.addAttribute("good", item);
+
+        Iterable<Photo> photoIterable = photos.findByItem(item);
+        ArrayList<Photo> photoArrayList = new ArrayList<>();
+        for (Photo p : photoIterable) {
+            photoArrayList.add(p);
+        }
+        model.addAttribute("photos", photoArrayList);
+
         return "view-barter";
     }
 
