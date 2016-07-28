@@ -32,7 +32,7 @@ public class Message implements Comparable<Message>
     @Column(nullable = false)
     private LocalDateTime time;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String conversation;
 
     private String timedateString;

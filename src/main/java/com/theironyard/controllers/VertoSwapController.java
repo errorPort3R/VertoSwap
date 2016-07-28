@@ -468,15 +468,16 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/message-reply", method = RequestMethod.POST)
-    public String messageFromBuyer(HttpSession session, Model model, String body, Item item, User receiver, String conversationKey)
+    public String messageFromBuyer(HttpSession session, Model model, String body, int itemid, int receiverid, String conversation)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Message m = new Message(user, receiver, item, body, LocalDateTime.now(), conversationKey);
+        Item item = items.findOne(itemid);
+        User receiver = users.findOne(receiverid);
+        Message m = new Message(user, receiver, item, body, LocalDateTime.now(), conversation);
         messages.save(m);
         session.setAttribute("username", user.getUsername());
-        model.addAttribute("popup", false);
-        return "redirect:/";
+        return "redirect:/message-get-unique-conversations-by-user";
     }
 
 
@@ -496,16 +497,31 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/message-get-by-conversation", method = RequestMethod.GET)
-    public String getMessages(HttpSession session, Model model, String conversationId)
+    public String getMessages(HttpSession session, Model model, String conversation)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        List<Message> messageList = messages.findByConversation(conversationId);
+        List<Message> messageList = messages.findByConversation(conversation);
         Collections.sort(messageList);
+        //get variables for page
+
+        User receiver = new User();
+        int itemId = messageList.get(messageList.size()-1).getItem().getId();
+        String conKey = messageList.get(messageList.size()-1).getConversation();
+        if (user.getId() == messageList.get(messageList.size()-1).getItem().getUser().getId())
+        {
+            receiver = messageList.get(messageList.size()-1).getAuthor();
+        }
+        else
+        {
+            receiver = messageList.get(messageList.size()-1).getItem().getUser();
+        }
         session.setAttribute("username", user.getUsername());
+        model.addAttribute("conkey", conKey);
+        model.addAttribute("itemid", itemId);
+        model.addAttribute("receiverid", receiver.getId());
         model.addAttribute("messages", messageList);
-        model.addAttribute("popup", true);
-        return "message-list";
+        return "message-display";
     }
 
     @RequestMapping(path = "/message-get-unique-conversations-by-user", method = RequestMethod.GET)
@@ -537,8 +553,7 @@ public class VertoSwapController
 
         session.setAttribute("username", user.getUsername());
         model.addAttribute("conversations", messageList);
-        model.addAttribute("popup", false);
-        return "message-display";
+        return "message-list";
     }
 
     @RequestMapping(path = "/message-update", method = RequestMethod.POST)

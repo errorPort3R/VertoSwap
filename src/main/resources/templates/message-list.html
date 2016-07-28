@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="style.css">
     <meta charset="UTF-8">
     <title>Welcome to VertoMessage!</title>
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
@@ -31,11 +31,12 @@
     <input type="hidden" name="id" value="{{id}}"/>
     {{timedateString}}
 </div>
-<input type="hidden" name="id" value="{{id}}"/>
-    <div id='divmsg'>
-        <a href="/message-get-by-conversation">
-            {{item.title}}
+<div id='divmsg'>
+    <form>
+    <a href="/message-get-by-conversation/?conversation={{conversation}}">
+        {{item.title}}
         </a>
+    </form>
     </div><br /><br />
 {{/conversations}}
 </body>

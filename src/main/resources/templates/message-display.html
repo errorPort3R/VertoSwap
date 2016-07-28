@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
+    <link rel="stylesheet" href="style.css">
     <meta charset="UTF-8">
     <title>Message</title>
 </head>
 <body>
+<form action="/" method="get" class="inline-form-button">
+    <button type="submit">Home</button>
+</form>
+<form action="/logout" method="post" class="inline-form-button">
+    <button type="submit">Logout</button>
+</form>
 <form action="/message-conversation" method ="post">
     <input type="hidden" name="conversationId" value="{{conkey}}"/>
     <button type="submit">Delete</button>
 </form>
-{{#conversation}}
+{{#messages}}
 
 
 <div id='divlabel'>
@@ -20,13 +26,14 @@
 </div>
 <input type="hidden" name="id" value="{{id}}"/>
 <div id='divmsg'>
-    <a href="/message-get-by-conversation">
-        {{item.title}}
-    </a>
+           {{body}}
 </div><br /><br />
-{{/conversation}}
+{{/messages}}
 <form action="/message-reply" method ="post">
-    <input type="hidden" name="conversationId" value="{{conkey}}"/>
+    <textarea name="body" placeholder="Type a message to this owner?" class="message-area"></textarea>
+    <input type="hidden" name="conversation" value="{{conkey}}"/>
+    <input type="hidden" name="itemid" value="{{itemid}}"/>
+    <input type="hidden" name="receiverid" value="{{receiverid}}">
     <button type="submit">Reply</button>
 </form>
 
