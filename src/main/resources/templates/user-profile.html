@@ -1,31 +1,84 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
     <meta charset="UTF-8">
     <title>User Profile</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/spacelab/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-Hello, {{username}}!
-<form action="/" method="get" class="inline-form-button">
-    <button type="submit">Home</button>
+<div class="btn-group btn-group-justified">
+    <div class="btn-group">
+<form action="/" method="get">
+    <button type="submit" class="btn btn-primary">Home</button>
 </form>
-<form action="/logout" method="post" class="inline-form-button">
-    <button type="submit">Logout</button>
+        </div>
+    <div class="btn-group">
+    <form action="/logout" method="post">
+    <button type="submit" class="btn btn-primary">Logout</button>
 </form>
-<form action="/work-history" method="get" class="inline-form-button">
-    <button type="submit">Work History</button>
+        </div>
+    <div class="btn-group">
+        <form action="/work-history" method="get">
+    <button type="submit" class="btn btn-primary">Work History</button>
 </form>
-<form action="/archive" method="post" class="inline-form-button">
-    <button type="submit">Archived Barters</button>
+        </div>
+    <div class="btn-group">
+    <form action="/archive" method="get">
+    <button type="submit" class="btn btn-primary">Archived Barters</button>
 </form>
-<form action="/message-get-unique-conversations-by-user" method="get" class="inline-form-button">
-    <button type="submit">Messages</button>
+        </div>
+    <div class="btn-group">
+    <form action="/thread-read-all" method="get">
+    <button type="submit" class="btn btn-primary">Messages</button>
 </form>
+        </div>
+<!--<div id="messageBox" class="messages-box">-->
+        <!--{{#messages}}-->
+           <!--{{body}}<br/>-->
+        <!--{{/messages}}-->
+<!--</div>-->
+</div>
+<div class="container">
+    <div class="jumbotron">
+    <h3>Hello, {{username}}!</h3>
+    </div>
+</div>
+<br>
+<div class="container">
+    <h4>Create a new barter:</h4>
+    <br>
+    <form role="form" action="/item-create" method="post">
+        <div class="form-group">
+            <input type="text" class="form-control" name="title" placeholder="Title"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="description" placeholder="Description"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="location" placeholder="Location"/>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" name="acceptableExchange" placeholder="Acceptable Exchange"/>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="service" value="true">Service</label>
+        </div>
+        <div class="radio">
+            <label><input type="radio" name="service" value="false">Good</label>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</div>
 <br><br>
-
-Active barters
-<table>
+<div class="container">
+<h4>Active barters</h4>
+</div>
+    <div class="container">
+<table class="table table-striped">
     <tr>
         <th>Title</th>
         <th>Description</th>
@@ -77,14 +130,21 @@ Active barters
             </form>
         </td>
         <td>
-            <a href="/update-item?id={{id}}">Update</a>
+            <form action="/update-item?id={{id}}" method="get">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Update</button>
+            </form>
         </td>
     </tr>
     {{/activeBarters}}
 </table>
+    </div>
 <br><br>
-Inactive barters
-<table>
+    <div class="container">
+<h4>Inactive barters</h4>
+        </div>
+        <div class="container">
+<table class="table table-striped">
     <tr>
         <th>Title</th>
         <th>Description</th>
@@ -106,12 +166,15 @@ Inactive barters
             </form>
         </td>
         <td>
-            <a href="/update-item?id={{id}}">Update</a>
+            <form action="/update-item?id={{id}}" method="get">
+                <input type="hidden" name="id" value="{{id}}"/>
+                <button type="submit">Update</button>
+            </form>
         </td>
     </tr>
     {{/inactiveBarters}}
 </table>
-
+    </div>
 
 
 
@@ -145,19 +208,7 @@ Inactive barters
 <br><br>
 
 <br><br><br>
-Create a new barter:
-<br>
-<form action="/item-create" method="post">
-    <input type="text" name="title" placeholder="Title"/>
-    <input type="text" name="description" placeholder="Description"/>
-    <input type="text" name="location" placeholder="Location"/>
-    <input type="text" name="acceptableExchange" placeholder="Acceptable Exchange"/>
-    <select name="service">
-        <option value="true">Service</option>
-        <option value="false">Good</option>
-    </select>
-    <button type="submit">Submit</button>
-</form>
+
 <!--<br><br>-->
 <!--Upload photo:-->
 <!--<form action="/photo-create" method="post" enctype="multipart/form-data">-->
@@ -172,6 +223,7 @@ Create a new barter:
     <!--<input type="text" name="description" placeholder="Description"/>-->
     <!--<button type="submit">Submit</button>-->
 <!--</form>-->
+
 
 </body>
 </html>
