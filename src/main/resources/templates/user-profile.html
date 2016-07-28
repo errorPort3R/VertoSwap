@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
     <meta charset="UTF-8">
     <title>User Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,11 +13,6 @@
     <div class="btn-group">
 <form action="/" method="get">
     <button type="submit" class="btn btn-primary">Home</button>
-</form>
-        </div>
-    <div class="btn-group">
-    <form action="/logout" method="post">
-    <button type="submit" class="btn btn-primary">Logout</button>
 </form>
         </div>
     <div class="btn-group">
@@ -36,6 +30,11 @@
     <button type="submit" class="btn btn-primary">Messages</button>
 </form>
         </div>
+    <div class="btn-group">
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+    </div>
 <!--<div id="messageBox" class="messages-box">-->
         <!--{{#messages}}-->
            <!--{{body}}<br/>-->
@@ -62,7 +61,7 @@
             <input type="text" class="form-control" name="location" placeholder="Location"/>
         </div>
         <div class="form-group">
-            <input type="text" class="form-control" name="acceptableExchange" placeholder="Acceptable Exchange"/>
+            <input type="text" class="form-control" name="acceptableExchange" placeholder="Desired Swap"/>
         </div>
         <div class="radio">
             <label><input type="radio" name="service" value="true">Service</label>
@@ -75,7 +74,7 @@
 </div>
 <br><br>
 <div class="container">
-<h4>Active barters</h4>
+<h4><b>Active barters</b></h4>
 </div>
     <div class="container">
 <table class="table table-striped">
@@ -83,7 +82,7 @@
         <th>Title</th>
         <th>Description</th>
         <th>Location</th>
-        <th>Acceptable Exchange</th>
+        <th>Desired Swap</th>
         <th>Time</th>
     </tr>
     {{#activeBarters}}
@@ -93,34 +92,31 @@
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
         <td>{{time}}</td>
-        <!-- ?? only show below if photo/work history is empty-->
         <td>
             {{^service}}
             Upload photo:
-            <form action="/photo-create" method="post" enctype="multipart/form-data">
+            <form role="form" action="/photo-create" method="post" enctype="multipart/form-data">
+                <div class="form-group">
                 <input type="file" name="photo"/>
                 <input type="hidden" name="id" value="{{id}}"/>
                 <input type="text" name="caption" placeholder="Write a caption"/>
                 <button type="submit">Upload</button>
+                </div>
             </form>
             {{/service}}
             {{#service}}
-            <!-- ?? :  -->
             Add work history:
-            <form action="/item-attach-work" method="post">
+            <form role="form" action="/item-attach-work" method="post">
+                <div class="form-group">
                 <input type="hidden" name="id" value="{{id}}"/>
-                <select name="workId">
+                <select class="form-control" name="workId">
                     {{#workHistory}}
                     <option value="{{id}}">{{jobTitle}}</option>
                     {{/workHistory}}
                 </select>
                 <button type="submit">Add</button>
+                </div>
             </form>
-            <!--<form action="/work-create" method="post">-->
-                <!--<input type="text" name="job_title" placeholder="Job Title"/>-->
-                <!--<input type="text" name="description" placeholder="Description"/>-->
-                <!--<button type="submit">Submit</button>-->
-            <!--</form>-->
             {{/service}}
         </td>
         <td>
@@ -141,7 +137,7 @@
     </div>
 <br><br>
     <div class="container">
-<h4>Inactive barters</h4>
+<h4><b>Inactive barters</b></h4>
         </div>
         <div class="container">
 <table class="table table-striped">
@@ -149,7 +145,7 @@
         <th>Title</th>
         <th>Description</th>
         <th>Location</th>
-        <th>Acceptable Exchange</th>
+        <th>Desired Swap</th>
         <th>Time</th>
     </tr>
     {{#inactiveBarters}}
@@ -176,54 +172,7 @@
 </table>
     </div>
 
-
-
-
-<!--<ul>-->
-<!--{{#activeBarters}}-->
-    <!--<li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}-->
-        <!--Upload photo:-->
-        <!--<form action="/photo-create" method="post" enctype="multipart/form-data">-->
-            <!--<input type="file" name="photo"/>-->
-            <!--<input type="text" name="caption" placeholder="Write a caption"/>-->
-            <!--<button type="submit">Upload</button>-->
-        <!--</form>-->
-        <!--Add work history:-->
-        <!--<form action="/work-create" method="post">-->
-            <!--<input type="text" name="job_title" placeholder="Job Title"/>-->
-            <!--<input type="text" name="description" placeholder="Description"/>-->
-            <!--<button type="submit">Submit</button>-->
-        <!--</form>-->
-    <!--</li>-->
-<!--{{/activeBarters}}-->
-<!--</ul>-->
-<!--<br><br>-->
-
-<!--Inactive barters-->
-<!--<ul>-->
-<!--{{#inactiveBarters}}-->
-    <!--<li>{{title}} {{description}} {{location}} {{acceptableExchange}} {{time}}</li>-->
-<!--{{/inactiveBarters}}-->
-<!--</ul>-->
 <br><br>
-
-<br><br><br>
-
-<!--<br><br>-->
-<!--Upload photo:-->
-<!--<form action="/photo-create" method="post" enctype="multipart/form-data">-->
-    <!--<input type="file" name="photo"/>-->
-    <!--<input type="text" name="caption" placeholder="Write a caption"/>-->
-    <!--<button type="submit">Upload</button>-->
-<!--</form>-->
-<!--<br><br>-->
-<!--Add work history:-->
-<!--<form action="/work-create" method="post">-->
-    <!--<input type="text" name="job_title" placeholder="Job Title"/>-->
-    <!--<input type="text" name="description" placeholder="Description"/>-->
-    <!--<button type="submit">Submit</button>-->
-<!--</form>-->
-
 
 </body>
 </html>

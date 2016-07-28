@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
     <meta charset="UTF-8">
     <title>VertoSwap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,16 +8,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 
-<!--<div id="logindiv">-->
 {{^username}}
 <div class="container">
     <div class="pull-right">
             <form action="/account-create" method="get">
                 <button type="submit" class="btn btn-primary">Create account</button>
             </form>
-        </div>
+    </div>
     <div class="pull-right">
         <form action="/login" method="post">
             <input type="text" name="username" placeholder="Username"/>
@@ -32,56 +31,62 @@
 {{#username}}
 <div class="btn-group btn-group-justified">
     <div class="btn-group">
-    <form action="/user-profile" method="get">
-    <button type="submit" class="btn btn-primary">Go to profile</button>
-</form>
-        </div>
+        <form action="/user-profile" method="get">
+            <button type="submit" class="btn btn-primary">Go to profile</button>
+        </form>
+    </div>
     <div class="btn-group">
-    <form action="/logout" method="post">
-    <button type="submit" class="btn btn-primary">Logout</button>
-</form>
-        </div>
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+    </div>
 {{/username}}
 </div>
 
-
-<!--<div id="page-label">-->
 <div class="container">
     <div class="jumbotron">
-<h2>VertoSwap</h2>
+        <h2>VertoSwap</h2>
         <h4>a place to barter</h4>
     </div>
 </div>
 <div class="container">
-<h4>Search available barters:</h4>
-<form action="/" method="get">
-    <input type="text" name="search" placeholder="Search"/>
-    <button type="submit">Search</button>
-</form>
+    <h4>Search available barters:</h4>
+        <form action="/" method="get">
+            <input type="text" name="search" placeholder="Search"/>
+            <button type="submit"><span class="glyphicon glyphicon-search"></span>Search</button>
+        </form>
+    <br>
+    <form action="/" method="get">
+        <button type="submit">Show all barters</button>
+    </form>
 </div>
+
 <br><br>
-<!--<div id="goods-home" class="floating-box">-->
+
+
 <div class="container">
-<div class="row">
-    <div class="col-md-6">
-<h4><b>Goods</b></h4><br>
-    {{#goods}}
-    <a href="/view-item/?id={{id}}">
-       {{title}}  ({{location}})<br/>
-        <input type="hidden" name="id" value="{{id}}">
-    </a>
-    {{/goods}}
+    <div class="pull-left">
+            <h4><b>Goods</b></h4><br>
+            {{#goods}}
+            <a href="/view-item/?id={{id}}">
+            {{title}}  ({{location}}) <input type="hidden" name="id" value="{{id}}"></a>
+            <br/>
+            {{/goods}}
     </div>
-<!--<div id="services-home" class="floating-box">-->
-    <div class="col-md-6">
-        <h4><b>Services</b></h4><br/>
-    {{#services}}
-    <a href="/view-item/?id={{id}}">
-        {{title}}  ({{location}}) <br/>
-    <input type="hidden" name="id" value="{{id}}"></a>
-    {{/services}}
-        </div>
+    <div class="pull-right">
+            <h4><b>Services</b></h4><br/>
+            {{#services}}
+            <a href="/view-item/?id={{id}}">
+            {{title}}  ({{location}}) <br/>
+            <input type="hidden" name="id" value="{{id}}">
+            </a>
+            {{/services}}
+    </div>
 </div>
-</div>
+
+
+
+<br><br>
+
 </body>
 </html>
