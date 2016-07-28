@@ -54,6 +54,7 @@ public class VertoSwapController
     public String main(HttpSession session, Model model, String search) {
         String username = (String) session.getAttribute("username");
         model.addAttribute("username", username);
+
         Iterable<Item> searchList;
         ArrayList<Item> searchServiceArray = new ArrayList<>();
         ArrayList<Item> searchGoodArray = new ArrayList<>();
@@ -69,14 +70,25 @@ public class VertoSwapController
                 }
                 model.addAttribute("goods", searchGoodArray);
                 model.addAttribute("services", searchServiceArray);
-
             }
         }
         else {
+            ArrayList<Item> s = new ArrayList<>();
             Iterable<Item> servicesList = items.findByServiceTrueOrderByTimeDesc();
+            for (Item i : servicesList) {
+                if (i.getStatus() != DELETE) {
+                    s.add(i);
+                    model.addAttribute("services", s);
+                }
+            }
+            ArrayList<Item> g = new ArrayList<>();
             Iterable<Item> goodsList = items.findByServiceFalseOrderByTimeDesc();
-            model.addAttribute("services", servicesList);
-            model.addAttribute("goods", goodsList);
+            for (Item i : goodsList) {
+                if (i.getStatus() != DELETE) {
+                    g.add(i);
+                    model.addAttribute("goods", g);
+                }
+            }
         }
         return "home";
     }
@@ -156,6 +168,7 @@ public class VertoSwapController
         model.addAttribute("description", item.getDescription());
         model.addAttribute("location", item.getLocation());
         model.addAttribute("acceptableExchange", item.getAcceptableExchange());
+        model.addAttribute("service", item.isService());
         model.addAttribute("id", item.getId());
 
         return "update-item";
@@ -378,7 +391,7 @@ public class VertoSwapController
         item.setStatus(DELETE);
         items.save(item);
         //session.setAttribute("username", user.getUsername());
-        return "redirect:/";
+        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/item-archive", method = RequestMethod.POST)

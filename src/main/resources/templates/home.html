@@ -1,58 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
     <meta charset="UTF-8">
     <title>VertoSwap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/spacelab/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<div id="logindiv">
+<!--<div id="logindiv">-->
 {{^username}}
-<form action="/login" method="post">
-    <input type="text" name="username" placeholder="Username"/>
-    <input type="password" name="password" placeholder="Password" />
-    <button type="submit"display="inline-block">Login</button>
-</form>
-<form action="/account-create" method="get">
-    <button type="submit" display="inline-block">Create account</button>
-</form>
+<div class="container">
+    <div class="pull-right">
+            <form action="/account-create" method="get">
+                <button type="submit" class="btn btn-primary">Create account</button>
+            </form>
+        </div>
+    <div class="pull-right">
+        <form action="/login" method="post">
+            <input type="text" name="username" placeholder="Username"/>
+            <input type="password" name="password" placeholder="Password"/>
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+</div>
 {{/username}}
+
 {{#username}}
-<form action="/user-profile" method="get" display="inline-block">
-    <button type="submit">Go to profile</button>
+<div class="btn-group btn-group-justified">
+    <div class="btn-group">
+    <form action="/user-profile" method="get">
+    <button type="submit" class="btn btn-primary">Go to profile</button>
 </form>
-<form action="/logout" method="post" display="inline-block">
-    <button type="submit">Logout</button>
+        </div>
+    <div class="btn-group">
+    <form action="/logout" method="post">
+    <button type="submit" class="btn btn-primary">Logout</button>
 </form>
+        </div>
 {{/username}}
 </div>
 
-<div id="page-label">
+
+<!--<div id="page-label">-->
+<div class="container">
+    <div class="jumbotron">
 <h2>VertoSwap</h2>
-<h4>a place to barter</h4>
+        <h4>a place to barter</h4>
+    </div>
 </div>
-Search available barters:
+<div class="container">
+<h4>Search available barters:</h4>
 <form action="/" method="get">
     <input type="text" name="search" placeholder="Search"/>
     <button type="submit">Search</button>
 </form>
-<div id="goods-home" class="floating-box">
-<b>Goods</b><br>
+</div>
+<br><br>
+<!--<div id="goods-home" class="floating-box">-->
+<div class="container">
+<div class="row">
+    <div class="col-md-6">
+<h4><b>Goods</b></h4><br>
     {{#goods}}
     <a href="/view-item/?id={{id}}">
-       {{title}}-{{location}}<br/>
+       {{title}}  ({{location}})<br/>
         <input type="hidden" name="id" value="{{id}}">
     </a>
     {{/goods}}
-</div>
-<div id="services-home" class="floating-box">
-<b>Services</b><br/>
+    </div>
+<!--<div id="services-home" class="floating-box">-->
+    <div class="col-md-6">
+        <h4><b>Services</b></h4><br/>
     {{#services}}
-    <a href="/view-item/?id={{id}}"></a>
-        {{title}}-{{location}} <br/>
-    <input type="hidden" name="id" value="{{id}}">
+    <a href="/view-item/?id={{id}}">
+        {{title}}  ({{location}}) <br/>
+    <input type="hidden" name="id" value="{{id}}"></a>
     {{/services}}
+        </div>
+</div>
 </div>
 </body>
 </html>
