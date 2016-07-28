@@ -19,15 +19,9 @@ Hello, {{username}}!
 <form action="/archive" method="post" class="inline-form-button">
     <button type="submit">Archived Barters</button>
 </form>
-<form action="/thread-read-all" method="get" class="inline-form-button">
+<form action="/message-get-unique-conversations-by-user" method="get" class="inline-form-button">
     <button type="submit">Messages</button>
 </form>
-<div id="messageBox" class="messages-box">
-        {{#messages}}
-           {{body}}<br/>
-        {{/messages}}
-
-</div>
 <br><br>
 
 Active barters
@@ -45,7 +39,7 @@ Active barters
         <td>{{description}}</td>
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
-        <td>{{time}}</td>
+        <td>{{timedateString}}</td>
         <!-- ?? only show below if photo/work history is empty-->
         <td>
             {{^service}}

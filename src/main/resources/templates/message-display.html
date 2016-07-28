@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Message</title>
+</head>
+<body>
+<form action="/message-conversation" method ="post">
+    <input type="hidden" name="conversationId" value="{{conkey}}"/>
+    <button type="submit">Delete</button>
+</form>
+{{#conversation}}
+
+
+<div id='divlabel'>
+    {{author.username}}<br/>
+    <input type="hidden" name="id" value="{{id}}"/>
+    {{timedateString}}
+</div>
+<input type="hidden" name="id" value="{{id}}"/>
+<div id='divmsg'>
+    <a href="/message-get-by-conversation">
+        {{item.title}}
+    </a>
+</div><br /><br />
+{{/conversation}}
+<form action="/message-reply" method ="post">
+    <input type="hidden" name="conversationId" value="{{conkey}}"/>
+    <button type="submit">Reply</button>
+</form>
+
+</body>
+</html>

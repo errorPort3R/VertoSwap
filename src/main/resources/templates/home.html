@@ -49,9 +49,10 @@ Search available barters:
 <div id="services-home" class="floating-box">
 <b>Services</b><br/>
     {{#services}}
-    <a href="/view-item/?id={{id}}"></a>
+    <a href="/view-item/?id={{id}}">
         {{title}}-{{location}} <br/>
     <input type="hidden" name="id" value="{{id}}">
+    </a>
     {{/services}}
 </div>
 </body>
