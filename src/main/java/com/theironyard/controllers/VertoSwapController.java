@@ -490,7 +490,7 @@ public class VertoSwapController
         Message m = new Message(user, receiver, item, body, LocalDateTime.now(), conversation);
         messages.save(m);
         session.setAttribute("username", user.getUsername());
-        return "redirect:/message-get-unique-conversations-by-user";
+        return "redirect:/thread-read-all";
     }
 
 
@@ -537,7 +537,7 @@ public class VertoSwapController
         return "message-display";
     }
 
-    @RequestMapping(path = "/message-get-unique-conversations-by-user", method = RequestMethod.GET)
+    @RequestMapping(path = "/thread-read-all", method = RequestMethod.GET)
     public String getConversation(HttpSession session, Model model, ArrayList<String> conversationId)
     {
         ArrayList<Message> messageList = new ArrayList();
