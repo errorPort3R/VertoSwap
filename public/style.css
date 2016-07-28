@@ -1,4 +1,5 @@
-.floating-box {
+.floating-box
+{
     float: left;
     width: 275px;
     height: 400px;
@@ -7,30 +8,41 @@
     overflow: scrolling;
 }
 
-.after-box {
+.after-box
+{
     clear: left;
     border: 3px solid blue;
     font-align: center;
 }
 
-.inline-form-button {
+.inline-form-button
+{
     display: inline-block;
 }
+
 #divlabel
 {
     font-size: 6pt;
     display: inline-block;
+    text-align: right;
 }
+
 #divmsg
 {
     display: inline-block;
 }
 
 .messages-box {
-    float: left;
+    float: right;
     width: 400px;
     height: 200kpx;
     margin: 10px;
     border: 2px solid black;
     overflow: scrolling;
+}
+.button-small
+{
+    font-size: 6px;
+    height: 15px;
+    display: inline-block;
 }

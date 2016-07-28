@@ -18,9 +18,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.*;
 
 import static com.theironyard.entities.Item.Status.*;
 
@@ -335,6 +336,10 @@ public class VertoSwapController
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Item item = items.findOne(Integer.valueOf(id));
+        if (user == null)
+        {
+            return "redirect:/";
+        }
         session.setAttribute("username", user.getUsername());
         model.addAttribute("good", item);
         return "view-barter";
@@ -395,15 +400,14 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/item-archive", method = RequestMethod.POST)
-    public String archiveItem(HttpSession session, int id) {
-        String username = (String)session.getAttribute("username");
+    public String archiveItem(HttpSession session, int id)
+    {
+        String username = (String) session.getAttribute("username");
         Item item = items.findOne(id);
         item.setStatus(ARCHIVE);
         items.save(item);
         return "redirect:/user-profile";
     }
-
-
 
 
     //***************************************************************************************
@@ -476,39 +480,93 @@ public class VertoSwapController
     //                  MESSAGE ROUTES
     //
     //***************************************************************************************
-    @RequestMapping(path = "/message-to-buyer", method = RequestMethod.POST)
-    public String messageFromBuyer(HttpSession session, String body, Item item, User seller)
+    @RequestMapping(path = "/message-reply", method = RequestMethod.POST)
+    public String messageFromBuyer(HttpSession session, Model model, String body, int itemid, int receiverid, String conversation)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Message m = new Message(user, seller, item, body, LocalDateTime.now());
+        Item item = items.findOne(itemid);
+        User receiver = users.findOne(receiverid);
+        Message m = new Message(user, receiver, item, body, LocalDateTime.now(), conversation);
         messages.save(m);
         session.setAttribute("username", user.getUsername());
-        return "redirect:/";
+        return "redirect:/thread-read-all";
     }
 
+
+
     @RequestMapping(path = "/message-to-seller", method = RequestMethod.POST)
-    public String messageFromseller(HttpSession session,@RequestParam String itemId,@RequestParam String body)
+    public String messagetoseller(HttpSession session,@RequestParam String itemId,@RequestParam String body)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Item item = items.findOne(Integer.valueOf(itemId));
-        Message m = new Message(user, item.getUser(), item, body, LocalDateTime.now());
+        //create conversation key
+        String conversation = String.format("%s_%s", itemId, user.getId());
+        Message m = new Message(user, item.getUser(), item, body, LocalDateTime.now(), conversation);
         messages.save(m);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
     }
 
-    @RequestMapping(path = "/message-get-by-user", method = RequestMethod.GET)
-    public String getMessages(HttpSession session, Model model)
+    @RequestMapping(path = "/message-get-by-conversation", method = RequestMethod.GET)
+    public String getMessages(HttpSession session, Model model, String conversation)
     {
-        Iterable<Message> recievedMessages = new ArrayList<>();
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        Iterable<Message> messageList = messages.findByRecipient(user);
+        List<Message> messageList = messages.findByConversation(conversation);
+        Collections.sort(messageList);
+        //get variables for page
+
+        User receiver = new User();
+        int itemId = messageList.get(messageList.size()-1).getItem().getId();
+        String conKey = messageList.get(messageList.size()-1).getConversation();
+        if (user.getId() == messageList.get(messageList.size()-1).getItem().getUser().getId())
+        {
+            receiver = messageList.get(messageList.size()-1).getAuthor();
+        }
+        else
+        {
+            receiver = messageList.get(messageList.size()-1).getItem().getUser();
+        }
         session.setAttribute("username", user.getUsername());
-        model.addAttribute("recievedmessage", messageList);
-        return "message-page";
+        model.addAttribute("conkey", conKey);
+        model.addAttribute("itemid", itemId);
+        model.addAttribute("receiverid", receiver.getId());
+        model.addAttribute("messages", messageList);
+        return "message-display";
+    }
+
+    @RequestMapping(path = "/thread-read-all", method = RequestMethod.GET)
+    public String getConversation(HttpSession session, Model model, ArrayList<String> conversationId)
+    {
+        ArrayList<Message> messageList = new ArrayList();
+        HashMap<String ,Message> mapList= new HashMap<>();
+        String username = (String)session.getAttribute("username");
+        User user = users.findByUsername(username);
+        List<Message> messageLista = messages.findByRecipient(user);
+        List<Message> messageListb = messages.findByAuthor(user);
+        for (Message b: messageListb)
+        {
+            messageLista.add(b);
+        }
+        Collections.sort(messageLista);
+
+        for(Message m : messageLista)
+        {
+            mapList.put(m.getConversation(), m);
+        }
+        Iterator iter = mapList.entrySet().iterator();
+        while (iter.hasNext())
+        {
+            Map.Entry pair = (Map.Entry)iter.next();
+            messageList.add((Message)pair.getValue());
+            iter.remove();
+        }
+
+        session.setAttribute("username", user.getUsername());
+        model.addAttribute("conversations", messageList);
+        return "message-list";
     }
 
     @RequestMapping(path = "/message-update", method = RequestMethod.POST)
@@ -532,4 +590,6 @@ public class VertoSwapController
         return "redirect:/";
 
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.theironyard.entities;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 /**
  * Created by Dan on 7/18/16.
@@ -18,6 +19,8 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    private LocalDateTime lastMessageCheck=null;
+
     public User()
     {
     }
@@ -26,6 +29,7 @@ public class User {
     {
         this.username = username;
         this.password = password;
+        lastMessageCheck = LocalDateTime.now();
     }
 
     public int getId()
@@ -56,5 +60,15 @@ public class User {
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public LocalDateTime getLastMessageCheck()
+    {
+        return lastMessageCheck;
+    }
+
+    public void setLastMessageCheck(LocalDateTime lastMessageCheck)
+    {
+        this.lastMessageCheck = lastMessageCheck;
     }
 }
