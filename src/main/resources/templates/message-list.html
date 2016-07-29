@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
     <meta charset="UTF-8">
-    <title>Welcome to VertoMessage!</title>
-    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
-
+    <title>VertoSwap</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/spacelab/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-<form action="/user-profile" method="get" class="inline-form-button">
-    <button type="submit">Go to profile</button>
-</form>
-<form action="/" method="get" class="inline-form-button">
-    <button type="submit">Home</button>
-</form>
-<form action="/logout" method="post" class="inline-form-button">
-    <button type="submit">Logout</button>
-</form>
 
-<div id="message-box"></div>
+<div class="btn-group btn-group-justified">
+    <div class="btn-group">
+<form action="/user-profile" method="get">
+    <button type="submit" class="btn btn-primary">Go to profile</button>
+</form>
+    </div>
+    <div class="btn-group">
+<form action="/" method="get">
+    <button type="submit" class="btn btn-primary">Home</button>
+</form>
+    </div>
+    <div class="btn-group">
+<form action="/logout" method="post">
+    <button type="submit" class="btn btn-primary">Logout</button>
+</form>
+</div>
+</div>
+
+<div class="container">
 <br/>
 
-{{#conversations}}<form action="/message-delete" method ="post" class="button-small">
+{{#conversations}}
+    <div class="btn-group">
+    <form action="/message-delete" method ="post">
     <input type="hidden" name="id" value="{{id}}"/>
-    <button type="submit">X</button>
+    <a href="#" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
 </form>
-
-<div id='divlabel'>
-{{author.username}}<br/>
+    </div>
+    <div class="btn-group">
+<a href="/message-get-by-conversation/?conversation={{conversation}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+    </div>
+        <div id='divlabel'>
+{{recipient.username}}<br/>
     <input type="hidden" name="id" value="{{id}}"/>
     {{timedateString}}
 </div>
@@ -39,5 +56,6 @@
     </form>
     </div><br /><br />
 {{/conversations}}
+    </div>
 </body>
 </html>
