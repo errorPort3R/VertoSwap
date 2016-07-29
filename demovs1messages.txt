@@ -1,0 +1,16 @@
+Message:author|recipient|item|body|conversation
+4|5|24|I have cats and dogs.  The cats seem to be teasing the dogs too much.  I think it's all the pent up energy.  How much Dog food are we talking?|24_5
+18|5|38|I was interested in your mansion.  Would you be willing to accept my private jet in exchange?  I own a chain of 5 star hotels around the world, and you're welcome to stay at any of them, any time, free of charge.  The only cost to you would be the fuel.|38_5
+20|5|40|So, I'm a bartender when I host parties.  I can make any drink you'd like.|40_5
+7|5|27|I have a Mr. Fusion, but Datsun has been out of business for some time.|27_5
+19|5|39|I'm willing to take all your shoes.  I'll walk around with you after that to help you get your third-world feet.|39_5
+16|5|36|I think I'll need to move soon, as I may be acquiring a mansion in a few days.  When are you available?|36_5
+6|5|26|I have some Ray-Bans, but they're pretty scratched up.  Would you still want them?|26_5
+5|4|24|I want a 30lbs. bag for big dogs. That'll get you a week's worth  Sound good?|24_5
+4|5|24|Excellent!|24_5
+5|18|38|I would be willing to do that, if the rooms are always free at all of your hotels.|38_5
+5|20|40|Great!  Let me just grab a towel from the newest version of Earth, and I'll be by Straight away.|40_5
+5|7|27|Oh NO!  I must have altered the past somehow!  I gotta go!|27_5
+5|19|39|Yeah, I'm not sure why I have these first-world feet.  Call me later to set up a time to meet.  555.555.5555|39_5
+5|16|36|Long as you can stand my country music singin', honey we're good!  Call me with a time or place.  (555)867-5309|36_5
+5|6|26|I'd really have to see them to know for sure, but probably.  I can still get the Ray Ban lenses.|26_5
