@@ -83,7 +83,7 @@
         <th>Description</th>
         <th>Location</th>
         <th>Desired Swap</th>
-        <th>Time</th>
+        <th>Date & Time</th>
     </tr>
     {{#activeBarters}}
     <tr>
@@ -91,7 +91,7 @@
         <td>{{description}}</td>
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
-        <td>{{time}}</td>
+        <td>{{timedateString}}</td>
         <td>
             {{^service}}
             Upload photo:
@@ -146,7 +146,7 @@
         <th>Description</th>
         <th>Location</th>
         <th>Desired Swap</th>
-        <th>Time</th>
+        <th>Date & Time</th>
     </tr>
     {{#inactiveBarters}}
     <tr>
@@ -154,7 +154,7 @@
         <td>{{description}}</td>
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
-        <td>{{time}}</td>
+        <td>{{timedateString}}</td>
         <td>
             <form action="/item-archive" method="post">
                 <input type="hidden" name="id" value="{{id}}"/>

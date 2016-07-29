@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -225,7 +226,7 @@ public class VertoSwapController
         user.setUsername(newUsername);
         user.setPassword(PasswordStorage.createHash(newPassword));
         users.save(user);
-        return "redirect:/";
+        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/account-delete", method = RequestMethod.POST)
@@ -245,7 +246,7 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.POST)
-    public String login(HttpSession session, String username, String password) throws Exception {
+    public String login(HttpSession session, String username, String password, HttpServletRequest request) throws Exception {
         User userFromDB = users.findByUsername(username);
         if (userFromDB == null) {
             return "redirect:/account-create";
@@ -254,7 +255,10 @@ public class VertoSwapController
             throw new Exception("Wrong password.");
         }
         session.setAttribute("username", username);
-        return "redirect:/user-profile";
+
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
+//        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
@@ -334,13 +338,15 @@ public class VertoSwapController
     public String getSpecificItem(HttpSession session, Model model,@RequestParam String id)
     {
         String username = (String)session.getAttribute("username");
+        model.addAttribute("username", username);
+
         User user = users.findByUsername(username);
         Item item = items.findOne(Integer.valueOf(id));
-        if (user == null)
-        {
-            return "redirect:/";
-        }
-        session.setAttribute("username", user.getUsername());
+//        if (user == null)
+//        {
+//            return "redirect:/";
+//        }
+//        session.setAttribute("username", user.getUsername());
         model.addAttribute("good", item);
 
         Iterable<Photo> photoIterable = photos.findByItem(item);

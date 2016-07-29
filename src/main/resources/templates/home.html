@@ -74,7 +74,9 @@
             <h4>Goods</h4>
             {{#goods}}
             <a href="/view-item/?id={{id}}">
-                {{title}}  ({{location}}) <input type="hidden" name="id" value="{{id}}"></a><br>
+                {{title}}  ({{location}})
+                <input type="hidden" name="id" value="{{id}}">
+            </a><br>
             {{/goods}}
         </div>
         <div id="services" class="tab-pane fade">
@@ -82,7 +84,8 @@
             {{#services}}
             <a href="/view-item/?id={{id}}">
                 {{title}}  ({{location}})
-                <input type="hidden" name="id" value="{{id}}"></a><br>
+                <input type="hidden" name="id" value="{{id}}">
+            </a><br>
             {{/services}}
         </div>
     </div>
