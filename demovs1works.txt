@@ -1,0 +1,6 @@
+Work:jobTitle|description|user
+Carpentry|I've worked on many commercial structures. I can build you any structure from digging the formwork into the ground to putting the finishing touches on the hardwood trim, and everything in between|2
+Lapidary and Fine Metalsmith|I've made period pieces dating back to as far as 1800 BC.  I use materials they only had available during those time to ensure top quality.|5
+Yogi|I've been training yoga classes at my current gym for 2 years, and have done it for the past 15.|11
+ASE Certified Mechanic|I have worked on nearly any make and model car known to man.  I only like to work on domestics because the price on parts is reasonable.|12
+Mover and Shaker|I've been known to move entire audiences.|16

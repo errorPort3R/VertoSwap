@@ -1,0 +1,23 @@
+Item: title|location|description|acceptableExchange|status|service|user
+I'm trading my truck.|Charleston, SC|1994 Ford F150, power-windows, locks, air, needs a new heater core but runs fine. I need something that's more efficient.|Newer Model car.|ACTIVE|false|1
+Carpentry|Charleston Area|I'm a journeyman carpenter with my own tools and truck.|Mechanic work needed on my truck.|ACTIVE|true|2
+Custom Jewelry|Monck's Corner|I build specialized period jewelry for tv and films.|Air Conditioner repair.|ACTIVE|true|3
+Cat Walking Service|Summerville, SC|I walk cats around on a leash.  They hate it, but I think it's hilarious because I'm a dog person.|Dog Food|ACTIVE|true|4
+Designer Dresses|Charleston(downtown)|Various designer dresses, all no more than 2 years old.|Looking for shoes, preferably designer.|ACTIVE|false|5
+Oakley Sunglasses circa 1995|John's Island, SC|These are the classic wrap-around frames that you can't get anymore. 4 lenses, and 6 nose-guard colors.|Some Ray Bans of the same era.|ACTIVE|false|6
+Rims for an 05 Datsun|Goose Creek|Great find if you have what I need.|Mr. Fusion for my '84 DeLorean|ACTIVE|false|7
+3D Printing services|ChuckTown, South KackaLackey|I can print anything you like up to 10x10x10 inches in ABS plastic or nylon.|I need an update for my web page|ACTIVE|false|8
+A Giant Labyrinth|Far, Far away.|I'm bored of it.|I'll take a baby for it.|ACTIVE|false|9
+Guitar(it's priceless)|Daniel Island|My guitar from a stage performance this weekend(I need it for my concert first).|Copious amounts of drugs.  I don't care what type, I've done them all.|ACTIVE|false|10
+Yoga Lessons/Classes|Charleston(downtown)|I'm a Yoga Instructor at a local gym.|Boca Burgers and kale smoothies.|ACTIVE|true|11
+Mechanic|Charleston Area|I work on all late model domestic cars.|I need a dentist to Make me some crowns.|ACTIVE|true|12
+TimeShare in Cancun|Doesn't Matter|I want to trade my week in Cancun for a winter trip to the rockies or Alps.|Timeshare in the Alps or Rockies|ACTIVE|false|13
+Air Compressor|Summerville, SC|I have a compressor that I never use anymore.|Willing to field offers.|ACTIVE|false|14
+Sonic Screwdriver|Wherever you need(maybe not when, though).|It's fairly new, but I always make a new one anytime I almost die and regenerate.|Companion for traveling.|ACTIVE|false|15
+Mover/Moving help|Charleston Area|I'll help you move anywhere you want.  I have dollies.|A dinner and show somewhere around Nashville.|ACTIVE|true|16
+Windows|Walterboro, SC|I have windows left over from a recent renovation.|I need landscaping materials to complete my project.|ACTIVE|false|17
+Mansion|Kiawah Island, SC|The place has grown too familiar.  I need a change of environment|Castle or equivalent|ACTIVE|false|18
+All of my Shoes|Charleston Downtown|I'm tired of having first-world feet.|Third-world feet|ACTIVE|false|19
+Towel|Restaurant at the End of the Universe.|It's a quality towel.  Very absorbent|Pan Galactic Gargle Blaster|ACTIVE|false|20
+Monster Truck|Charleston Area|Wifey wants me to get rid of it.|Newer sports car.|ACTIVE|false|5
+Couch, love seat, chair, coffee table.|Charleston Area|Moving in with the gf. Need to pare down the amount of stuff I have.  In good shape.|Washer and Dryer.|INACTIVE|false|5

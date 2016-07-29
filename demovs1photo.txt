@@ -1,0 +1,4 @@
+Photo:filename|caption|user|item
+fordtruck1.jpg |She's a beaut!|1|21
+fordtruck2.jpg |Another shot of my pretty girl.|1|21
+sonicscrewdriver.jpg|S'gotten me out of a might number of bad situations.  Handy tool, this.|15|35
