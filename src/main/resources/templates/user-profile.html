@@ -9,27 +9,28 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <div class="btn-group btn-group-justified">
     <div class="btn-group">
-<form action="/" method="get">
-    <button type="submit" class="btn btn-primary">Home</button>
-</form>
-        </div>
+        <form action="/" method="get">
+            <button type="submit" class="btn btn-primary">Home</button>
+        </form>
+    </div>
     <div class="btn-group">
         <form action="/work-history" method="get">
-    <button type="submit" class="btn btn-primary">Work History</button>
-</form>
+            <button type="submit" class="btn btn-primary">Work History</button>
+        </form>
+    </div>
+    <div class="btn-group">
+        <form action="/archive" method="get">
+            <button type="submit" class="btn btn-primary">Archived Barters</button>
+        </form>
         </div>
     <div class="btn-group">
-    <form action="/archive" method="get">
-    <button type="submit" class="btn btn-primary">Archived Barters</button>
-</form>
-        </div>
-    <div class="btn-group">
-    <form action="/thread-read-all" method="get">
-    <button type="submit" class="btn btn-primary">Messages</button>
-</form>
-        </div>
+        <form action="/thread-read-all" method="get">
+            <button type="submit" class="btn btn-primary">Messages</button>
+        </form>
+    </div>
     <div class="btn-group">
         <form action="/logout" method="post">
             <button type="submit" class="btn btn-primary">Logout</button>
@@ -41,12 +42,15 @@
         <!--{{/messages}}-->
 <!--</div>-->
 </div>
+
 <div class="container">
     <div class="jumbotron">
     <h3>Hello, {{username}}!</h3>
     </div>
 </div>
+
 <br>
+
 <div class="container">
     <h4>Create a new barter:</h4>
     <br>
@@ -69,108 +73,112 @@
         <div class="radio">
             <label><input type="radio" name="service" value="false">Good</label>
         </div>
-        <button type="submit">Submit</button>
+            <button type="submit">Submit</button>
     </form>
 </div>
+
 <br><br>
+
 <div class="container">
-<h4><b>Active barters</b></h4>
+    <h4><b>Active barters</b></h4>
 </div>
     <div class="container">
-<table class="table table-striped">
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Location</th>
-        <th>Desired Swap</th>
-        <th>Date & Time</th>
-    </tr>
-    {{#activeBarters}}
-    <tr>
-        <td>{{title}}</td>
-        <td>{{description}}</td>
-        <td>{{location}}</td>
-        <td>{{acceptableExchange}}</td>
-        <td>{{timedateString}}</td>
-        <td>
-            {{^service}}
-            Upload photo:
-            <form role="form" action="/photo-create" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                <input type="file" name="photo"/>
-                <input type="hidden" name="id" value="{{id}}"/>
-                <input type="text" name="caption" placeholder="Write a caption"/>
-                <button type="submit">Upload</button>
-                </div>
-            </form>
-            {{/service}}
-            {{#service}}
-            Add work history:
-            <form role="form" action="/item-attach-work" method="post">
-                <div class="form-group">
-                <input type="hidden" name="id" value="{{id}}"/>
-                <select class="form-control" name="workId">
-                    {{#workHistory}}
-                    <option value="{{id}}">{{jobTitle}}</option>
-                    {{/workHistory}}
-                </select>
-                <button type="submit">Add</button>
-                </div>
-            </form>
-            {{/service}}
-        </td>
-        <td>
-            <form action="/item-archive" method="post">
-                <input type="hidden" name="id" value="{{id}}"/>
-                <button type="submit">Archive</button>
-            </form>
-        </td>
-        <td>
-            <form action="/update-item?id={{id}}" method="get">
-                <input type="hidden" name="id" value="{{id}}"/>
-                <button type="submit">Update</button>
-            </form>
-        </td>
-    </tr>
-    {{/activeBarters}}
-</table>
+        <table class="table table-striped">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Desired Swap</th>
+                <th>Date & Time</th>
+            </tr>
+            {{#activeBarters}}
+            <tr>
+                <td>{{title}}</td>
+                <td>{{description}}</td>
+                <td>{{location}}</td>
+                <td>{{acceptableExchange}}</td>
+                <td>{{timedateString}}</td>
+                <td>
+                    {{^service}}
+                    Upload photo:
+                    <form role="form" action="/photo-create" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                        <input type="file" name="photo"/>
+                        <input type="hidden" name="id" value="{{id}}"/>
+                        <input type="text" name="caption" placeholder="Write a caption"/>
+                        <button type="submit">Upload</button>
+                        </div>
+                    </form>
+                    {{/service}}
+                    {{#service}}
+                    Add work history:
+                    <form role="form" action="/item-attach-work" method="post">
+                        <div class="form-group">
+                        <input type="hidden" name="id" value="{{id}}"/>
+                        <select class="form-control" name="workId">
+                            {{#workHistory}}
+                            <option value="{{id}}">{{jobTitle}}</option>
+                            {{/workHistory}}
+                        </select>
+                        <button type="submit">Add</button>
+                        </div>
+                    </form>
+                    {{/service}}
+                </td>
+                <td>
+                    <form action="/item-archive" method="post">
+                        <input type="hidden" name="id" value="{{id}}"/>
+                        <button type="submit">Archive</button>
+                    </form>
+                </td>
+                <td>
+                    <form action="/update-item?id={{id}}" method="get">
+                        <input type="hidden" name="id" value="{{id}}"/>
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {{/activeBarters}}
+        </table>
     </div>
+
 <br><br>
-    <div class="container">
-<h4><b>Inactive barters</b></h4>
-        </div>
-        <div class="container">
-<table class="table table-striped">
-    <tr>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Location</th>
-        <th>Desired Swap</th>
-        <th>Date & Time</th>
-    </tr>
-    {{#inactiveBarters}}
-    <tr>
-        <td>{{title}}</td>
-        <td>{{description}}</td>
-        <td>{{location}}</td>
-        <td>{{acceptableExchange}}</td>
-        <td>{{timedateString}}</td>
-        <td>
-            <form action="/item-archive" method="post">
-                <input type="hidden" name="id" value="{{id}}"/>
-                <button type="submit">Archive</button>
-            </form>
-        </td>
-        <td>
-            <form action="/update-item?id={{id}}" method="get">
-                <input type="hidden" name="id" value="{{id}}"/>
-                <button type="submit">Update</button>
-            </form>
-        </td>
-    </tr>
-    {{/inactiveBarters}}
-</table>
-    </div>
+
+<div class="container">
+    <h4><b>Inactive barters</b></h4>
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Location</th>
+            <th>Desired Swap</th>
+            <th>Date & Time</th>
+        </tr>
+        {{#inactiveBarters}}
+        <tr>
+            <td>{{title}}</td>
+            <td>{{description}}</td>
+            <td>{{location}}</td>
+            <td>{{acceptableExchange}}</td>
+            <td>{{timedateString}}</td>
+            <td>
+                <form action="/item-archive" method="post">
+                    <input type="hidden" name="id" value="{{id}}"/>
+                    <button type="submit">Archive</button>
+                </form>
+            </td>
+            <td>
+                <form action="/update-item?id={{id}}" method="get">
+                    <input type="hidden" name="id" value="{{id}}"/>
+                    <button type="submit">Update</button>
+                </form>
+            </td>
+        </tr>
+        {{/inactiveBarters}}
+    </table>
+</div>
 
 <br><br>
 

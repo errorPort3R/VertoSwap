@@ -49,6 +49,7 @@
         <h4>a place to barter</h4>
     </div>
 </div>
+
 <div class="container">
     <h4>Search available barters:</h4>
         <form action="/" method="get">
@@ -72,24 +73,56 @@
     <div class="tab-content">
         <div id="goods" class="tab-pane fade in active">
             <h4>Goods</h4>
+            <div class="list-group">
             {{#goods}}
-            <a href="/view-item/?id={{id}}">
+            <a href="/view-item/?id={{id}}" class="list-group-item">
                 {{title}}  ({{location}})
                 <input type="hidden" name="id" value="{{id}}">
-            </a><br>
+            </a>
             {{/goods}}
+            </div>
         </div>
         <div id="services" class="tab-pane fade">
             <h4>Services</h4>
+            <div class="list-group">
             {{#services}}
-            <a href="/view-item/?id={{id}}">
+            <a href="/view-item/?id={{id}}" class="list-group-item">
                 {{title}}  ({{location}})
                 <input type="hidden" name="id" value="{{id}}">
             </a><br>
             {{/services}}
+            </div>
         </div>
     </div>
 </div>
+
+<!--<div class="container">-->
+    <!--<ul class="nav nav-pills nav-justified">-->
+        <!--<li class="active"><a data-toggle="pill" href="#goods">Goods</a></li>-->
+        <!--<li><a data-toggle="pill" href="#services">Services</a></li>-->
+    <!--</ul>-->
+
+    <!--<div class="tab-content">-->
+        <!--<div id="goods" class="tab-pane fade in active">-->
+            <!--<h4>Goods</h4>-->
+            <!--{{#goods}}-->
+            <!--<a href="/view-item/?id={{id}}">-->
+                <!--{{title}}  ({{location}})-->
+                <!--<input type="hidden" name="id" value="{{id}}">-->
+            <!--</a><br>-->
+            <!--{{/goods}}-->
+        <!--</div>-->
+        <!--<div id="services" class="tab-pane fade">-->
+            <!--<h4>Services</h4>-->
+            <!--{{#services}}-->
+            <!--<a href="/view-item/?id={{id}}">-->
+                <!--{{title}}  ({{location}})-->
+                <!--<input type="hidden" name="id" value="{{id}}">-->
+            <!--</a><br>-->
+            <!--{{/services}}-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
 
 <br><br>
 

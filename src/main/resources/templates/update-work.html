@@ -9,6 +9,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <div class="btn-group btn-group-justified">
     <div class="btn-group">
         <form action="/" method="get">
@@ -23,7 +24,9 @@
             <button type="submit" class="btn btn-primary">Logout</button></form>
     </div>
 </div>
+
 <br><br>
+
 <div class="container">
 <h4>Update Work Info:</h4>
 </div>
@@ -31,15 +34,17 @@
 <div class="container">
 <form role="form" action="/work-update" method="post">
     <div class="form-group">
-    <input type="text" class="form-control" name="jobTitle" value="{{jobTitle}}"/>
+        <input type="text" class="form-control" name="jobTitle" value="{{jobTitle}}"/>
     </div>
     <div class="form-group">
-    <input type="text" class="form-control" name="description" value="{{description}}"/>
+        <input type="text" class="form-control" name="description" value="{{description}}"/>
     </div>
-    <input type="hidden" name="id" value="{{id}}"/> 
-    <button type="submit">Submit</button>
+        <input type="hidden" name="id" value="{{id}}"/> 
+            <button type="submit">Submit</button>
 </form>
 </div>
+
 <br><br>
+
 </body>
 </html>

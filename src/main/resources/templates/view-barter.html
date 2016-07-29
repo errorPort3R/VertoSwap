@@ -25,12 +25,13 @@
         </form>
     </div>
 </div>
+
 <br>
+
 <div class="container">
     <div class="well well-sm pull-right">
         <p class="text-warning">To contact this swapper, create an account or log in.</p>
     </div>
-
 </div>
 {{/username}}
 
@@ -52,25 +53,30 @@
 {{/username}}
 <br><br>
 
+<!-- set to carousel -->
 <div class="container">
     {{#photos}} <img class="img-thumbnail" src="/photos/{{filename}}" style="height:200px"> {{/photos}}
 </div>
-<br><br>
+
+<!--<div class="container">-->
+    <!--{{#photos}} <img class="img-thumbnail" src="/photos/{{filename}}" style="height:200px"> {{/photos}}-->
+<!--</div>-->
+<!--<br><br>-->
 
 {{#good}}
 {{#work}}
 <div class="container">
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <b>{{user.username}}'s Work History</b><br>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <b>{{user.username}}'s Work History</b><br>
+        </div>
+        <div class="panel-body">
+            {{jobTitle}}
+        </div>
+        <div class="panel-body">
+            {{description}}
+        </div>
     </div>
-    <div class="panel-body">
-        {{jobTitle}}
-    </div>
-    <div class="panel-body">
-        {{description}}
-    </div>
-</div>
 </div>
 {{/work}}
 {{/good}}
