@@ -349,6 +349,10 @@ public class VertoSwapController
 //        session.setAttribute("username", user.getUsername());
         model.addAttribute("good", item);
 
+        if(item.isService()) {
+            model.addAttribute("service", true);
+        }
+
         Iterable<Photo> photoIterable = photos.findByItem(item);
         ArrayList<Photo> photoArrayList = new ArrayList<>();
         for (Photo p : photoIterable) {
