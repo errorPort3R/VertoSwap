@@ -52,12 +52,13 @@
         <td>
             <form action="/update-item?id={{id}}" method="get">
                 <input type="hidden" name="id" value="{{id}}"/>
-                <button type="submit">Update</button></form>
-            </td>
+                <button type="submit">Update</button>
+            </form>
+        </td>
         <td>
             <form action="/item-delete" method="post">
                 <input type="hidden" name="id" value="{{id}}"/>
-                <button type="submit">Delete</button>
+                <button type="submit"><span class="glyphicon glyphicon-trash"></span></button>
             </form>
         </td>
     </tr>

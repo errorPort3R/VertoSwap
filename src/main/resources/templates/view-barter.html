@@ -73,7 +73,10 @@
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
             <div class="item active">
-                <img src="/photos/VS Carousel Active.png" class="img-responsive center-block">
+                <img src="/photos/{{photoActive.filename}}" class="img-responsive center-block">
+                <div class="carousel-caption">
+                    <p>{{photoActive.caption}}</p>
+                </div>
             </div>
             {{#photos}}
                 <div class="item">
@@ -122,7 +125,7 @@
     <div class="well text-primary">
     {{#good}}
         <b>{{title}}</b> <br>
-        <small><text-muted>Location:</text-muted></small><br><br>
+        <small><text-muted>Location:</text-muted></small><br>
         {{location}}<br>
         <small><text-muted>Description:</text-muted></small><br>
         {{description}}<br>
