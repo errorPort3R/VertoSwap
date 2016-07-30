@@ -19,6 +19,11 @@
 
 {{^username}}
 <div class="container">
+    <div class="pull-left">
+        <form action="/" method="get">
+            <button type="submit" class="btn btn-primary">Home</button>
+        </form>
+    </div>
     <div class="pull-right">
         <form action="/account-create" method="get">
             <button type="submit" class="btn btn-primary">Create account</button>
@@ -46,15 +51,18 @@
 <div class="btn-group btn-group-justified">
     <div class="btn-group">
         <form action="/" method="get">
-            <button type="submit" class="btn btn-primary">Home</button></form>
+            <button type="submit" class="btn btn-primary">Home</button>
+        </form>
     </div>
     <div class="btn-group">
         <form action="/user-profile" method="get">
-            <button type="submit" class="btn btn-primary">Profile</button></form>
+            <button type="submit" class="btn btn-primary">Profile</button>
+        </form>
     </div>
     <div class="btn-group">
         <form action="/logout" method="post">
-            <button type="submit" class="btn btn-primary">Logout</button></form>
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
     </div>
 </div>
 {{/username}}
