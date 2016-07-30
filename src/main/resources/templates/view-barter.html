@@ -19,7 +19,7 @@
 
 {{^username}}
 <div class="container">
-    <div class="pull-left">
+    <div class="pull-right">
         <form action="/" method="get">
             <button type="submit" class="btn btn-primary">Home</button>
         </form>
@@ -30,9 +30,13 @@
         </form>
     </div>
     <div class="pull-right">
-        <form action="/login" method="post">
-            <input type="text" name="username" placeholder="Username"/>
-            <input type="password" name="password" placeholder="Password"/>
+        <form role="form" class="form-inline" action="/login" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control" name="username" placeholder="Username"/>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password"/>
+            </div>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
@@ -42,7 +46,7 @@
 
 <div class="container">
     <div class="well well-sm pull-right">
-        <p class="text-warning">To contact this swapper, create an account or log in.</p>
+        <p class="text-warning">To contact this swapper, log in or create an account.</p>
     </div>
 </div>
 {{/username}}
