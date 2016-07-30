@@ -72,12 +72,14 @@
 <div class="container">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner" role="listbox">
+            {{#photoActive}}
             <div class="item active">
-                <img src="/photos/{{photoActive.filename}}" class="img-responsive center-block">
+                <img src="/photos/{{filename}}" class="img-responsive center-block">
                 <div class="carousel-caption">
-                    <p>{{photoActive.caption}}</p>
+                    <p>{{caption}}</p>
                 </div>
             </div>
+            {{/photoActive}}
             {{#photos}}
                 <div class="item">
                 <img src="/photos/{{filename}}" class="img-responsive center-block">
@@ -85,7 +87,6 @@
                     <p>{{caption}}</p>
                 </div>
             </div>
-            {{/photos}}
         </div>
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -96,6 +97,7 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
+            {{/photos}}
 </div>
 {{/service}}
 

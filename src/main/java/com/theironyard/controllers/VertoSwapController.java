@@ -375,9 +375,10 @@ public class VertoSwapController
         ArrayList<Photo> photoArrayList = new ArrayList<>();
         for (Photo p : photoIterable) {
             photoArrayList.add(p);
+            model.addAttribute("photoActive", photoArrayList.get(0));
+            model.addAttribute("photos", photoArrayList.subList(1, photoArrayList.size()));
         }
-        model.addAttribute("photoActive", photoArrayList.get(0));
-        model.addAttribute("photos", photoArrayList.subList(1, photoArrayList.size()));
+
 
         return "view-barter";
     }
