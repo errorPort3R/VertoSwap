@@ -56,6 +56,9 @@ public class Item
 
     private String timedateString;
 
+//    @OneToMany
+//    private Photo photo;
+
     public Item()
     {
     }
@@ -185,4 +188,12 @@ public class Item
     {
         this.timedateString = timedateString;
     }
+
+//    public Photo getPhoto() {
+//        return photo;
+//    }
+//
+//    public void setPhoto(Photo photo) {
+//        this.photo = photo;
+//    }
 }

@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
     <meta charset="UTF-8">
     <title>VertoSwap</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,21 +8,25 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 
-<!--<div id="logindiv">-->
 {{^username}}
 <div class="container">
     <div class="pull-right">
             <form action="/account-create" method="get">
                 <button type="submit" class="btn btn-primary">Create account</button>
             </form>
-        </div>
+    </div>
     <div class="pull-right">
-        <form action="/login" method="post">
-            <input type="text" name="username" placeholder="Username"/>
-            <input type="password" name="password" placeholder="Password"/>
-            <button type="submit" class="btn btn-primary">Login</button>
+        <form role="form" class="form-inline" action="/login" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control" name="username" placeholder="Username"/>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" name="password" placeholder="Password"/>
+            </div>
+                <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
 </div>
@@ -32,56 +35,102 @@
 {{#username}}
 <div class="btn-group btn-group-justified">
     <div class="btn-group">
-    <form action="/user-profile" method="get">
-    <button type="submit" class="btn btn-primary">Go to profile</button>
-</form>
-        </div>
+        <form action="/user-profile" method="get">
+            <button type="submit" class="btn btn-primary">Go to profile</button>
+        </form>
+    </div>
     <div class="btn-group">
-    <form action="/logout" method="post">
-    <button type="submit" class="btn btn-primary">Logout</button>
-</form>
-        </div>
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+    </div>
 {{/username}}
 </div>
 
-
-<!--<div id="page-label">-->
 <div class="container">
     <div class="jumbotron">
-<h2>VertoSwap</h2>
+        <h2>VertoSwap</h2>
         <h4>a place to barter</h4>
     </div>
 </div>
+
 <div class="container">
-<h4>Search available barters:</h4>
-<form action="/" method="get">
-    <input type="text" name="search" placeholder="Search"/>
-    <button type="submit">Search</button>
-</form>
+    <h4>Search available barters:</h4>
+        <form role="form" action="/" method="get">
+            <div class="form-group">
+                <input type="text" class="form-control" name="search" placeholder="Search"/>
+            </div>
+            <button type="submit"><span class="glyphicon glyphicon-search"></span>Search</button>
+        </form>
+    <br>
+    <form action="/" method="get">
+        <button type="submit" class="btn btn-block">Show all barters</button>
+    </form>
 </div>
+
 <br><br>
-<!--<div id="goods-home" class="floating-box">-->
+
 <div class="container">
-<div class="row">
-    <div class="col-md-6">
-<h4><b>Goods</b></h4><br>
-    {{#goods}}
-    <a href="/view-item/?id={{id}}">
-       {{title}}  ({{location}})<br/>
-        <input type="hidden" name="id" value="{{id}}">
-    </a>
-    {{/goods}}
-    </div>
-<!--<div id="services-home" class="floating-box">-->
-    <div class="col-md-6">
-        <h4><b>Services</b></h4><br/>
-    {{#services}}
-    <a href="/view-item/?id={{id}}">
-        {{title}}  ({{location}}) <br/>
-    <input type="hidden" name="id" value="{{id}}"></a>
-    {{/services}}
+    <ul class="nav nav-pills nav-justified">
+        <li class="active"><a data-toggle="pill" href="#goods">Goods</a></li>
+        <li><a data-toggle="pill" href="#services">Services</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="goods" class="tab-pane fade in active">
+            <h4>Goods</h4>
+            <div class="list-group">
+            {{#goods}}
+            <a href="/view-item/?id={{id}}" class="list-group-item">
+                {{title}}  ({{location}})
+                <input type="hidden" name="id" value="{{id}}">
+            </a>
+            {{/goods}}
+            </div>
         </div>
+        <div id="services" class="tab-pane fade">
+            <h4>Services</h4>
+            <div class="list-group">
+            {{#services}}
+            <a href="/view-item/?id={{id}}" class="list-group-item">
+                {{title}}  ({{location}})
+                <input type="hidden" name="id" value="{{id}}">
+            </a>
+            {{/services}}
+            </div>
+        </div>
+    </div>
 </div>
-</div>
+
+<!--<div class="container">-->
+    <!--<ul class="nav nav-pills nav-justified">-->
+        <!--<li class="active"><a data-toggle="pill" href="#goods">Goods</a></li>-->
+        <!--<li><a data-toggle="pill" href="#services">Services</a></li>-->
+    <!--</ul>-->
+
+    <!--<div class="tab-content">-->
+        <!--<div id="goods" class="tab-pane fade in active">-->
+            <!--<h4>Goods</h4>-->
+            <!--{{#goods}}-->
+            <!--<a href="/view-item/?id={{id}}">-->
+                <!--{{title}}  ({{location}})-->
+                <!--<input type="hidden" name="id" value="{{id}}">-->
+            <!--</a><br>-->
+            <!--{{/goods}}-->
+        <!--</div>-->
+        <!--<div id="services" class="tab-pane fade">-->
+            <!--<h4>Services</h4>-->
+            <!--{{#services}}-->
+            <!--<a href="/view-item/?id={{id}}">-->
+                <!--{{title}}  ({{location}})-->
+                <!--<input type="hidden" name="id" value="{{id}}">-->
+            <!--</a><br>-->
+            <!--{{/services}}-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<br><br>
+
 </body>
 </html>

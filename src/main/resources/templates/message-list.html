@@ -14,48 +14,49 @@
 
 <div class="btn-group btn-group-justified">
     <div class="btn-group">
-<form action="/user-profile" method="get">
-    <button type="submit" class="btn btn-primary">Go to profile</button>
-</form>
+        <form action="/" method="get">
+            <button type="submit" class="btn btn-primary">Home</button>
+        </form>
     </div>
     <div class="btn-group">
-<form action="/" method="get">
-    <button type="submit" class="btn btn-primary">Home</button>
-</form>
+        <form action="/user-profile" method="get">
+            <button type="submit" class="btn btn-primary">Go to profile</button>
+        </form>
     </div>
     <div class="btn-group">
-<form action="/logout" method="post">
-    <button type="submit" class="btn btn-primary">Logout</button>
-</form>
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
+    </div>
 </div>
-</div>
+
+<br><br>
 
 <div class="container">
-<br/>
-
 {{#conversations}}
     <div class="btn-group">
-    <form action="/message-delete" method ="post">
-    <input type="hidden" name="id" value="{{id}}"/>
-    <a href="#" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
-</form>
+        <form action="/message-delete" method ="post">
+            <input type="hidden" name="id" value="{{id}}"/>
+            <a href="#" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+        </form>
     </div>
     <div class="btn-group">
-<a href="/message-get-by-conversation/?conversation={{conversation}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
+        <a href="/message-get-by-conversation/?conversation={{conversation}}" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></a>
     </div>
-        <div id='divlabel'>
-{{recipient.username}}<br/>
-    <input type="hidden" name="id" value="{{id}}"/>
-    {{timedateString}}
-</div>
-<div id='divmsg'>
-    <form>
-    <a href="/message-get-by-conversation/?conversation={{conversation}}">
-        {{item.title}}
-        </a>
-    </form>
-    </div><br /><br />
+    <div id='divlabel'>
+        {{recipient.username}}<br>
+        <input type="hidden" name="id" value="{{id}}"/>
+        {{timedateString}}
+    </div>
+    <div id='divmsg'>
+        <form>
+            <a href="/message-get-by-conversation/?conversation={{conversation}}">
+            {{item.title}}
+            </a>
+        </form>
+    </div><br><br>
 {{/conversations}}
-    </div>
+</div>
+
 </body>
 </html>

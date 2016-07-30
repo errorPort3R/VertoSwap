@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
     <title>Archive</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,6 +9,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <div class="btn-group btn-group-justified">
     <div class="btn-group">
     <form action="/" method="get">
@@ -24,19 +24,23 @@
         <button type="submit" class="btn btn-primary">Logout</button></form>
         </div>
 </div>
+
 <br><br>
+
 <div class="container">
+    <div class="jumbotron">
 <h3>{{username}}'s Archive</h3>
+    </div>
 </div>
-<br><br>
+<br>
 <div class="container">
 <table class="table table-striped">
     <tr>
         <th>Title</th>
         <th>Description</th>
         <th>Location</th>
-        <th>Acceptable Exchange</th>
-        <th>Time</th>
+        <th>Desired Swap</th>
+        <th>Date & Time</th>
     </tr>
     {{#archived}}
     <tr>
@@ -44,69 +48,27 @@
         <td>{{description}}</td>
         <td>{{location}}</td>
         <td>{{acceptableExchange}}</td>
-        <td>{{time}}</td>
+        <td>{{timedateString}}</td>
         <td>
             <form action="/update-item?id={{id}}" method="get">
                 <input type="hidden" name="id" value="{{id}}"/>
-                <button type="submit">Update</button></form>
-            </td>
+                <button type="submit">Update</button>
+            </form>
+        </td>
         <td>
             <form action="/item-delete" method="post">
                 <input type="hidden" name="id" value="{{id}}"/>
-                <button type="submit">Delete</button>
+                <button type="submit"><span class="glyphicon glyphicon-trash"></span></button>
             </form>
         </td>
     </tr>
     {{/archived}}
 </table>
 </div>
+
+<br><br>
+
 </body>
 </html>
 
 
-<!--<!DOCTYPE html>-->
-<!--<html lang="en">-->
-<!--<head>-->
-    <!--<link rel="stylesheet" type="text/css" href="style.css">-->
-    <!--<meta charset="UTF-8">-->
-    <!--<title>Archive</title>-->
-<!--</head>-->
-<!--<body>-->
-<!--<a href="/">Home</a>-->
-<!--<br>-->
-<!--<a href="/user-profile">Go to profile</a>-->
-<!--<form action="/logout" method="post">-->
-    <!--<button type="submit">Logout</button>-->
-<!--</form>-->
-<!--<br><br>-->
-<!--{{username}}'s Archive-->
-<!--<br><br>-->
-<!--<table>-->
-    <!--<tr>-->
-        <!--<th>Title</th>-->
-        <!--<th>Description</th>-->
-        <!--<th>Location</th>-->
-        <!--<th>Acceptable Exchange</th>-->
-        <!--<th>Time</th>-->
-    <!--</tr>-->
-    <!--{{#archived}}-->
-    <!--<tr>-->
-        <!--<td>{{title}}</td>-->
-        <!--<td>{{description}}</td>-->
-        <!--<td>{{location}}</td>-->
-        <!--<td>{{acceptableExchange}}</td>-->
-        <!--<td>{{time}}</td>-->
-        <!--<td>-->
-            <!--<form action="/item-delete" method="post">-->
-                <!--<input type="hidden" name="id" value="{{id}}"/>-->
-                <!--<button type="submit">Delete</button>-->
-            <!--</form>-->
-        <!--</td>-->
-        <!--<td>-->
-            <!--<a href="/update-item?id={{id}}">Update</a>-->
-        <!--</td>-->
-    <!--</tr>-->
-    <!--{{/archived}}-->
-<!--</table>-->
-<!--</body>-->
-<!--</html>-->
