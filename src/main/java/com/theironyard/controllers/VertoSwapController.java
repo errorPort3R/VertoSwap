@@ -18,13 +18,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Array;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
 
 import static com.theironyard.entities.Item.Status.*;
+
 
 
 /**
@@ -35,6 +38,11 @@ public class VertoSwapController
 {
 
     public static String PHOTOS_DIR = "photos/";
+    public static final String  USER_FILE = "demovs1users.txt";
+    public static final String  ITEM_FILE = "demovs1items.txt";
+    public static final String  WORK_FILE = "demovs1works.txt";
+    public static final String  MESSAGE_FILE = "demovs1messages.txt";
+    public static final String  PHOTO_FILE = "demovs1photo.txt";
 
     @Autowired
     UserRepository users;
@@ -50,6 +58,16 @@ public class VertoSwapController
 
     @Autowired
     PhotoRepository photos;
+
+
+    @PostConstruct
+    public void init() throws SQLException, IOException, PasswordStorage.CannotPerformOperationException
+    {
+        if (users.count() == 0)
+        {
+            migrateTextFiles();
+        }
+    }
 
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
@@ -607,6 +625,63 @@ public class VertoSwapController
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
 
+    }
+
+    public void migrateTextFiles() throws PasswordStorage.CannotPerformOperationException, IOException
+    {
+        //User: username|password 1234
+        Scanner fileScanner =  new Scanner(new File(USER_FILE));
+        fileScanner.nextLine();
+        while (fileScanner.hasNext())
+        {
+            String line = fileScanner.nextLine();
+            String[] fields = line.split("\\|");
+            users.save(new User(fields[0],PasswordStorage.createHash(fields[1])));
+        }
+        //Item: title|location|description|acceptableExchange|status|service|user
+        fileScanner = new Scanner(new File(ITEM_FILE));
+        fileScanner.nextLine();
+        while (fileScanner.hasNext())
+        {
+            String line = fileScanner.nextLine();
+            String[] fields = line.split("\\|");
+            items.save(new Item(fields[0],fields[1], fields[2], fields[3], Item.Status.valueOf(fields[4]), LocalDateTime.now(), Boolean.valueOf(fields[5]), users.findOne(Integer.valueOf(fields[6]))));
+        }
+        //Work:jobTitle|description|user
+        fileScanner = new Scanner(new File(WORK_FILE));
+        fileScanner.nextLine();
+        while (fileScanner.hasNext())
+        {
+            String line = fileScanner.nextLine();
+            String[] fields = line.split("\\|");
+            works.save(new Work(fields[0], fields[1], users.findOne(Integer.valueOf(fields[2]))));
+        }
+        //Message:author|recipient|item|body|conversation
+        fileScanner = new Scanner(new File(MESSAGE_FILE));
+        fileScanner.nextLine();
+        while (fileScanner.hasNext())
+        {
+            String line = fileScanner.nextLine();
+            String[] fields = line.split("\\|");
+            messages.save(new Message(users.findOne(Integer.valueOf(fields[0])), users.findOne(Integer.valueOf(fields[1])), items.findOne(Integer.valueOf(fields[2])), fields[3], LocalDateTime.now(), fields[4]));
+        }
+        //Photo:filename|caption|user|item
+        fileScanner = new Scanner(new File(PHOTO_FILE));
+        fileScanner.nextLine();
+        while (fileScanner.hasNext())
+        {
+            String line = fileScanner.nextLine();
+            String[] fields = line.split("\\|");
+            File dir = new File("public/" + PHOTOS_DIR);
+            dir.mkdirs();
+
+            File photoFile = File.createTempFile("photo", fields[0], dir);
+            FileOutputStream fos = new FileOutputStream(photoFile);
+            fos.write(fields[0].getBytes());
+
+            photos.save(new Photo(photoFile.getName(),fields[1],users.findOne(Integer.valueOf(fields[2])), items.findOne(Integer.valueOf(fields[3]))));
+        }
+        fileScanner.close();
     }
 
 
