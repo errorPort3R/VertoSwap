@@ -3,11 +3,9 @@ package com.theironyard.controllers;
 import com.theironyard.entities.Messagea;
 import com.theironyard.entities.User;
 import com.theironyard.services.*;
+import jodd.json.JsonParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JacksonJsonParser;
-import org.springframework.boot.json.JsonParser;
-import org.springframework.boot.json.JsonSimpleJsonParser;
-import org.springframework.format.Parser;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -30,6 +28,7 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -66,13 +65,13 @@ public class VSChatController
     @SendTo("/chat")
     public Message sendMessage(Message msg)
     {
-        HashMap mapper = new HashMap();
+        System.out.println(new String((byte[]) msg.getPayload()));
+        LinkedHashMap mapper = new LinkedHashMap();
         JacksonJsonParser parser = new JacksonJsonParser();
-        mapper = (HashMap) parser.parseMap(new String((byte[]) msg.getPayload()));
+        mapper = (LinkedHashMap) parser.parseMap(new String((byte[]) msg.getPayload()));
         User user = users.findByUsername((String)mapper.get("name"));
         Messagea mess = new Messagea(user, users.findOne(Integer.valueOf((String)mapper.get("receiverid"))), items.findOne(Integer.valueOf((String)mapper.get("itemid"))), (String)mapper.get("body"), LocalDateTime.now(), (String) mapper.get("conversation"));
         messages.save(mess);
-        System.out.println(new String((byte[]) msg.getPayload()));
         return msg;
     }
 }
