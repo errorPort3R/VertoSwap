@@ -547,7 +547,9 @@ public class VertoSwapController
         {
             receiver = messageList.get(messageList.size()-1).getItem().getUser();
         }
+        Collections.sort(messageList);
         session.setAttribute("username", user.getUsername());
+        model.addAttribute("name", user.getUsername());
         model.addAttribute("conkey", conKey);
         model.addAttribute("itemid", itemId);
         model.addAttribute("receiverid", receiver.getId());
@@ -607,6 +609,20 @@ public class VertoSwapController
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
 
+    }
+
+    @RequestMapping(path = "/conversation-delete", method = RequestMethod.POST)
+    public String deleteConversation(HttpSession session, String conversation)
+    {
+        String username = (String)session.getAttribute("username");
+        User user = users.findByUsername(username);
+        Iterable<Messagea> messageList = messages.findByConversation(conversation);
+        for(Messagea m : messageList)
+        {
+            messages.delete(m.getId());
+        }
+        session.setAttribute("username", user.getUsername());
+        return "";
     }
 
     public void migrateTextFiles() throws PasswordStorage.CannotPerformOperationException, IOException

@@ -4,6 +4,7 @@ import com.theironyard.entities.Messagea;
 import com.theironyard.entities.User;
 import com.theironyard.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JacksonJsonParser;
 import org.springframework.boot.json.JsonParser;
 import org.springframework.boot.json.JsonSimpleJsonParser;
 import org.springframework.format.Parser;
@@ -27,6 +28,7 @@ import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,21 +57,20 @@ public class VSChatController
     static SimpMessagingTemplate messenger;
 
     @Autowired
-    public VSChatController(SimpMessagingTemplate messenger, HttpSession session)
+    public VSChatController(SimpMessagingTemplate messenger)
     {
         this.messenger = messenger;
     }
-
+    //User author, User recipient, Item item, String body, LocalDateTime time, String conversation)
     @MessageMapping("/topic/chat")
     @SendTo("/chat")
-    public Message sendMessage(Message msg, HttpSession session)
+    public Message sendMessage(Message msg)
     {
-        String username = (String)session.getAttribute("username");
-        User user = users.findByUsername(username);
-        Map mapper = new HashMap();
-        JsonSimpleJsonParser parser = new JsonSimpleJsonParser();
-        mapper = parser.parseMap(new String((byte[]) msg.getPayload()));
-        Messagea mess = new Messagea(user, mapper.get());
+        HashMap mapper = new HashMap();
+        JacksonJsonParser parser = new JacksonJsonParser();
+        mapper = (HashMap) parser.parseMap(new String((byte[]) msg.getPayload()));
+        User user = users.findByUsername((String)mapper.get("name"));
+        Messagea mess = new Messagea(user, users.findOne(Integer.valueOf((String)mapper.get("receiverid"))), items.findOne(Integer.valueOf((String)mapper.get("itemid"))), (String)mapper.get("body"), LocalDateTime.now(), (String) mapper.get("conversation"));
         messages.save(mess);
         System.out.println(new String((byte[]) msg.getPayload()));
         return msg;
