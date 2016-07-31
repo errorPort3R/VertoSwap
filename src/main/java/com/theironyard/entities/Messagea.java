@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  */
 @Entity
 @Table(name = "messages")
-public class Message implements Comparable<Message>
+public class Messagea implements Comparable<Messagea>
 {
     @Id
     @GeneratedValue
@@ -37,11 +37,11 @@ public class Message implements Comparable<Message>
 
     private String timedateString;
 
-    public Message()
+    public Messagea()
     {
     }
     //user, item.getUser(), item, body, LocalDateTime.now(), conversation
-    public Message(User author, User recipient, Item item, String body, LocalDateTime time, String conversation)
+    public Messagea(User author, User recipient, Item item, String body, LocalDateTime time, String conversation)
     {
         this.author = author;
         this.recipient = recipient;
@@ -135,7 +135,7 @@ public class Message implements Comparable<Message>
     }
 
     @Override
-    public int compareTo(Message o)
+    public int compareTo(Messagea o)
     {
         if (this.id < o.id)
         {

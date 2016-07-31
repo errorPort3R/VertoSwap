@@ -53,7 +53,7 @@ public class VertoSwapController
     ItemRepository items;
 
     @Autowired
-    MessageRepository messages;
+    MessageaRepository messages;
 
     @Autowired
     PhotoRepository photos;
@@ -130,7 +130,7 @@ public class VertoSwapController
         //Iterable<Item> activeItems = items.findByUserAndStatus(user, ACTIVE);
         Iterable<Item> inactiveItems = items.findByUserAndStatusOrderByTimeDesc(user, INACTIVE);
         //Iterable<Item> inactiveItems = items.findByUserAndStatus(user, INACTIVE);
-        Iterable<Message> messagesList = messages.findByRecipient(user);
+        Iterable<Messagea> messagesList = messages.findByRecipient(user);
         model.addAttribute("username", username);
         model.addAttribute("activeBarters", activeItems);
 
@@ -505,7 +505,7 @@ public class VertoSwapController
         User user = users.findByUsername(username);
         Item item = items.findOne(itemid);
         User receiver = users.findOne(receiverid);
-        Message m = new Message(user, receiver, item, body, LocalDateTime.now(), conversation);
+        Messagea m = new Messagea(user, receiver, item, body, LocalDateTime.now(), conversation);
         messages.save(m);
         session.setAttribute("username", user.getUsername());
         return "redirect:/thread-read-all";
@@ -521,7 +521,7 @@ public class VertoSwapController
         Item item = items.findOne(Integer.valueOf(itemId));
         //create conversation key
         String conversation = String.format("%s_%s", itemId, user.getId());
-        Message m = new Message(user, item.getUser(), item, body, LocalDateTime.now(), conversation);
+        Messagea m = new Messagea(user, item.getUser(), item, body, LocalDateTime.now(), conversation);
         messages.save(m);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
@@ -532,7 +532,7 @@ public class VertoSwapController
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        List<Message> messageList = messages.findByConversation(conversation);
+        List<Messagea> messageList = messages.findByConversation(conversation);
         Collections.sort(messageList);
         //get variables for page
 
@@ -558,19 +558,19 @@ public class VertoSwapController
     @RequestMapping(path = "/thread-read-all", method = RequestMethod.GET)
     public String getConversation(HttpSession session, Model model, ArrayList<String> conversationId)
     {
-        ArrayList<Message> messageList = new ArrayList();
-        HashMap<String ,Message> mapList= new HashMap<>();
+        ArrayList<Messagea> messageList = new ArrayList();
+        HashMap<String ,Messagea> mapList= new HashMap<>();
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        List<Message> messageLista = messages.findByRecipient(user);
-        List<Message> messageListb = messages.findByAuthor(user);
-        for (Message b: messageListb)
+        List<Messagea> messageLista = messages.findByRecipient(user);
+        List<Messagea> messageListb = messages.findByAuthor(user);
+        for (Messagea b: messageListb)
         {
             messageLista.add(b);
         }
         Collections.sort(messageLista);
 
-        for(Message m : messageLista)
+        for(Messagea m : messageLista)
         {
             mapList.put(m.getConversation(), m);
         }
@@ -578,7 +578,7 @@ public class VertoSwapController
         while (iter.hasNext())
         {
             Map.Entry pair = (Map.Entry)iter.next();
-            messageList.add((Message)pair.getValue());
+            messageList.add((Messagea)pair.getValue());
             iter.remove();
         }
 
@@ -588,7 +588,7 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/message-update", method = RequestMethod.POST)
-    public String updateMessage(HttpSession session,int id, Message message)
+    public String updateMessage(HttpSession session,int id, Messagea message)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
@@ -645,7 +645,7 @@ public class VertoSwapController
         {
             String line = fileScanner.nextLine();
             String[] fields = line.split("\\|");
-            messages.save(new Message(users.findOne(Integer.valueOf(fields[0])), users.findOne(Integer.valueOf(fields[1])), items.findOne(Integer.valueOf(fields[2])), fields[3], LocalDateTime.now(), fields[4]));
+            messages.save(new Messagea(users.findOne(Integer.valueOf(fields[0])), users.findOne(Integer.valueOf(fields[1])), items.findOne(Integer.valueOf(fields[2])), fields[3], LocalDateTime.now(), fields[4]));
         }
         //Photo:filename|caption|user|item
         fileScanner = new Scanner(new File(PHOTO_FILE));

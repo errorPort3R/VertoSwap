@@ -1,8 +1,12 @@
 package com.theironyard.controllers;
 
+import com.theironyard.entities.Messagea;
 import com.theironyard.entities.User;
 import com.theironyard.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.JsonParser;
+import org.springframework.boot.json.JsonSimpleJsonParser;
+import org.springframework.format.Parser;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -24,10 +28,12 @@ import org.springframework.web.socket.messaging.WebSocketStompClient;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by jeffryporter on 7/29/16.
  */
+@Controller
 public class VSChatController
 {
     @Autowired
@@ -40,7 +46,7 @@ public class VSChatController
     ItemRepository items;
 
     @Autowired
-    MessageRepository messages;
+    MessageaRepository messages;
 
     @Autowired
     PhotoRepository photos;
@@ -51,7 +57,6 @@ public class VSChatController
     @Autowired
     public VSChatController(SimpMessagingTemplate messenger, HttpSession session)
     {
-
         this.messenger = messenger;
     }
 
@@ -59,10 +64,14 @@ public class VSChatController
     @SendTo("/chat")
     public Message sendMessage(Message msg, HttpSession session)
     {
-//        String username = (String)session.getAttribute("username");
-//        User user = users.findByUsername(username);
-//        Message mess = new Message(new String((byte[]) msg.getPayload()));
-//        messages.save(mess);
+        String username = (String)session.getAttribute("username");
+        User user = users.findByUsername(username);
+        Map mapper = new HashMap();
+        JsonSimpleJsonParser parser = new JsonSimpleJsonParser();
+        mapper = parser.parseMap(new String((byte[]) msg.getPayload()));
+        Messagea mess = new Messagea(user, mapper.get());
+        messages.save(mess);
+        System.out.println(new String((byte[]) msg.getPayload()));
         return msg;
     }
 }
