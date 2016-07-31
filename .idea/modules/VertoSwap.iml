@@ -8,5 +8,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="org.jodd:jodd-json:3.6.7" level="project" />
+    <orderEntry type="library" name="org.jodd:jodd-json:3.6.71" level="project" />
+    <orderEntry type="library" name="org.jodd:jodd-json:3.7.1" level="project" />
   </component>
 </module>

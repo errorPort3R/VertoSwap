@@ -82,6 +82,8 @@
     <orderEntry type="library" name="Gradle: javax.validation:validation-api:1.1.0.Final" level="project" />
     <orderEntry type="library" name="Gradle: com.fasterxml:classmate:1.1.0" level="project" />
     <orderEntry type="library" name="Gradle: ch.qos.logback:logback-core:1.1.7" level="project" />
+    <orderEntry type="library" name="org.jodd:jodd-json:3.6.71" level="project" />
+    <orderEntry type="library" name="org.jodd:jodd-json:3.7.1" level="project" />
   </component>
   <component name="TestModuleProperties" production-module="VertoSwap_main" />
 </module>
