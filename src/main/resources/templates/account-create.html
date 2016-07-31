@@ -2,15 +2,38 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="style.css">
     <title>Create Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/spacelab/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-Create your account:<br>
-<form action="/account-create" method="post">
-    <input type="text" name="username" placeholder="Username"/>
-    <input type="password" name="password" placeholder="Password"/>
-    <button type="submit">Create account</button>
-</form>
+
+<div class="container">
+    <div class="jumbotron">
+        <h2>VertoSwap</h2>
+        <h4>a place to barter</h4>
+    </div>
+</div>
+
+<div class="container">
+<h4>Create your account:</h4>
+</div>
+<br>
+<div class="container">
+    <form role="form" action="/account-create" method="post">
+        <div class="form-group">
+            <input class="form-control" type="text" name="username" placeholder="Username"/>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password"/>
+        </div>
+        <button type="submit">Create account</button>
+    </form>
+</div>
+
+<br><br>
+
 </body>
 </html>

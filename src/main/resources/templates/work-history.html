@@ -9,6 +9,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
+
 <div class="btn-group btn-group-justified">
     <div class="btn-group">
         <form action="/" method="get">
@@ -23,11 +24,16 @@
             <button type="submit" class="btn btn-primary">Logout</button></form>
     </div>
 </div>
+
 <br><br>
+
 <div class="container">
+    <div class="jumbotron">
     <h3>{{username}}'s Work History</h3>
+    </div>
 </div>
-<br><br>
+<br>
+
 <div class="container">
     <table class="table table-striped">
         <tr>
@@ -54,19 +60,23 @@
         {{/workList}}
     </table>
 </div>
+
 <br><br>
+
 <div class="container">
-<h4>Add a job to your work history:</h4>
-    <br>
-<form role="form" action="/work-create" method="post">
-    <div class="form-group">
-    <input type="text" class="form-control" name="jobTitle" placeholder="Job title"/>
-    </div>
-    <div class="form-group">
-    <input type="text" class="form-control" name="description" placeholder="Description"/>
-    </div>
-    <button type="submit">Submit</button>
-</form>
+    <h4>Add a job to your work history:</h4><br>
+        <form role="form" action="/work-create" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control" name="jobTitle" placeholder="Job title"/>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="description" placeholder="Description"/>
+            </div>
+                <button type="submit">Submit</button>
+        </form>
 </div>
+
+<br><br>
+
 </body>
 </html>
