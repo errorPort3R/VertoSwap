@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.6/spacelab/bootstrap.min.css">
     <link rel="stylesheet" href="style.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
@@ -33,16 +34,19 @@
 <br><br>
 
 <div class="container">
+    <div class="list-group">
 {{#conversations}}
-    <div class="btn-group">
+        <div class="list-group-item">
+            <div class="btn-group">
     <form action="/conversation-delete" method ="post">
-    <input type="hidden" name="id" value="{{id}}"/>
-    <a href="#" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-trash"></span></a>
+        <input type="hidden" name="conversation" value="{{conversation}}"/>
+    <button type="submit" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-trash"></span></button></a>
 </form>
     </div>
     <div class="btn-group">
-        <form action="/message-get-by-conversation" method ="get">
+        <form action="/message-get-by-conversation" method="get">
             <input type="hidden" name="conversation" value="{{conversation}}"/>
+            <input type="hidden" id="conversation" value="{{conversation}}"/>
             <button type="submit" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></a>
         </form>
     </div>
@@ -52,15 +56,11 @@
     {{timedateString}}
 </div>
 <div id='divmsg'>
-    <form action="/message-get-by-conversation" method ="get">
-        <input type="hidden" name="conversation" value="{{conversation}}"/>
-    <a type="submit">
         {{item.title}}
-        </a>
-    </form>
     </div><br /><br />
 {{/conversations}}
 </div>
+        </div></div>
 
 </body>
 </html>

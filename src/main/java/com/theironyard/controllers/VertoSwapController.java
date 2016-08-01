@@ -43,6 +43,7 @@ public class VertoSwapController
     public static final String  WORK_FILE = "demovs1works.txt";
     public static final String  MESSAGE_FILE = "demovs1messages.txt";
     public static final String  PHOTO_FILE = "demovs1photo.txt";
+    public static State state = new State();
 
     @Autowired
     UserRepository users;
@@ -60,6 +61,7 @@ public class VertoSwapController
     PhotoRepository photos;
 
 
+
     @PostConstruct
     public void init() throws SQLException, IOException, PasswordStorage.CannotPerformOperationException
     {
@@ -67,6 +69,7 @@ public class VertoSwapController
         {
             migrateTextFiles();
         }
+
     }
 
 
@@ -402,11 +405,14 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/item-attach-work", method = RequestMethod.POST)
-    public String attachWork(HttpSession session, int workId, int id) {
-        Work work = works.findOne(workId);
-        Item i = items.findOne(id);
-        i.setWork(work);
-        items.save(i);
+    public String attachWork(HttpSession session, Integer workId, Integer id) {
+        if (workId != null && id != null)
+        {
+            Work work = works.findOne(workId);
+            Item i = items.findOne(id);
+            i.setWork(work);
+            items.save(i);
+        }
         return "redirect:/user-profile";
     }
 
@@ -532,7 +538,6 @@ public class VertoSwapController
     }
 
 
-
     @RequestMapping(path = "/message-to-seller", method = RequestMethod.POST)
     public String messagetoseller(HttpSession session,@RequestParam String itemId,@RequestParam String body)
     {
@@ -552,6 +557,7 @@ public class VertoSwapController
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
+        state.setConversation(conversation);
         List<Messagea> messageList = messages.findByConversation(conversation);
         Collections.sort(messageList);
         //get variables for page
@@ -632,7 +638,7 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/conversation-delete", method = RequestMethod.POST)
-    public String deleteConversation(HttpSession session, String conversation)
+    public String deleteConversation(HttpSession session, String conversation, HttpServletRequest request)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
@@ -642,7 +648,9 @@ public class VertoSwapController
             messages.delete(m.getId());
         }
         session.setAttribute("username", user.getUsername());
-        return "";
+
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
     }
 
     public void migrateTextFiles() throws PasswordStorage.CannotPerformOperationException, IOException
@@ -681,7 +689,7 @@ public class VertoSwapController
         {
             String line = fileScanner.nextLine();
             String[] fields = line.split("\\|");
-            messages.save(new Messagea(users.findOne(Integer.valueOf(fields[0])), users.findOne(Integer.valueOf(fields[1])), items.findOne(Integer.valueOf(fields[2])), fields[3], LocalDateTime.now(), fields[4]));
+            messages.save(new Messagea(users.findOne(Integer.valueOf(fields[1])), users.findOne(Integer.valueOf(fields[0])), items.findOne(Integer.valueOf(fields[2])), fields[3], LocalDateTime.now(), fields[4]));
         }
         //Photo:filename|caption|user|item
         fileScanner = new Scanner(new File(PHOTO_FILE));
@@ -701,6 +709,4 @@ public class VertoSwapController
         }
         fileScanner.close();
     }
-
-
 }

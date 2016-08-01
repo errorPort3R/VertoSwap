@@ -8,7 +8,7 @@ function start() {
 }
 
 function onSocketConnected() {
-    socket.subscribe("/topic/chat", onReceiveMessage)
+    socket.subscribe("/topic/chat/"+$('#conversation').val(), onReceiveMessage)
 }
 
 function onReceiveMessage(mess) {
@@ -23,7 +23,7 @@ function onReceiveMessage(mess) {
 function sendMessage() {
     var t = timeNow();
     var s = JSON.stringify({body: $('#body').val(), time: t, itemid: $('#itemid').val(), conversation: $('#conversation').val(), receiverid: $('#receiverid').val(), name: $('#name').val()});
-    socket.send("/topic/chat", {}, s);
+    socket.send("/topic/chat/"+$('#conversation').val(), {}, s);
 }
 
 function timeNow() {
