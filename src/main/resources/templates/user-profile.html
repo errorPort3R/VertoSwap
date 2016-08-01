@@ -36,11 +36,6 @@
             <button type="submit" class="btn btn-primary">Logout</button>
         </form>
     </div>
-<!--<div id="messageBox" class="messages-box">-->
-        <!--{{#messages}}-->
-           <!--{{body}}<br/>-->
-        <!--{{/messages}}-->
-<!--</div>-->
 </div>
 
 <div class="container-fluid">
@@ -113,15 +108,6 @@
                             </div>
                         </form>
                     </div>
-                    <!--Upload photo:-->
-                    <!--<form role="form" action="/photo-create" method="post" enctype="multipart/form-data">-->
-                        <!--<div class="form-group">-->
-                        <!--<input type="file" name="photo"/>-->
-                        <!--<input type="hidden" name="id" value="{{id}}"/>-->
-                        <!--<input type="text" name="caption" placeholder="Write a caption"/>-->
-                        <!--<button type="submit">Upload</button>-->
-                        <!--</div>-->
-                    <!--</form>-->
                     {{/service}}
                     {{#service}}
                     <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#add-wh-{{id}}">Add work history</button>
@@ -138,18 +124,6 @@
                             </div>
                         </form>
                     </div>
-                    <!--Add work history:-->
-                    <!--<form role="form" action="/item-attach-work" method="post">-->
-                        <!--<div class="form-group">-->
-                        <!--<input type="hidden" name="id" value="{{id}}"/>-->
-                        <!--<select class="form-control" name="workId">-->
-                            <!--{{#workHistory}}-->
-                            <!--<option value="{{id}}">{{jobTitle}}</option>-->
-                            <!--{{/workHistory}}-->
-                        <!--</select>-->
-                        <!--<button type="submit">Add</button>-->
-                        <!--</div>-->
-                    <!--</form>-->
                     {{/service}}
                 </td>
                 <td>

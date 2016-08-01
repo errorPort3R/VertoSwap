@@ -19,33 +19,33 @@
 
 {{^username}}
 <div class="container">
-    <div class="pull-right">
+    <div class="pull-left">
         <form action="/" method="get">
             <button type="submit" class="btn btn-primary">Home</button>
         </form>
     </div>
-    <div class="pull-right">
+    <div class="pull-left">
         <form action="/account-create" method="get">
             <button type="submit" class="btn btn-primary">Create account</button>
         </form>
     </div>
-    <div class="pull-right">
-        <form role="form" class="form-inline" action="/login" method="post">
-            <div class="form-group">
-                <input type="text" class="form-control" name="username" placeholder="Username"/>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password"/>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
+    <div class="pull-left">
+        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#login">Login</button>
+        <div id="login" class="collapse">
+            <form role="form" class="form-inline" action="/login" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" placeholder="Username"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password"/>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
     </div>
 </div>
-
-<br>
-
 <div class="container">
-    <div class="well well-sm pull-right">
+    <div class="well well-sm pull-left">
         <p class="text-warning">To contact this swapper, log in or create an account.</p>
     </div>
 </div>
@@ -70,7 +70,6 @@
     </div>
 </div>
 {{/username}}
-<br><br>
 
 {{^service}}
 <div class="container">
@@ -106,11 +105,6 @@
     </div>
 </div>
 {{/service}}
-
-<!--<div class="container">-->
-    <!--{{#photos}} <img class="img-thumbnail" src="/photos/{{filename}}" style="height:200px"> {{/photos}}-->
-<!--</div>-->
-<!--<br><br>-->
 
 {{#good}}
 {{#work}}

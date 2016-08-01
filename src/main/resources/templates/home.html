@@ -13,21 +13,24 @@
 
 {{^username}}
 <div class="container">
-    <div class="pull-right">
-            <form action="/account-create" method="get">
-                <button type="submit" class="btn btn-primary">Create account</button>
-            </form>
-    </div>
-    <div class="pull-right">
-        <form role="form" class="form-inline" action="/login" method="post">
-            <div class="form-group">
-                <input type="text" class="form-control" name="username" placeholder="Username"/>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" name="password" placeholder="Password"/>
-            </div>
-                <button type="submit" class="btn btn-primary">Login</button>
+    <div class="pull-left">
+        <form action="/account-create" method="get">
+            <button type="submit" class="btn btn-primary">Create account</button>
         </form>
+    </div>
+    <div class="pull-left">
+        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#login">Login</button>
+        <div id="login" class="collapse">
+            <form role="form" class="form-inline" action="/login" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="username" placeholder="Username"/>
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password"/>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
     </div>
 </div>
 {{/username}}
@@ -47,7 +50,7 @@
 {{/username}}
 </div>
 
-<div class="container-fluid">
+<div class="container">
     <div class="jumbotron">
         <h2>VertoSwap</h2>
         <h4>a place to barter</h4>
@@ -102,34 +105,6 @@
         </div>
     </div>
 </div>
-
-<!--<div class="container">-->
-    <!--<ul class="nav nav-pills nav-justified">-->
-        <!--<li class="active"><a data-toggle="pill" href="#goods">Goods</a></li>-->
-        <!--<li><a data-toggle="pill" href="#services">Services</a></li>-->
-    <!--</ul>-->
-
-    <!--<div class="tab-content">-->
-        <!--<div id="goods" class="tab-pane fade in active">-->
-            <!--<h4>Goods</h4>-->
-            <!--{{#goods}}-->
-            <!--<a href="/view-item/?id={{id}}">-->
-                <!--{{title}}  ({{location}})-->
-                <!--<input type="hidden" name="id" value="{{id}}">-->
-            <!--</a><br>-->
-            <!--{{/goods}}-->
-        <!--</div>-->
-        <!--<div id="services" class="tab-pane fade">-->
-            <!--<h4>Services</h4>-->
-            <!--{{#services}}-->
-            <!--<a href="/view-item/?id={{id}}">-->
-                <!--{{title}}  ({{location}})-->
-                <!--<input type="hidden" name="id" value="{{id}}">-->
-            <!--</a><br>-->
-            <!--{{/services}}-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
 
 <br><br>
 

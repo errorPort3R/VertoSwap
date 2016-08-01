@@ -15,40 +15,44 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
+
 <div class="btn-group btn-group-justified">
     <div class="btn-group">
-<form action="/" method="get">
-    <button type="submit" class="btn btn-primary">Home</button>
-</form>
-        </div>
+        <form action="/" method="get">
+            <button type="submit" class="btn btn-primary">Home</button>
+        </form>
+    </div>
     <div class="btn-group">
         <form action="/thread-read-all" method ="get">
             <button type="submit" class="btn btn-primary">Chat List</button>
         </form>
     </div>
     <div class="btn-group">
-<form action="/logout" method="post">
-    <button type="submit" class="btn btn-primary">Logout</button>
-</form>
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
     </div>
-    </div>
+</div>
 
 <div class="container">
-
-    <form action="/message-reply" method ="post">
-        <textarea id="body" placeholder="Type a message." class="message-area"></textarea><br/>
+    <div class="well">
+    <form role="form" action="/message-reply" method ="post">
+        <div class="form-group">
+        <textarea id="body" placeholder="Type a message." class="message-area form-control" rows="6"></textarea>
         <input type="hidden" id="conversation" value="{{conkey}}"/>
         <input type="hidden" id="itemid" value="{{itemid}}"/>
         <input type="hidden" id="receiverid" value="{{receiverid}}"/>
         <input type="hidden" id="name" value="{{name}}"/>
+        </div>
         <input type="button" onclick="sendMessage()" value="Send"/>
     </form>
-
-<div id="message-block">
-{{#messages}}<div><div class='divlabel'>{{author.username}}<br/>{{timedateString}}</div><div class="talk-bubble tri-left round right-in"><div class="talktext"><p>{{body}}</p></div></div></div><br />{{/messages}}
+        <br><br>
+    <div id="message-block">
+    {{#messages}}<div><div class='divlabel'>{{author.username}}<br/>{{timedateString}}</div><div class="talk-bubble tri-left round right-in"><div class="talktext"><p>{{body}}</p></div></div></div><br />{{/messages}}
+    </div>
+    </div>
 </div>
 
-</div>
 <script src="main.js"></script>
 </body>
 </html>
