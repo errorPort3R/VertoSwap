@@ -43,6 +43,7 @@ public class VertoSwapController
     public static final String  WORK_FILE = "demovs1works.txt";
     public static final String  MESSAGE_FILE = "demovs1messages.txt";
     public static final String  PHOTO_FILE = "demovs1photo.txt";
+    public static State state = new State();
 
     @Autowired
     UserRepository users;
@@ -54,10 +55,11 @@ public class VertoSwapController
     ItemRepository items;
 
     @Autowired
-    MessageRepository messages;
+    MessageaRepository messages;
 
     @Autowired
     PhotoRepository photos;
+
 
 
     @PostConstruct
@@ -67,6 +69,7 @@ public class VertoSwapController
         {
             migrateTextFiles();
         }
+
     }
 
 
@@ -131,7 +134,7 @@ public class VertoSwapController
         //Iterable<Item> activeItems = items.findByUserAndStatus(user, ACTIVE);
         Iterable<Item> inactiveItems = items.findByUserAndStatusOrderByTimeDesc(user, INACTIVE);
         //Iterable<Item> inactiveItems = items.findByUserAndStatus(user, INACTIVE);
-        Iterable<Message> messagesList = messages.findByRecipient(user);
+        Iterable<Messagea> messagesList = messages.findByRecipient(user);
         model.addAttribute("username", username);
         model.addAttribute("activeBarters", activeItems);
 
@@ -402,11 +405,14 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/item-attach-work", method = RequestMethod.POST)
-    public String attachWork(HttpSession session, int workId, int id) {
-        Work work = works.findOne(workId);
-        Item i = items.findOne(id);
-        i.setWork(work);
-        items.save(i);
+    public String attachWork(HttpSession session, Integer workId, Integer id) {
+        if (workId != null && id != null)
+        {
+            Work work = works.findOne(workId);
+            Item i = items.findOne(id);
+            i.setWork(work);
+            items.save(i);
+        }
         return "redirect:/user-profile";
     }
 
@@ -525,12 +531,11 @@ public class VertoSwapController
         User user = users.findByUsername(username);
         Item item = items.findOne(itemid);
         User receiver = users.findOne(receiverid);
-        Message m = new Message(user, receiver, item, body, LocalDateTime.now(), conversation);
+        Messagea m = new Messagea(user, receiver, item, body, LocalDateTime.now(), conversation);
         messages.save(m);
         session.setAttribute("username", user.getUsername());
         return "redirect:/thread-read-all";
     }
-
 
 
     @RequestMapping(path = "/message-to-seller", method = RequestMethod.POST)
@@ -541,7 +546,7 @@ public class VertoSwapController
         Item item = items.findOne(Integer.valueOf(itemId));
         //create conversation key
         String conversation = String.format("%s_%s", itemId, user.getId());
-        Message m = new Message(user, item.getUser(), item, body, LocalDateTime.now(), conversation);
+        Messagea m = new Messagea(user, item.getUser(), item, body, LocalDateTime.now(), conversation);
         messages.save(m);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
@@ -552,7 +557,8 @@ public class VertoSwapController
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        List<Message> messageList = messages.findByConversation(conversation);
+        state.setConversation(conversation);
+        List<Messagea> messageList = messages.findByConversation(conversation);
         Collections.sort(messageList);
         //get variables for page
 
@@ -567,7 +573,9 @@ public class VertoSwapController
         {
             receiver = messageList.get(messageList.size()-1).getItem().getUser();
         }
+        Collections.sort(messageList);
         session.setAttribute("username", user.getUsername());
+        model.addAttribute("name", user.getUsername());
         model.addAttribute("conkey", conKey);
         model.addAttribute("itemid", itemId);
         model.addAttribute("receiverid", receiver.getId());
@@ -578,19 +586,19 @@ public class VertoSwapController
     @RequestMapping(path = "/thread-read-all", method = RequestMethod.GET)
     public String getConversation(HttpSession session, Model model, ArrayList<String> conversationId)
     {
-        ArrayList<Message> messageList = new ArrayList();
-        HashMap<String ,Message> mapList= new HashMap<>();
+        ArrayList<Messagea> messageList = new ArrayList();
+        HashMap<String ,Messagea> mapList= new HashMap<>();
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        List<Message> messageLista = messages.findByRecipient(user);
-        List<Message> messageListb = messages.findByAuthor(user);
-        for (Message b: messageListb)
+        List<Messagea> messageLista = messages.findByRecipient(user);
+        List<Messagea> messageListb = messages.findByAuthor(user);
+        for (Messagea b: messageListb)
         {
             messageLista.add(b);
         }
         Collections.sort(messageLista);
 
-        for(Message m : messageLista)
+        for(Messagea m : messageLista)
         {
             mapList.put(m.getConversation(), m);
         }
@@ -598,7 +606,7 @@ public class VertoSwapController
         while (iter.hasNext())
         {
             Map.Entry pair = (Map.Entry)iter.next();
-            messageList.add((Message)pair.getValue());
+            messageList.add((Messagea)pair.getValue());
             iter.remove();
         }
 
@@ -609,7 +617,7 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/message-update", method = RequestMethod.POST)
-    public String updateMessage(HttpSession session,int id, Message message)
+    public String updateMessage(HttpSession session,int id, Messagea message)
     {
         String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
@@ -628,6 +636,22 @@ public class VertoSwapController
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
 
+    }
+
+    @RequestMapping(path = "/conversation-delete", method = RequestMethod.POST)
+    public String deleteConversation(HttpSession session, String conversation, HttpServletRequest request)
+    {
+        String username = (String)session.getAttribute("username");
+        User user = users.findByUsername(username);
+        Iterable<Messagea> messageList = messages.findByConversation(conversation);
+        for(Messagea m : messageList)
+        {
+            messages.delete(m.getId());
+        }
+        session.setAttribute("username", user.getUsername());
+
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
     }
 
     public void migrateTextFiles() throws PasswordStorage.CannotPerformOperationException, IOException
@@ -666,7 +690,7 @@ public class VertoSwapController
         {
             String line = fileScanner.nextLine();
             String[] fields = line.split("\\|");
-            messages.save(new Message(users.findOne(Integer.valueOf(fields[0])), users.findOne(Integer.valueOf(fields[1])), items.findOne(Integer.valueOf(fields[2])), fields[3], LocalDateTime.now(), fields[4]));
+            messages.save(new Messagea(users.findOne(Integer.valueOf(fields[1])), users.findOne(Integer.valueOf(fields[0])), items.findOne(Integer.valueOf(fields[2])), fields[3], LocalDateTime.now(), fields[4]));
         }
         //Photo:filename|caption|user|item
         fileScanner = new Scanner(new File(PHOTO_FILE));

@@ -22,7 +22,7 @@ public class VertoSwapRestController
     ItemRepository items;
 
     @Autowired
-    MessageRepository messages;
+    MessageaRepository messages;
 
     @Autowired
     PhotoRepository photos;
