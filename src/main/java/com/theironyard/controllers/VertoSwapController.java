@@ -17,10 +17,9 @@ import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.Array;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -700,15 +699,13 @@ public class VertoSwapController
         {
             String line = fileScanner.nextLine();
             String[] fields = line.split("\\|");
-            File dir = new File("public/" + PHOTOS_DIR);
-            dir.mkdirs();
-
-            File photoFile = File.createTempFile("photo", fields[0], dir);
-            FileOutputStream fos = new FileOutputStream(photoFile);
-            fos.write(fields[0].getBytes());
-
-            photos.save(new Photo(photoFile.getName(),fields[1],users.findOne(Integer.valueOf(fields[2])), items.findOne(Integer.valueOf(fields[3]))));
+            photos.save(new Photo(fields[0],fields[1],users.findOne(Integer.valueOf(fields[2])), items.findOne(Integer.valueOf(fields[3]))));
         }
         fileScanner.close();
     }
 }
+//spring.datasource.url=jdbc:h2:./main
+//        spring.jpa.generate-ddl=true
+//        spring.jpa.hibernate.ddl-auto=none
+//        multipart.maxFileSize: 10MB
+//        multipart.maxRequestSize: 10MB
