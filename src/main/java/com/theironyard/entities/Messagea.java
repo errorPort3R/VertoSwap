@@ -141,7 +141,7 @@ public class Messagea implements Comparable<Messagea>
         {
             return 1;
         }
-        else if (this.id <o.id)
+        else if (this.id > o.id)
         {
             return -1;
         }
