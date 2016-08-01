@@ -27,14 +27,31 @@
 
 <br><br>
 
-<div class="container">
+<div class="container-fluid">
     <div class="jumbotron">
     <h3>{{username}}'s Work History</h3>
     </div>
 </div>
-<br>
 
 <div class="container">
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#add-job">Add a job</button>
+    <div id="add-job" class="collapse">
+        <form role="form" action="/work-create" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control" name="jobTitle" placeholder="Job title"/>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="description" placeholder="Description"/>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+
+<br><br>
+
+<div class="container">
+    <div class="table-responsive">
     <table class="table table-striped">
         <tr>
             <th>Title</th>
@@ -59,21 +76,7 @@
         </tr>
         {{/workList}}
     </table>
-</div>
-
-<br><br>
-
-<div class="container">
-    <h4>Add a job to your work history:</h4><br>
-        <form role="form" action="/work-create" method="post">
-            <div class="form-group">
-                <input type="text" class="form-control" name="jobTitle" placeholder="Job title"/>
-            </div>
-            <div class="form-group">
-                <input type="text" class="form-control" name="description" placeholder="Description"/>
-            </div>
-                <button type="submit">Submit</button>
-        </form>
+    </div>
 </div>
 
 <br><br>
