@@ -32,6 +32,7 @@
 #divmsg
 {
     display: inline-block;
+    text-align: left;
 }
 
 .messages-area {
