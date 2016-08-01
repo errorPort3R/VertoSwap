@@ -13,7 +13,25 @@ function onSocketConnected() {
 
 function onReceiveMessage(mess) {
     data = JSON.parse(mess.body);
-    $('#divlist').prepend("<div id='divlabel'>" + data.name + "<br />" + data.time + "</div>   <div id='divmsg'>" + data.body +  "</div><br />");
+    //$('#message-block').prepend("<div id='divlabel'>" + data.name + "<br />" + data.time + "</div><div class='talk-bubble tri-left round right-in'><div class='talktext'><p>" + data.body +  "</p></div></div><br /></div>");
+
+    var element = "<div>" +
+                    "<div class='divlabel'>" +
+                        data.name + "<br/>" +
+                        data.time +
+                    "</div>" +
+                    "<div class='talk-bubble tri-left round right-in'>" +
+                        "<div class='talktext'>" +
+                            "<p>" +
+                               data.body +
+                            "</p>" +
+                        "</div>" +
+                    "</div>" +
+                "</div>" +
+                "<br />";
+
+    $('#message-block').prepend(element);
+
     if (mess === undefined)
     {
         return;

@@ -34,33 +34,21 @@
     </div>
 
 <div class="container">
-<form action="/message-reply" method ="post">
-    <textarea id="body" placeholder="Type a message." class="message-area"></textarea><br/>
-    <input type="hidden" id="conversation" value="{{conkey}}"/>
-    <input type="hidden" id="itemid" value="{{itemid}}"/>
-    <input type="hidden" id="receiverid" value="{{receiverid}}"/>
-    <input type="hidden" id="name" value="{{name}}"/>
-    <input type="button" onclick="sendMessage()" value="Send"/>
-</form></div>
+
+    <form action="/message-reply" method ="post">
+        <textarea id="body" placeholder="Type a message." class="message-area"></textarea><br/>
+        <input type="hidden" id="conversation" value="{{conkey}}"/>
+        <input type="hidden" id="itemid" value="{{itemid}}"/>
+        <input type="hidden" id="receiverid" value="{{receiverid}}"/>
+        <input type="hidden" id="name" value="{{name}}"/>
+        <input type="button" onclick="sendMessage()" value="Send"/>
+    </form>
 
 <div id="message-block">
-<div id="divlist"></div>
-{{#messages}}
-<div id='divlabel'>
-    {{author.username}}<br/>
-    <input type="hidden" name="id" value="{{id}}"/>
-    {{timedateString}}
+{{#messages}}<div><div class='divlabel'>{{author.username}}<br/>{{timedateString}}</div><div class="talk-bubble tri-left round right-in"><div class="talktext"><p>{{body}}</p></div></div></div><br />{{/messages}}
 </div>
-<input type="hidden" name="id" value="{{id}}"/>
-<div class="talk-bubble tri-left round right-in">
-    <div class="talktext">
-        <p>
-           {{body}}
-        </p>
-    </div>
-</div><br/>
-{{/messages}}
-    </div>
+
+</div>
 <script src="main.js"></script>
 </body>
 </html>

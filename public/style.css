@@ -20,11 +20,13 @@
     display: inline-block;
 }
 
-#divlabel
+.divlabel
 {
     font-size: 6pt;
     display: inline-block;
     text-align: right;
+    width: 100px;
+    padding-right: 50px;
 }
 
 #divmsg
