@@ -91,6 +91,7 @@
                     <p>{{caption}}</p>
                 </div>
             </div>
+            {{/photos}}
         </div>
         <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
             <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
@@ -101,7 +102,6 @@
             <span class="sr-only">Next</span>
         </a>
     </div>
-            {{/photos}}
 </div>
 {{/service}}
 
@@ -143,13 +143,16 @@
     </div>
     <br>
     {{#username}}
-    <form role="form" action="/message-to-seller" method="post">
-        <div class="form-group">
-            <textarea class="form-control" name="body" placeholder="Type a message to this swapper."></textarea>
-            <input type="hidden" name="itemId" value="{{id}}"/>
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#send-message">Send a message to this swapper</button>
+        <div id="send-message" class="collapse">
+            <form role="form" action="/message-to-seller" method="post">
+                <div class="form-group">
+                    <textarea class="form-control" name="body" placeholder="Type your message."></textarea>
+                    <input type="hidden" name="itemId" value="{{id}}"/>
+                </div>
+                <button type="submit">Send</button>
+            </form>
         </div>
-        <button type="submit">Send</button>
-    </form>
     {{/username}}
 </div>
 {{/good}}

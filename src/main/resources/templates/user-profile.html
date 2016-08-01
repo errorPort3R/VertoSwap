@@ -43,7 +43,7 @@
 <!--</div>-->
 </div>
 
-<div class="container">
+<div class="container-fluid">
     <div class="jumbotron">
     <h3>Hello, {{username}}!</h3>
     </div>
@@ -52,29 +52,30 @@
 <br>
 
 <div class="container">
-    <h4>Create a new barter:</h4>
-    <br>
-    <form role="form" action="/item-create" method="post">
-        <div class="form-group">
-            <input type="text" class="form-control" name="title" placeholder="Title"/>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" name="description" placeholder="Description"/>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" name="location" placeholder="Location"/>
-        </div>
-        <div class="form-group">
-            <input type="text" class="form-control" name="acceptableExchange" placeholder="Desired Swap"/>
-        </div>
-        <div class="radio">
-            <label><input type="radio" name="service" value="true">Service</label>
-        </div>
-        <div class="radio">
-            <label><input type="radio" name="service" value="false">Good</label>
-        </div>
+    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#add-barter">Create a new barter</button>
+    <div id="add-barter" class="collapse">
+        <form role="form" action="/item-create" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control" name="title" placeholder="Title"/>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="description" placeholder="Description"/>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="location" placeholder="Location"/>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control" name="acceptableExchange" placeholder="Desired Swap"/>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="service" value="true">Service</label>
+            </div>
+            <div class="radio">
+                <label><input type="radio" name="service" value="false">Good</label>
+            </div>
             <button type="submit">Submit</button>
-    </form>
+        </form>
+    </div>
 </div>
 
 <br><br>
@@ -83,6 +84,7 @@
     <h4><b>Active barters</b></h4>
 </div>
     <div class="container">
+        <div class="table-responsive">
         <table class="table table-striped">
             <tr>
                 <th>Title</th>
@@ -100,29 +102,54 @@
                 <td>{{timedateString}}</td>
                 <td>
                     {{^service}}
-                    Upload photo:
-                    <form role="form" action="/photo-create" method="post" enctype="multipart/form-data">
-                        <div class="form-group">
-                        <input type="file" name="photo"/>
-                        <input type="hidden" name="id" value="{{id}}"/>
-                        <input type="text" name="caption" placeholder="Write a caption"/>
-                        <button type="submit">Upload</button>
-                        </div>
-                    </form>
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#add-photo-{{id}}">Upload photo</button>
+                    <div id="add-photo-{{id}}" class="collapse">
+                        <form role="form" action="/photo-create" method="post" enctype="multipart/form-data">
+                            <div class="form-group">
+                                <input type="file" name="photo"/>
+                                <input type="hidden" name="id" value="{{id}}"/>
+                                <input type="text" name="caption" placeholder="Write a caption"/>
+                                <button type="submit">Upload</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!--Upload photo:-->
+                    <!--<form role="form" action="/photo-create" method="post" enctype="multipart/form-data">-->
+                        <!--<div class="form-group">-->
+                        <!--<input type="file" name="photo"/>-->
+                        <!--<input type="hidden" name="id" value="{{id}}"/>-->
+                        <!--<input type="text" name="caption" placeholder="Write a caption"/>-->
+                        <!--<button type="submit">Upload</button>-->
+                        <!--</div>-->
+                    <!--</form>-->
                     {{/service}}
                     {{#service}}
-                    Add work history:
-                    <form role="form" action="/item-attach-work" method="post">
-                        <div class="form-group">
-                        <input type="hidden" name="id" value="{{id}}"/>
-                        <select class="form-control" name="workId">
-                            {{#workHistory}}
-                            <option value="{{id}}">{{jobTitle}}</option>
-                            {{/workHistory}}
-                        </select>
-                        <button type="submit">Add</button>
-                        </div>
-                    </form>
+                    <button type="button" class="btn btn-link" data-toggle="collapse" data-target="#add-wh-{{id}}">Add work history</button>
+                    <div id="add-wh-{{id}}" class="collapse">
+                        <form role="form" action="/item-attach-work" method="post">
+                            <div class="form-group">
+                                <input type="hidden" name="id" value="{{id}}"/>
+                                <select class="form-control" name="workId">
+                                    {{#workHistory}}
+                                    <option value="{{id}}">{{jobTitle}}</option>
+                                    {{/workHistory}}
+                                </select>
+                                <button type="submit">Add</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!--Add work history:-->
+                    <!--<form role="form" action="/item-attach-work" method="post">-->
+                        <!--<div class="form-group">-->
+                        <!--<input type="hidden" name="id" value="{{id}}"/>-->
+                        <!--<select class="form-control" name="workId">-->
+                            <!--{{#workHistory}}-->
+                            <!--<option value="{{id}}">{{jobTitle}}</option>-->
+                            <!--{{/workHistory}}-->
+                        <!--</select>-->
+                        <!--<button type="submit">Add</button>-->
+                        <!--</div>-->
+                    <!--</form>-->
                     {{/service}}
                 </td>
                 <td>
@@ -137,9 +164,13 @@
                         <button type="submit">Update</button>
                     </form>
                 </td>
+                <td>
+                    <a href="/view-item/?id={{id}}"><span class="glyphicon glyphicon-link"></span></a>
+                </td>
             </tr>
             {{/activeBarters}}
         </table>
+        </div>
     </div>
 
 <br><br>
@@ -148,6 +179,7 @@
     <h4><b>Inactive barters</b></h4>
 </div>
 <div class="container">
+    <div class="table-responsive">
     <table class="table table-striped">
         <tr>
             <th>Title</th>
@@ -178,6 +210,7 @@
         </tr>
         {{/inactiveBarters}}
     </table>
+    </div>
 </div>
 
 <br><br>

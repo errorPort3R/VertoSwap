@@ -603,6 +603,7 @@ public class VertoSwapController
         }
 
         session.setAttribute("username", user.getUsername());
+        model.addAttribute("username", user.getUsername());
         model.addAttribute("conversations", messageList);
         return "message-list";
     }
@@ -685,6 +686,4 @@ public class VertoSwapController
         }
         fileScanner.close();
     }
-
-
 }
