@@ -269,10 +269,12 @@ public class VertoSwapController
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpSession session, String username, String password, HttpServletRequest request) throws Exception {
         User userFromDB = users.findByUsername(username);
-        if (userFromDB == null) {
+        if (userFromDB == null)
+        {
             return "redirect:/account-create";
         }
-        else if (!PasswordStorage.verifyPassword(password, userFromDB.getPassword())) {
+        else if (!PasswordStorage.verifyPassword(password, userFromDB.getPassword()))
+        {
             throw new Exception("Wrong password.");
         }
         session.setAttribute("username", username);
