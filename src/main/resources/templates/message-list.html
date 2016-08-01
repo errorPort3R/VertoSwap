@@ -31,35 +31,41 @@
     </div>
 </div>
 
-<br><br>
+<div class="container-fluid"> 
+    <div class="jumbotron"> 
+        <h3>{{username}}'s Messages</h3> 
+    </div> 
+</div> 
 
 <div class="container">
     <div class="list-group">
-{{#conversations}}
+    {{#conversations}}
         <div class="list-group-item">
             <div class="btn-group">
-    <form action="/conversation-delete" method ="post">
-        <input type="hidden" name="conversation" value="{{conversation}}"/>
-    <button type="submit" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-trash"></span></button></a>
-</form>
+                <form action="/conversation-delete" method ="post">
+                    <input type="hidden" name="conversation" value="{{conversation}}"/>
+                    <button type="submit" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-trash"></span></button></a>
+                </form>
+            </div>
+            <div class="btn-group">
+                <form action="/message-get-by-conversation" method="get">
+                    <input type="hidden" name="conversation" value="{{conversation}}"/>
+                    <input type="hidden" id="conversation" value="{{conversation}}"/>
+                    <button type="submit" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></a>
+                </form>
+            </div>
+            <div id='divlabel'>
+                {{recipient.username}}<br/>
+                <input type="hidden" name="id" value="{{id}}"/>
+                {{timedateString}}
+            </div>
+            <div id='divmsg'>
+                {{item.title}}
+            </div>
+        </div>
+    {{/conversations}}
     </div>
-    <div class="btn-group">
-        <form action="/message-get-by-conversation" method="get">
-            <input type="hidden" name="conversation" value="{{conversation}}"/>
-            <input type="hidden" id="conversation" value="{{conversation}}"/>
-            <button type="submit" class="btn btn-primary btn-xs"><span class="glyphicon glyphicon-pencil"></span></button></a>
-        </form>
-    </div>
-        <div id='divlabel'>
-{{recipient.username}}<br/>
-    <input type="hidden" name="id" value="{{id}}"/>
-    {{timedateString}}
 </div>
-<div id='divmsg'>
-        {{item.title}}
-    </div></div>
-{{/conversations}}
-</div>
-</div>
+
 </body>
 </html>

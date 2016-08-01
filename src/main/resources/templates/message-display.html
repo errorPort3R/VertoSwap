@@ -15,52 +15,59 @@
     <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
 </head>
 <body>
+
 <div class="btn-group btn-group-justified">
     <div class="btn-group">
-<form action="/" method="get">
-    <button type="submit" class="btn btn-primary">Home</button>
-</form>
-        </div>
+        <form action="/" method="get">
+            <button type="submit" class="btn btn-primary">Home</button>
+        </form>
+    </div>
     <div class="btn-group">
         <form action="/thread-read-all" method ="get">
             <button type="submit" class="btn btn-primary">Chat List</button>
         </form>
     </div>
     <div class="btn-group">
-<form action="/logout" method="post">
-    <button type="submit" class="btn btn-primary">Logout</button>
-</form>
+        <form action="/logout" method="post">
+            <button type="submit" class="btn btn-primary">Logout</button>
+        </form>
     </div>
-    </div>
+</div>
 
 <div class="container">
-<form action="/message-reply" method ="post">
-    <textarea id="body" placeholder="Type a message." class="message-area"></textarea><br/>
-    <input type="hidden" id="conversation" value="{{conkey}}"/>
-    <input type="hidden" id="itemid" value="{{itemid}}"/>
-    <input type="hidden" id="receiverid" value="{{receiverid}}"/>
-    <input type="hidden" id="name" value="{{name}}"/>
-    <input type="button" onclick="sendMessage()" value="Send"/>
-</form></div>
-
-<div id="message-block">
-<div id="divlist"></div>
-{{#messages}}
-<div id='divlabel'>
+    <div class="well">
+        <form role="form" action="/message-reply" method ="post">
+            <div class="form-group">
+            <textarea class="form-control message-area" rows="6" id="body" placeholder="Type a message."></textarea>
+            <input type="hidden" id="conversation" value="{{conkey}}"/>
+            <input type="hidden" id="itemid" value="{{itemid}}"/>
+            <input type="hidden" id="receiverid" value="{{receiverid}}"/>
+            <input type="hidden" id="name" value="{{name}}"/>
+            </div>
+            <input type="button" onclick="sendMessage()" value="Send"/>
+        </form>
+    <br><br>
+    <div id="message-block"></div>
+    <div id="divlist"></div>
+    {{#messages}}
+    <div id='divlabel'>
     {{author.username}}<br/>
     <input type="hidden" name="id" value="{{id}}"/>
     {{timedateString}}
+    </div>
+    <input type="hidden" name="id" value="{{id}}"/>
+    <div class="talk-bubble tri-left round right-in">
+        <div class="talktext">
+            <p>
+               {{body}}
+            </p>
+        </div>
+    </div><br/>
+    {{/messages}}
+    </div>
 </div>
-<input type="hidden" name="id" value="{{id}}"/>
-<div class="talk-bubble tri-left round right-in">
-    <div class="talktext">
-        <p>
-           {{body}}
-        </p>
-    </div>
-</div><br/>
-{{/messages}}
-    </div>
+
 <script src="main.js"></script>
+
 </body>
 </html>
