@@ -6,7 +6,7 @@
 
 /* CSS talk bubble */
 .talk-bubble {
-	margin: 40px;
+  margin: 1%;
   display: inline-block;
   position: relative;
 	width: 200px;
@@ -18,9 +18,9 @@
   border: 8px solid #666;
 }
 .round{
-  border-radius: 30px;
-	-webkit-border-radius: 30px;
-	-moz-border-radius: 30px;
+  border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 
 }
 
