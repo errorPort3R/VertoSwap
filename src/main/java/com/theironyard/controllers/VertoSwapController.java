@@ -60,7 +60,6 @@ public class VertoSwapController
     PhotoRepository photos;
 
 
-
     @PostConstruct
     public void init() throws SQLException, IOException, PasswordStorage.CannotPerformOperationException
     {
