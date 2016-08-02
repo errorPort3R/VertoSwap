@@ -1,0 +1,24 @@
+{
+  "name": "vertoswap",
+  "version": "1.0.0",
+  "description": "alpha program.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "gulp"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/errorPort3R/VertoSwap.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/errorPort3R/VertoSwap/issues"
+  },
+  "homepage": "https://github.com/errorPort3R/VertoSwap#readme",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
+    "gulp-watch": "^4.3.9"
+  }
+}
