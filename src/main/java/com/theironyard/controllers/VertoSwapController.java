@@ -65,9 +65,9 @@ public class VertoSwapController
     @PostConstruct
     public void init() throws SQLException, IOException, PasswordStorage.CannotPerformOperationException
     {
-        //for H2 builds ONLY!!!!!!*****************************//
-        Server.createWebServer("-webPort", "8082").start();    //
-        //for H2 builds ONLY!!!!!!*****************************//
+//        //for H2 builds ONLY!!!!!!*****************************//
+//        Server.createWebServer("-webPort", "8082").start();    //
+//        //for H2 builds ONLY!!!!!!*****************************//
         if (users.count() == 0)
         {
             migrateTextFiles();
@@ -222,11 +222,9 @@ public class VertoSwapController
     }
 
 
-
-
     //***************************************************************************************
     //
-    //USER ROUTES
+    //             USER ROUTES
     //
     //***************************************************************************************
     @RequestMapping(path = "/account-create", method = RequestMethod.POST)
@@ -304,7 +302,7 @@ public class VertoSwapController
 
     //***************************************************************************************
     //
-    //WORK ROUTES
+    //                   WORK ROUTES
     //
     //***************************************************************************************
     @RequestMapping(path = "/work-create", method = RequestMethod.POST)
@@ -361,6 +359,13 @@ public class VertoSwapController
         }
 //        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
+        Work work = works.findOne(id);
+        Iterable<Item> removeWorksList = new ArrayList<>();
+        removeWorksList = items.findByWork(work);
+        for(Item i : removeWorksList)
+        {
+            i.setWork(null);
+        }
         works.delete(id);
         session.setAttribute("username", user.getUsername());
         return "redirect:/work-history";
@@ -682,7 +687,13 @@ public class VertoSwapController
             messageList.add((Messagea)pair.getValue());
             iter.remove();
         }
-
+        for (Messagea n : messageList)
+        {
+            if (user.getUsername().equals(n.getRecipient().getUsername()))
+            {
+                n.setRecipient(n.getAuthor());
+            }
+        }
         session.setAttribute("username", user.getUsername());
         model.addAttribute("username", user.getUsername());
         model.addAttribute("conversations", messageList);
