@@ -68,9 +68,7 @@ public class VertoSwapController
         {
             migrateTextFiles();
         }
-
     }
-
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String main(HttpSession session, Model model, String search) {
@@ -128,14 +126,23 @@ public class VertoSwapController
             return "home";
         }
         User user = users.findByUsername(username);
-        //Iterable<Item> activeItems = items.findByUser(user);
+
+        Iterable<Item> itemsList = items.findByUser(user);
+        for(Item item : itemsList)
+        {
+            if(item.getTime().plusWeeks(2).compareTo(LocalDateTime.now()) < 0)
+            {
+                item.setStatus(INACTIVE);
+                items.save(item);
+            }
+        }
+
         Iterable<Item> activeItems = items.findByUserAndStatusOrderByTimeDesc(user, ACTIVE);
-        //Iterable<Item> activeItems = items.findByUserAndStatus(user, ACTIVE);
         Iterable<Item> inactiveItems = items.findByUserAndStatusOrderByTimeDesc(user, INACTIVE);
-        //Iterable<Item> inactiveItems = items.findByUserAndStatus(user, INACTIVE);
         Iterable<Messagea> messagesList = messages.findByRecipient(user);
         model.addAttribute("username", username);
         model.addAttribute("activeBarters", activeItems);
+        model.addAttribute("inactiveBarters", inactiveItems);
 
         //  to show photo/work upload only if good/service resp. :
         for (Item i : activeItems) {
@@ -146,6 +153,7 @@ public class VertoSwapController
                 model.addAttribute("service", i);
             }
         }
+
         Iterable<Work> workHistory = works.findByUser(user);
         model.addAttribute("workHistory", workHistory);
         model.addAttribute("messages", messagesList);
