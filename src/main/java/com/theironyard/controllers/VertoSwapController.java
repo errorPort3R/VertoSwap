@@ -3,6 +3,7 @@ package com.theironyard.controllers;
 import com.theironyard.entities.*;
 import com.theironyard.services.*;
 import com.theironyard.utilities.PasswordStorage;
+import org.h2.tools.Server;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -64,6 +65,9 @@ public class VertoSwapController
     @PostConstruct
     public void init() throws SQLException, IOException, PasswordStorage.CannotPerformOperationException
     {
+        //for H2 builds ONLY!!!!!!*****************************//
+        Server.createWebServer("-webPort", "8082").start();    //
+        //for H2 builds ONLY!!!!!!*****************************//
         if (users.count() == 0)
         {
             migrateTextFiles();
