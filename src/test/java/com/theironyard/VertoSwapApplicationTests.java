@@ -2,6 +2,7 @@ package com.theironyard;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.theironyard.entities.Item;
 import com.theironyard.entities.User;
 import com.theironyard.services.*;
 import com.theironyard.utilities.PasswordStorage;
@@ -19,6 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+
+import java.util.ArrayList;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = VertoSwapApplication.class)
@@ -69,6 +72,24 @@ public class VertoSwapApplicationTests {
 		Assert.assertTrue(PasswordStorage.verifyPassword("123", users.findByUsername("Bob").getPassword()));
 	}
 
+	@Test
+	public void cTestItemCreate() throws Exception {
+		mockMvc.perform(
+				MockMvcRequestBuilders.post("/item-create")
+				.sessionAttr("username", "Bob")
+				.param("title", "TestTitle")
+				.param("location", "TestLocation")
+				.param("description", "TestDescription")
+				.param("acceptableExchange", "TestSwap")
+				.param("service", "true")
+		);
 
+		Iterable<Item> testItems = items.findByUser(users.findByUsername("Bob"));
+		ArrayList<Item> testArr = new ArrayList<>();
+		for (Item i : testItems) {
+			testArr.add(i);
+		}
+		Assert.assertTrue(testArr.size() == 1);
+	}
 
 }
