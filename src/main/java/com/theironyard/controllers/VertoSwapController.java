@@ -365,6 +365,7 @@ public class VertoSwapController
         for(Item i : removeWorksList)
         {
             i.setWork(null);
+            items.save(i);
         }
         works.delete(id);
         session.setAttribute("username", user.getUsername());

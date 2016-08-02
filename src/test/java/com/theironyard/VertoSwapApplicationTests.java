@@ -123,27 +123,46 @@ public class VertoSwapApplicationTests {
 		Assert.assertTrue(itemArr.get(0).getWork().getJobTitle().equals("TestJob"));
 	}
 
-//	@Test
-//	public void fTestWorkDelete() throws Exception {
-//		ArrayList<Work> workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
-//		Work w = workArr.get(0);
-//
-//		mockMvc.perform(
-//				MockMvcRequestBuilders.post("/work-delete")
-//						.sessionAttr("username", "Bob")
-//						.param("id", String.valueOf(w.getId()))
-//		);
-//
-//
-//		workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
-//		Assert.assertTrue(workArr.size() == 0);
-//	}
+	@Test
+	public void fTestWorkDelete() throws Exception {
+		ArrayList<Work> workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
+		Work w = workArr.get(0);
 
+		mockMvc.perform(
+				MockMvcRequestBuilders.post("/work-delete")
+						.sessionAttr("username", "Bob")
+						.param("id", String.valueOf(w.getId()))
+		);
 
-	// item-attach-work
-	// item-archive
-	// item-delete
+		workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
+		Assert.assertTrue(workArr.size() == 0);
+	}
 
+	@Test
+	public void gTestItemArchive() throws Exception {
+		ArrayList<Item> itemArr = (ArrayList<Item>) items.findByUser(users.findByUsername("Bob"));
+		Item i = itemArr.get(0);
+		mockMvc.perform(
+				MockMvcRequestBuilders.post("/item-archive")
+				.sessionAttr("username", "Bob")
+				.param("id", String.valueOf(i.getId()))
+		);
+		itemArr = (ArrayList<Item>) items.findByUser(users.findByUsername("Bob"));
+		Item item = itemArr.get(0);
+		Assert.assertTrue(item.getStatus() == Item.Status.ARCHIVE);
+	}
 
-
+	@Test
+	public void hTestItemDelete() throws Exception {
+		ArrayList<Item> itemArr = (ArrayList<Item>) items.findByUser(users.findByUsername("Bob"));
+		Item i = itemArr.get(0);
+		mockMvc.perform(
+				MockMvcRequestBuilders.post("/item-delete")
+				.sessionAttr("username", "Bob")
+				.param("id", String.valueOf(i.getId()))
+		);
+		itemArr = (ArrayList<Item>) items.findByUser(users.findByUsername("Bob"));
+		Item item = itemArr.get(0);
+		Assert.assertTrue(item.getStatus() == Item.Status.DELETE);
+	}
 }
