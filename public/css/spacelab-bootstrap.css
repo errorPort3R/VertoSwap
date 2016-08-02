@@ -1190,7 +1190,7 @@ h6,
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 500;
   line-height: 1.1;
-  color: #2d2d2d;
+  color: #2F950B;
 }
 h1 small,
 h2 small,
@@ -3995,11 +3995,11 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   background-color: #eeeeee;
 }
 .nav > li.disabled > a {
-  color: #999999;
+  color: #2F950B;
 }
 .nav > li.disabled > a:hover,
 .nav > li.disabled > a:focus {
-  color: #999999;
+  color: #2F950B;
   text-decoration: none;
   background-color: transparent;
   cursor: not-allowed;
@@ -4038,7 +4038,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav-tabs > li.active > a,
 .nav-tabs > li.active > a:hover,
 .nav-tabs > li.active > a:focus {
-  color: #666666;
+  color: #2F950B;
   background-color: #ffffff;
   border: 1px solid #dddddd;
   border-bottom-color: transparent;
@@ -4089,19 +4089,20 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   }
 }
 .nav-pills > li {
+  margin-top: 20px;
   float: left;
 }
 .nav-pills > li > a {
-  border-radius: 4px;
+  border-radius: 3px;
 }
 .nav-pills > li + li {
-  margin-left: 2px;
+  margin-left: 3px;
 }
 .nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
   color: #ffffff;
-  background-color: #446e9b;
+  background-color: #2F950B;
 }
 .nav-stacked > li {
   float: none;
@@ -4947,7 +4948,7 @@ a.badge:focus {
 }
 .list-group-item.active > .badge,
 .nav-pills > .active > a > .badge {
-  color: #3399f3;
+  color: #2F950B;
   background-color: #ffffff;
 }
 .list-group-item > .badge {
@@ -4960,6 +4961,7 @@ a.badge:focus {
   margin-left: 3px;
 }
 .jumbotron {
+  text-align: center;
   padding-top: 30px;
   padding-bottom: 30px;
   margin-bottom: 30px;
