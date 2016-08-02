@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.theironyard.entities.Item;
 import com.theironyard.entities.User;
+import com.theironyard.entities.Work;
 import com.theironyard.services.*;
 import com.theironyard.utilities.PasswordStorage;
 import org.junit.Assert;
@@ -90,6 +91,22 @@ public class VertoSwapApplicationTests {
 			testArr.add(i);
 		}
 		Assert.assertTrue(testArr.size() == 1);
+	}
+
+	@Test
+	public void dTestWorkCreate() throws Exception {
+		mockMvc.perform(
+				MockMvcRequestBuilders.post("/work-create")
+				.sessionAttr("username", "Bob")
+				.param("jobTitle", "TestJob")
+				.param("description", "TestJobDesc")
+		);
+		Iterable<Work> testWork = works.findByUser(users.findByUsername("Bob"));
+		ArrayList<Work> workArr = new ArrayList<>();
+		for (Work w : testWork) {
+			workArr.add(w);
+		}
+		Assert.assertTrue(workArr.size() == 1);
 	}
 
 }
