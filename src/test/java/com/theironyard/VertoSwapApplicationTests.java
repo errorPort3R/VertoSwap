@@ -101,12 +101,26 @@ public class VertoSwapApplicationTests {
 				.param("jobTitle", "TestJob")
 				.param("description", "TestJobDesc")
 		);
-		Iterable<Work> testWork = works.findByUser(users.findByUsername("Bob"));
-		ArrayList<Work> workArr = new ArrayList<>();
-		for (Work w : testWork) {
-			workArr.add(w);
-		}
+		ArrayList<Work> workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
 		Assert.assertTrue(workArr.size() == 1);
+
 	}
+
+	@Test
+	public void eTestWorkDelete() throws Exception {
+		ArrayList<Work> workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
+		Work w = workArr.get(0);
+
+		mockMvc.perform(
+				MockMvcRequestBuilders.post("/work-delete")
+						.sessionAttr("username", "Bob")
+						.param("id", String.valueOf(w.getId()))
+		);
+
+
+		workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
+		Assert.assertTrue(workArr.size() == 0);
+	}
+
 
 }
