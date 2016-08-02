@@ -777,8 +777,3 @@ public class VertoSwapController
         fileScanner.close();
     }
 }
-//spring.datasource.url=jdbc:h2:./main
-//        spring.jpa.generate-ddl=true
-//        spring.jpa.hibernate.ddl-auto=none
-//        multipart.maxFileSize: 10MB
-//        multipart.maxRequestSize: 10MB
