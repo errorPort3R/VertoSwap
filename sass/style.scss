@@ -1,0 +1,61 @@
+
+.floating-box
+{
+    float: left;
+    width: 275px;
+    height: 400px;
+    margin: 10px;
+    border: 2px solid black;
+    overflow: scrolling;
+}
+
+.after-box
+{
+    clear: left;
+    border: 3px solid blue;
+    font-align: center;
+}
+
+.inline-form-button
+{
+    display: inline-block;
+}
+
+.divlabel
+{
+    font-size: 6pt;
+    display: inline-block;
+    text-align: right;
+    width: 100px;
+    padding-right: 50px;
+}
+
+#divmsg
+{
+    display: inline-block;
+    text-align: left;
+}
+
+.messages-area {
+    float: right;
+    width: 400px;
+    height: 200kpx;
+    margin: 10px;
+    border: 2px solid black;
+    overflow: scrolling;
+}
+.button-small
+{
+    font-size: 6px;
+    height: 15px;
+    display: inline-block;
+}
+
+#message-block
+{
+
+}
+
+body{
+    background:#999;
+}
