@@ -68,9 +68,7 @@ public class VertoSwapController
         {
             migrateTextFiles();
         }
-
     }
-
 
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String main(HttpSession session, Model model, String search) {
