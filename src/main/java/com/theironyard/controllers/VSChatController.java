@@ -68,7 +68,7 @@ public class VSChatController
 
         if (new String((byte[]) msg.getPayload()).length() > 0)
         {
-            System.out.println(new String((byte[]) msg.getPayload()));
+            //System.out.println(new String((byte[]) msg.getPayload()));
             LinkedHashMap mapper = new LinkedHashMap();
             JacksonJsonParser parser = new JacksonJsonParser();
             mapper = (LinkedHashMap) parser.parseMap(new String((byte[]) msg.getPayload()));
