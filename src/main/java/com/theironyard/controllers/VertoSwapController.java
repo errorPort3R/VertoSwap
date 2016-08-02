@@ -355,6 +355,7 @@ public class VertoSwapController
         }
 //        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
+
         works.delete(id);
         session.setAttribute("username", user.getUsername());
         return "redirect:/work-history";

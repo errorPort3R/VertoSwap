@@ -107,20 +107,43 @@ public class VertoSwapApplicationTests {
 	}
 
 	@Test
-	public void eTestWorkDelete() throws Exception {
+	public void eTestAttachWork() throws Exception {
 		ArrayList<Work> workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
 		Work w = workArr.get(0);
+		ArrayList<Item> itemArr = (ArrayList<Item>) items.findByUser(users.findByUsername("Bob"));
+		Item i = itemArr.get(0);
 
 		mockMvc.perform(
-				MockMvcRequestBuilders.post("/work-delete")
+				MockMvcRequestBuilders.post("/item-attach-work")
 						.sessionAttr("username", "Bob")
-						.param("id", String.valueOf(w.getId()))
+						.param("id", String.valueOf(i.getId()))
+						.param("workId", String.valueOf(w.getId()))
 		);
-
-
-		workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
-		Assert.assertTrue(workArr.size() == 0);
+		itemArr = (ArrayList<Item>) items.findByUser(users.findByUsername("Bob"));
+		Assert.assertTrue(itemArr.get(0).getWork().getJobTitle().equals("TestJob"));
 	}
+
+//	@Test
+//	public void fTestWorkDelete() throws Exception {
+//		ArrayList<Work> workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
+//		Work w = workArr.get(0);
+//
+//		mockMvc.perform(
+//				MockMvcRequestBuilders.post("/work-delete")
+//						.sessionAttr("username", "Bob")
+//						.param("id", String.valueOf(w.getId()))
+//		);
+//
+//
+//		workArr = (ArrayList<Work>) works.findByUser(users.findByUsername("Bob"));
+//		Assert.assertTrue(workArr.size() == 0);
+//	}
+
+
+	// item-attach-work
+	// item-archive
+	// item-delete
+
 
 
 }
