@@ -287,7 +287,6 @@ public class VertoSwapController
 
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;
-//        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)

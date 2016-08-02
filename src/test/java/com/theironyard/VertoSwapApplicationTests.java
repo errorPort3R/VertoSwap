@@ -59,5 +59,16 @@ public class VertoSwapApplicationTests {
 		Assert.assertTrue(PasswordStorage.verifyPassword("123", users.findByUsername("Bob").getPassword()));
 	}
 
+	@Test
+	public void bTestLogin() throws Exception {
+		mockMvc.perform(
+				MockMvcRequestBuilders.post("/login")
+				.param("username", "Bob")
+				.param("password", "123")
+		);
+		Assert.assertTrue(PasswordStorage.verifyPassword("123", users.findByUsername("Bob").getPassword()));
+	}
+
+
 
 }
