@@ -298,7 +298,11 @@ public class VertoSwapController
     @RequestMapping(path = "/work-create", method = RequestMethod.POST)
     public String createWork(HttpSession session,String jobTitle, String description)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Work w = new Work(jobTitle, description, user);
         works.save(w);
@@ -309,7 +313,11 @@ public class VertoSwapController
     @RequestMapping(path = "/work-read", method = RequestMethod.GET)
     public String getWork(HttpSession session)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Iterable<Work> workList = works.findByUser(user);
         session.setAttribute("username", user.getUsername());
@@ -319,7 +327,11 @@ public class VertoSwapController
     @RequestMapping(path = "/work-update", method = RequestMethod.POST)
     public String updateWork(HttpSession session, int id, String jobTitle, String description)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Work w = new Work(jobTitle, description, user);
         w.setId(id);
@@ -331,7 +343,11 @@ public class VertoSwapController
     @RequestMapping(path = "/work-delete", method = RequestMethod.POST)
     public String deleteWork(HttpSession session, int id)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         works.delete(id);
         session.setAttribute("username", user.getUsername());
@@ -346,7 +362,11 @@ public class VertoSwapController
     @RequestMapping(path = "/item-create", method = RequestMethod.POST)
     public String createItem(HttpSession session, String title, String location, String description, String acceptableExchange, boolean service)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
         //Item.Status status = ACTIVE;
@@ -359,7 +379,11 @@ public class VertoSwapController
     @RequestMapping(path = "/view-item", method = RequestMethod.GET)
     public String getSpecificItem(HttpSession session, Model model,@RequestParam String id)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         model.addAttribute("username", username);
 
         User user = users.findByUsername(username);
@@ -407,6 +431,10 @@ public class VertoSwapController
 
     @RequestMapping(path = "/item-attach-work", method = RequestMethod.POST)
     public String attachWork(HttpSession session, Integer workId, Integer id) {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
         if (workId != null && id != null)
         {
             Work work = works.findOne(workId);
@@ -420,7 +448,11 @@ public class VertoSwapController
     @RequestMapping(path = "/item-update", method = RequestMethod.POST)
     public String updateItem(HttpSession session, int id, String title, String location, String description, String acceptableExchange, String stat, boolean service)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
         //Item.Status status = Item.Status.valueOf(stat);
@@ -434,7 +466,11 @@ public class VertoSwapController
     @RequestMapping(path = "/item-delete", method = RequestMethod.POST)
     public String deleteitem (HttpSession session, int id)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         //items.delete(id);
         Item item = items.findOne(id);
@@ -448,6 +484,10 @@ public class VertoSwapController
     public String archiveItem(HttpSession session, int id)
     {
         String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String) session.getAttribute("username");
         Item item = items.findOne(id);
         item.setStatus(ARCHIVE);
         items.save(item);
@@ -463,7 +503,11 @@ public class VertoSwapController
     @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
     public String addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, /*Item item,*/ int id, HttpServletResponse response) throws Exception
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         File dir = new File("public/" + PHOTOS_DIR);
         dir.mkdirs();
@@ -528,7 +572,11 @@ public class VertoSwapController
     @RequestMapping(path = "/message-reply", method = RequestMethod.POST)
     public String messageFromBuyer(HttpSession session, Model model, String body, int itemid, int receiverid, String conversation)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Item item = items.findOne(itemid);
         User receiver = users.findOne(receiverid);
@@ -542,7 +590,11 @@ public class VertoSwapController
     @RequestMapping(path = "/message-to-seller", method = RequestMethod.POST)
     public String messagetoseller(HttpSession session,@RequestParam String itemId,@RequestParam String body)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Item item = items.findOne(Integer.valueOf(itemId));
         //create conversation key
@@ -556,7 +608,11 @@ public class VertoSwapController
     @RequestMapping(path = "/message-get-by-conversation", method = RequestMethod.GET)
     public String getMessages(HttpSession session, Model model, String conversation)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         state.setConversation(conversation);
         List<Messagea> messageList = messages.findByConversation(conversation);
@@ -587,9 +643,13 @@ public class VertoSwapController
     @RequestMapping(path = "/thread-read-all", method = RequestMethod.GET)
     public String getConversation(HttpSession session, Model model, ArrayList<String> conversationId)
     {
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
         ArrayList<Messagea> messageList = new ArrayList();
         HashMap<String ,Messagea> mapList= new HashMap<>();
-        String username = (String)session.getAttribute("username");
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         List<Messagea> messageLista = messages.findByRecipient(user);
         List<Messagea> messageListb = messages.findByAuthor(user);
@@ -620,7 +680,11 @@ public class VertoSwapController
     @RequestMapping(path = "/message-update", method = RequestMethod.POST)
     public String updateMessage(HttpSession session,int id, Messagea message)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         message.setId(id);
         messages.save(message);
@@ -631,7 +695,11 @@ public class VertoSwapController
     @RequestMapping(path = "/message-delete", method = RequestMethod.POST)
     public String deleteMessage(HttpSession session, int id)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         messages.delete(id);
         session.setAttribute("username", user.getUsername());
@@ -642,7 +710,11 @@ public class VertoSwapController
     @RequestMapping(path = "/conversation-delete", method = RequestMethod.POST)
     public String deleteConversation(HttpSession session, String conversation, HttpServletRequest request)
     {
-        String username = (String)session.getAttribute("username");
+        String username = (String) session.getAttribute("username");
+        if (username == null) {
+            return "home";
+        }
+//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Iterable<Messagea> messageList = messages.findByConversation(conversation);
         for(Messagea m : messageList)

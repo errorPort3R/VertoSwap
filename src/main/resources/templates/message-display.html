@@ -23,8 +23,12 @@
         </form>
     </div>
     <div class="btn-group">
+        <form action="/user-profile" method="get">
+            <button type="submit" class="btn btn-primary">Profile</button></form>
+    </div>
+    <div class="btn-group">
         <form action="/thread-read-all" method ="get">
-            <button type="submit" class="btn btn-primary">Chat List</button>
+            <button type="submit" class="btn btn-primary">Chats</button>
         </form>
     </div>
     <div class="btn-group">
@@ -38,7 +42,7 @@
     <div class="well">
     <form role="form" action="/message-reply" method ="post">
         <div class="form-group">
-        <textarea id="body" placeholder="Type a message." class="message-area form-control" rows="6"></textarea>
+        <textarea id="body" placeholder="Type a message." class="message-area form-control" rows="4"></textarea>
         <input type="hidden" id="conversation" value="{{conkey}}"/>
         <input type="hidden" id="itemid" value="{{itemid}}"/>
         <input type="hidden" id="receiverid" value="{{receiverid}}"/>
