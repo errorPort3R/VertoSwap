@@ -290,7 +290,6 @@ public class VertoSwapController
 
         String referer = request.getHeader("Referer");
         return "redirect:" + referer;
-//        return "redirect:/user-profile";
     }
 
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
@@ -312,7 +311,6 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Work w = new Work(jobTitle, description, user);
         works.save(w);
@@ -327,7 +325,6 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Iterable<Work> workList = works.findByUser(user);
         session.setAttribute("username", user.getUsername());
@@ -341,7 +338,6 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Work w = new Work(jobTitle, description, user);
         w.setId(id);
@@ -357,7 +353,6 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Work work = works.findOne(id);
         Iterable<Item> removeWorksList = new ArrayList<>();
@@ -384,10 +379,8 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
-        //Item.Status status = ACTIVE;
         Item i = new Item(title, location, description, acceptableExchange, ACTIVE, time, service, user);
         items.save(i);
         session.setAttribute("username", user.getUsername());
@@ -401,16 +394,10 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         model.addAttribute("username", username);
 
         User user = users.findByUsername(username);
         Item item = items.findOne(Integer.valueOf(id));
-//        if (user == null)
-//        {
-//            return "redirect:/";
-//        }
-//        session.setAttribute("username", user.getUsername());
         model.addAttribute("good", item);
 
         if(item.isService()) {
@@ -424,8 +411,6 @@ public class VertoSwapController
             model.addAttribute("photoActive", photoArrayList.get(0));
             model.addAttribute("photos", photoArrayList.subList(1, photoArrayList.size()));
         }
-
-
         return "view-barter";
     }
 
@@ -470,10 +455,8 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         LocalDateTime time = LocalDateTime.now();
-        //Item.Status status = Item.Status.valueOf(stat);
         Item i = new Item(title, location, description, acceptableExchange, ACTIVE, time, service, user);
         i.setId(id);
         items.save(i);
@@ -488,9 +471,7 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
-        //items.delete(id);
         Item item = items.findOne(id);
         item.setStatus(DELETE);
         items.save(item);
@@ -505,7 +486,6 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String) session.getAttribute("username");
         Item item = items.findOne(id);
         item.setStatus(ARCHIVE);
         items.save(item);
@@ -519,13 +499,12 @@ public class VertoSwapController
     //
     //***************************************************************************************
     @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
-    public String addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, /*Item item,*/ int id, HttpServletResponse response) throws Exception
+    public String addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, int id, HttpServletResponse response) throws Exception
     {
         String username = (String) session.getAttribute("username");
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         File dir = new File("public/" + PHOTOS_DIR);
         dir.mkdirs();
@@ -594,7 +573,6 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Item item = items.findOne(itemid);
         User receiver = users.findOne(receiverid);
@@ -612,7 +590,6 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Item item = items.findOne(Integer.valueOf(itemId));
         //create conversation key
@@ -630,7 +607,6 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         state.setConversation(conversation);
         List<Messagea> messageList = messages.findByConversation(conversation);
@@ -667,7 +643,6 @@ public class VertoSwapController
         }
         ArrayList<Messagea> messageList = new ArrayList();
         HashMap<String ,Messagea> mapList= new HashMap<>();
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         List<Messagea> messageLista = messages.findByRecipient(user);
         List<Messagea> messageListb = messages.findByAuthor(user);
@@ -708,7 +683,6 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         message.setId(id);
         messages.save(message);
@@ -723,12 +697,10 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         messages.delete(id);
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
-
     }
 
     @RequestMapping(path = "/conversation-delete", method = RequestMethod.POST)
@@ -738,7 +710,6 @@ public class VertoSwapController
         if (username == null) {
             return "home";
         }
-//        String username = (String)session.getAttribute("username");
         User user = users.findByUsername(username);
         Iterable<Messagea> messageList = messages.findByConversation(conversation);
         for(Messagea m : messageList)
