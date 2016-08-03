@@ -37,6 +37,19 @@ public class Messagea implements Comparable<Messagea>
 
     private String timedateString;
 
+    public String getPossession()
+    {
+        return possession;
+    }
+
+    public void setPossession(String possession)
+    {
+        this.possession = possession;
+    }
+
+    @Transient
+    private String possession = null;
+
     public Messagea()
     {
     }
