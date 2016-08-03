@@ -54,11 +54,12 @@ function sendMessage() {
     var t = timeNow();
     var s = JSON.stringify({body: $('#body').val(), time: t, itemid: $('#itemid').val(), conversation: $('#conversation').val(), receiverid: $('#receiverid').val(), name: $('#name').val()});
     socket.send("/topic/chat/"+$('#conversation').val(), {}, s);
+    $("#body").val('');
 }
 
 function timeNow() {
   var d = new Date(),
-      mo = ((d.getMonth()+1)<10?'0':'') + d.getMonth(),
+      mo = ((d.getMonth()+1)<10?'0':'') + (d.getMonth() + 1),
       day = (d.getDate()<10?'0':'') + d.getDate(),
       h = (d.getHours()<10?'0':'') + d.getHours(),
       m = (d.getMinutes()<10?'0':'') + d.getMinutes();
