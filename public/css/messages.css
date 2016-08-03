@@ -1,19 +1,63 @@
-/* General CSS Setup   BELOW BY JASON FOUNTS*/
+/* General CSS Setup   BELOW BY: JASON FOUNTS and ->  https://codepen.io/Founts/pen/gmhcl
+                                nicholas gallagher -> http://nicolasgallagher.com/pure-css-speech-bubbles/demo/default.css*/
 /* container */
 .container {
   padding: 5% 5%;
 }
 
-/* CSS talk bubble */
+/* CSS talk bubble
 .talk-bubble {
   margin: 1%;
   display: inline-block;
   position: relative;
 	width: 200px;
 	height: auto;
-	background-color: #2FD119;
+	//background-color: #2FD119;
 	color: white;
-}
+}*/
+.talk-bubble-mine {
+	display: inline-block;
+	position:relative;
+      padding:0px 0px;
+      margin:0;
+      color: white;
+      background:#2E8210; /* default background for browsers without gradient support */
+      /* css3 */
+      background:-webkit-gradient(linear, 0 0, 0 100%, from(#2FD119), to(#2E8210));
+      background:-moz-linear-gradient(#2FD119, #2E8210);
+      background:-o-linear-gradient(#2FD119, #2E8210);
+      background:linear-gradient(#2FD119, #2E8210);
+      /* Using longhand to avoid inconsistencies between Safari 4 and Chrome 4 */
+      -webkit-border-top-left-radius:25px 50px;
+      -webkit-border-top-right-radius:25px 50px;
+      -webkit-border-bottom-right-radius:25px 50px;
+      -webkit-border-bottom-left-radius:25px 50px;
+      -moz-border-radius:25px / 50px;
+      border-radius:25px / 50px;
+    }
+
+
+.talk-bubble-theirs {
+  display: inline-block;
+  position:relative;
+  padding:0px 0px;
+  margin:0;
+  color: black;
+  background:#E1FAD8; /* default background for browsers without gradient support */
+  /* css3 */
+  background:-webkit-gradient(linear, 0 0, 0 100%, from(#FFFFFF), to(#E1FAD8));
+  background:-moz-linear-gradient(#FFFFFF, #E1FAD8);
+  background:-o-linear-gradient(#FFFFFF, #E1FAD8);
+  background:linear-gradient(#FFFFFF, #E1FAD8);
+  /* Using longhand to avoid inconsistencies between Safari 4 and Chrome 4 */
+  -webkit-border-top-left-radius:25px 50px;
+  -webkit-border-top-right-radius:25px 50px;
+  -webkit-border-bottom-right-radius:25px 50px;
+  -webkit-border-bottom-left-radius:25px 50px;
+  -moz-border-radius:25px / 50px;
+  border-radius:25px / 50px;
+  }
+
 .border{
   border: 8px solid #666;
 }

@@ -625,6 +625,17 @@ public class VertoSwapController
             receiver = messageList.get(messageList.size()-1).getItem().getUser();
         }
         Collections.sort(messageList);
+        for(Messagea m: messageList)
+        {
+            if (user.getUsername().equals(m.getAuthor().getUsername()))
+            {
+                m.setPossession("mine");
+            }
+            else
+            {
+                m.setPossession("theirs");
+            }
+        }
         session.setAttribute("username", user.getUsername());
         model.addAttribute("name", user.getUsername());
         model.addAttribute("conkey", conKey);
