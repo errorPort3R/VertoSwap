@@ -11,26 +11,38 @@
 </head>
 <body>
 
-<div class="btn-group btn-group-justified">
-    <div class="btn-group">
-        <form action="/" method="get">
-            <button type="submit" class="btn btn-primary">Home</button></form>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#vs-nav" aria-expanded="false">
+                <span class="sr-only"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">VertoSwap</a>
+        </div>
+        <div class="collapse navbar-collapse" id="vs-nav">
+            <ul class="nav navbar-nav">
+                <li><a href="/user-profile">MySwaps</a></li>
+                <li class="active" href="/work-history">Resume<span class="sr-only"></span></li>
+                <li><a href="/archive">Archive</a></li>
+                <li><a href="/thread-read-all">Chats</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><form action="/logout" method="post">
+                    <button type="submit" class="btn btn-primary navbar-btn">Logout</button>
+                </form></li>
+            </ul>
+        </div>
     </div>
-    <div class="btn-group">
-        <form action="/user-profile" method="get">
-            <button type="submit" class="btn btn-primary">Profile</button></form>
-    </div>
-    <div class="btn-group">
-        <form action="/logout" method="post">
-            <button type="submit" class="btn btn-primary">Logout</button></form>
-    </div>
-</div>
+</nav>
 
 <br><br>
 
-<div class="container-fluid">
-    <div class="jumbotron">
-    <h3>{{username}}'s Work History</h3>
+<div class="container">
+    <div class="well" style="text-align:center;">
+    <h3>{{username}}'s Resume</h3>
     </div>
 </div>
 
