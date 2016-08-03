@@ -391,9 +391,6 @@ public class VertoSwapController
     public String getSpecificItem(HttpSession session, Model model,@RequestParam String id)
     {
         String username = (String) session.getAttribute("username");
-        if (username == null) {
-            return "home";
-        }
         model.addAttribute("username", username);
 
         User user = users.findByUsername(username);
@@ -465,7 +462,7 @@ public class VertoSwapController
     }
 
     @RequestMapping(path = "/item-delete", method = RequestMethod.POST)
-    public String deleteitem (HttpSession session, int id)
+    public String deleteitem (HttpSession session, int id, HttpServletRequest request)
     {
         String username = (String) session.getAttribute("username");
         if (username == null) {
@@ -475,8 +472,9 @@ public class VertoSwapController
         Item item = items.findOne(id);
         item.setStatus(DELETE);
         items.save(item);
-        //session.setAttribute("username", user.getUsername());
-        return "redirect:/user-profile";
+
+        String referer = request.getHeader("Referer");
+        return "redirect:" + referer;
     }
 
     @RequestMapping(path = "/item-archive", method = RequestMethod.POST)
