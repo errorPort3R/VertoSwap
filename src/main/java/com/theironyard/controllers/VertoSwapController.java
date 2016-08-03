@@ -86,10 +86,10 @@ public class VertoSwapController
             searchList = items.searchText(search, search, search, search);
             //searchList = items.findByTitleLikeOrLocationLikeOrDescriptionLikeOrAcceptableExchangeLike(search, search, search, search);
             for (Item i : searchList) {
-                if (!i.isService()) {
+                if (!i.isService() && (i.getStatus() != DELETE)) {
                     searchGoodArray.add(i);
                 }
-                else if (i.isService()) {
+                else if (i.isService() && (i.getStatus() != DELETE)) {
                     searchServiceArray.add(i);
                 }
                 model.addAttribute("goods", searchGoodArray);
