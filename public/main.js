@@ -1,6 +1,5 @@
 var socket;
 var sender;
-var receiver;
 
 function start() {
     var ws = new SockJS("/socket")
@@ -50,7 +49,6 @@ function onReceiveMessage(mess) {
 
 function sendMessage() {
     sender = $('#name').val();
-    receiver = $('#receiverid').val();
     var t = timeNow();
     var s = JSON.stringify({body: $('#body').val(), time: t, itemid: $('#itemid').val(), conversation: $('#conversation').val(), receiverid: $('#receiverid').val(), name: $('#name').val()});
     socket.send("/topic/chat/"+$('#conversation').val(), {}, s);
