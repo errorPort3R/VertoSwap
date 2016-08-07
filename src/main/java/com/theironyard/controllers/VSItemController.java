@@ -46,6 +46,8 @@ public class VSItemController
     //                  ITEM ROUTES
     //
     //***************************************************************************************
+
+    //creates an item and saves it to the database
     @RequestMapping(path = "/item-create", method = RequestMethod.POST)
     public String createItem(HttpSession session, String title, String location, String description, String acceptableExchange, boolean service)
     {
@@ -61,6 +63,7 @@ public class VSItemController
         return "redirect:/user-profile";
     }
 
+    //shows an item and loads the barter into the view-barter page
     @RequestMapping(path = "/view-item", method = RequestMethod.GET)
     public String getSpecificItem(HttpSession session, Model model, @RequestParam String id)
     {
@@ -85,6 +88,7 @@ public class VSItemController
         return "view-barter";
     }
 
+    //shows an item.  not implemented as it was a general build.
     @RequestMapping(path = "/item-read", method = RequestMethod.GET)
     public Iterable<Item> getItem(HttpSession session)
     {
@@ -103,6 +107,7 @@ public class VSItemController
         return itemsList;
     }
 
+    //attaches work to an item and sends the user to the user-profile page
     @RequestMapping(path = "/item-attach-work", method = RequestMethod.POST)
     public String attachWork(HttpSession session, Integer workId, Integer id) {
         String username = (String) session.getAttribute("username");
@@ -119,6 +124,7 @@ public class VSItemController
         return "redirect:/user-profile";
     }
 
+    //updates an item and loads the user-profile page
     @RequestMapping(path = "/item-update", method = RequestMethod.POST)
     public String updateItem(HttpSession session, int id, String title, String location, String description, String acceptableExchange, String stat, boolean service)
     {
@@ -135,6 +141,7 @@ public class VSItemController
         return "redirect:/user-profile";
     }
 
+    //"deletes" an item.  item is kept in database, but is not visible anymore.
     @RequestMapping(path = "/item-delete", method = RequestMethod.POST)
     public String deleteitem (HttpSession session, int id, HttpServletRequest request)
     {
@@ -151,6 +158,7 @@ public class VSItemController
         return "redirect:" + referer;
     }
 
+    //sets status of an item to ARCHIVE and reloads the user-profile page
     @RequestMapping(path = "/item-archive", method = RequestMethod.POST)
     public String archiveItem(HttpSession session, int id)
     {
@@ -164,6 +172,7 @@ public class VSItemController
         return "redirect:/user-profile";
     }
 
+    //updates an item and loads the update-item page
     @RequestMapping(path = "/update-item", method = RequestMethod.GET)
     public String updateItem(HttpSession session, Model model, int id) {
         String username = (String) session.getAttribute("username");
@@ -181,6 +190,7 @@ public class VSItemController
         return "update-item";
     }
 
+    //shows archive page
     @RequestMapping(path = "/archive", method = RequestMethod.GET)
     public String archive(HttpSession session, Model model) {
         String username = (String) session.getAttribute("username");

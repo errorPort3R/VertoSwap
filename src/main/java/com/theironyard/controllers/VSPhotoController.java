@@ -41,6 +41,8 @@ public class VSPhotoController
     //           PHOTO ROUTES
     //
     //***************************************************************************************
+
+    //create a photo, transfer file to local /photo directory, save it to the database and reload the page
     @RequestMapping(path = "/photo-create", method = RequestMethod.POST)
     public String addPhoto(HttpSession session, MultipartFile photo, String filename, String caption, int id, HttpServletResponse response) throws Exception
     {
@@ -64,6 +66,7 @@ public class VSPhotoController
         return "redirect:/user-profile";
     }
 
+    //show photo from original build.  no longer implemented
     @RequestMapping(path = "/photo-read", method = RequestMethod.GET)
     public String getPhoto(HttpSession session, Item item)
     {
@@ -74,6 +77,7 @@ public class VSPhotoController
         return"";
     }
 
+    //updates a photo in the database
     @RequestMapping(path = "/photo-update", method = RequestMethod.POST)
     public String updatePhoto(HttpSession session, MultipartFile photo, int id, String filename, String caption, Item item, HttpServletResponse response) throws Exception
     {
@@ -93,12 +97,16 @@ public class VSPhotoController
         return "redirect:/";
     }
 
+    //deletes a photo from the database and removes the photo from the /photo directory
     @RequestMapping(path = "/photo-delete", method = RequestMethod.POST)
     public String deletePhoto(HttpSession session, int id)
     {
         String username = (String) session.getAttribute("username");
         User user = users.findByUsername(username);
-        works.delete(id);
+        Photo photo = photos.findOne(id);
+        photos.delete(id);
+        File delFile = new File("public/" + VertoSwapController.PHOTOS_DIR, photo.getFilename());
+        delFile.delete();
         session.setAttribute("username", user.getUsername());
         return "redirect:/";
     }

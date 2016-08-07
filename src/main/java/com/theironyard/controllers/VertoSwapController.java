@@ -8,20 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.sql.Array;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -74,6 +66,8 @@ public class VertoSwapController
         }
     }
 
+    //loads the home page
+    //checks for a session, loads goods and services into the page
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public String main(HttpSession session, Model model, String search) {
         String username = (String) session.getAttribute("username");
@@ -117,6 +111,7 @@ public class VertoSwapController
         return "home";
     }
 
+    //loads the account creation page
     @RequestMapping(path = "/account-create", method = RequestMethod.GET)
     public String createAccountPage(HttpSession session, Model model)
     {
@@ -170,6 +165,9 @@ public class VertoSwapController
     //             USER ROUTES
     //
     //***************************************************************************************
+
+    //action for account creation page
+    //checks that entered username is not already taken and creates account if it's valid
     @RequestMapping(path = "/account-create", method = RequestMethod.POST)
     public String createAccount(HttpSession session, String username, String password) throws PasswordStorage.CannotPerformOperationException
     {
@@ -182,10 +180,11 @@ public class VertoSwapController
             user = new User(username, PasswordStorage.createHash(password));
             users.save(user);
             session.setAttribute("username", username);
-            return "redirect:/user-profile";
+            return "redirect:/";
         }
     }
 
+    //allows you to change your username.  not implemented as yet.
     @RequestMapping(path = "/account-update", method = RequestMethod.POST)
     public String editAccount(HttpSession session, String password, String newUsername, String newPassword) throws Exception {
         String username = (String) session.getAttribute("username");
@@ -202,6 +201,7 @@ public class VertoSwapController
         return "redirect:/user-profile";
     }
 
+    //deletes a user account and all affiliated items/messages.  not implemented yet.
     @RequestMapping(path = "/account-delete", method = RequestMethod.POST)
     public String deleteAccount(HttpSession session) throws Exception {
         String username = (String) session.getAttribute("username");
@@ -218,6 +218,7 @@ public class VertoSwapController
         return "redirect:/";
     }
 
+    //Login route that keeps you on the same page you're on.
     @RequestMapping(path = "/login", method = RequestMethod.POST)
     public String login(HttpSession session, String username, String password, HttpServletRequest request) throws Exception {
         User userFromDB = users.findByUsername(username);
@@ -235,12 +236,15 @@ public class VertoSwapController
         return "redirect:" + referer;
     }
 
+    //logout route sends you back to home
     @RequestMapping(path = "/logout", method = RequestMethod.POST)
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/";
     }
 
+
+    //testing file loader
     public void migrateTextFiles() throws PasswordStorage.CannotPerformOperationException, IOException
     {
         //User: username|password 1234

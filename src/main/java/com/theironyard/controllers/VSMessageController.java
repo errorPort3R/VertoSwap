@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -44,6 +42,8 @@ public class VSMessageController
     //                  MESSAGE ROUTES
     //
     //***************************************************************************************
+
+    //reply's to a message.  no longer implemented
     @RequestMapping(path = "/message-reply", method = RequestMethod.POST)
     public String messageFromBuyer(HttpSession session, Model model, String body, int itemid, int receiverid, String conversation)
     {
@@ -60,7 +60,7 @@ public class VSMessageController
         return "redirect:/thread-read-all";
     }
 
-
+    //initial message creation by customer.  creates a specific conversation key then loads the home page.
     @RequestMapping(path = "/message-to-seller", method = RequestMethod.POST)
     public String messagetoseller(HttpSession session, @RequestParam String itemId, @RequestParam String body)
     {
@@ -78,6 +78,8 @@ public class VSMessageController
         return "redirect:/";
     }
 
+    //gets all the messages in a conversation that were saved to the database
+    //loads it and displays the message-display page
     @RequestMapping(path = "/message-get-by-conversation", method = RequestMethod.GET)
     public String getMessages(HttpSession session, Model model, String conversation)
     {
@@ -123,6 +125,7 @@ public class VSMessageController
         return "message-display";
     }
 
+    //finds all conversations that the user is a part of, loads them into the message-list
     @RequestMapping(path = "/thread-read-all", method = RequestMethod.GET)
     public String getConversation(HttpSession session, Model model, ArrayList<String> conversationId)
     {
@@ -165,6 +168,7 @@ public class VSMessageController
         return "message-list";
     }
 
+    //message update route from original build.  not implemented or necessary
     @RequestMapping(path = "/message-update", method = RequestMethod.POST)
     public String updateMessage(HttpSession session,int id, Messagea message)
     {
@@ -179,6 +183,7 @@ public class VSMessageController
         return "chatpage";
     }
 
+    //message delete route from original build.  not implemented or necessary
     @RequestMapping(path = "/message-delete", method = RequestMethod.POST)
     public String deleteMessage(HttpSession session, int id)
     {
@@ -192,6 +197,7 @@ public class VSMessageController
         return "redirect:/";
     }
 
+    //deletes a conversation and all associated messages, then reloads the page.
     @RequestMapping(path = "/conversation-delete", method = RequestMethod.POST)
     public String deleteConversation(HttpSession session, String conversation, HttpServletRequest request)
     {
